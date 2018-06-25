@@ -10,19 +10,14 @@ using System.Windows.Forms;
 
 namespace moneyManage
 {
-    public partial class Report : Form
+    public partial class SignIn : Form
     {
-        public Report()
+        public SignIn()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Report_Load(object sender, EventArgs e)
         {
 
         }
