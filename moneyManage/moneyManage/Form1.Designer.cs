@@ -192,7 +192,6 @@
         private System.Windows.Forms.Label label5;
         private string username;
         private string password;
-        private string database;
     }
 }
 

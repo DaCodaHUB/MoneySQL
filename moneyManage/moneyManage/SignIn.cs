@@ -21,8 +21,7 @@ namespace moneyManage
         {
             string userid = textBox1.Text;
             string pass = textBox2.Text;
-            string dbase = textBox3.Text;
-            var form = new Form1(userid,pass,dbase);
+            var form = new Form1(userid,pass);
             form.Show();
         }
     }
