@@ -1,0 +1,34 @@
+﻿Opening repositories:
+C:\Users\lewin\Source\Repos\MoneySQL
+An existing Git repository was found in C:\Users\lewin\Source\Repos\MoneySQL.
+Commit fce4e7e9 created locally in repository C:\Users\lewin\Source\Repos\MoneySQL
+Error encountered while pushing to the remote repository: Git failed with a fatal error.
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+error: cannot spawn askpass: No such file or directory
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Pushing to https://github.com/DaCodaHUB/MoneySQL.git
+Error encountered while pushing to the remote repository: Git failed with a fatal error.
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+error: cannot spawn askpass: No such file or directory
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Pushing to https://github.com/DaCodaHUB/MoneySQL.git
+Error encountered while pushing to the remote repository: Git failed with a fatal error.
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+error: cannot spawn askpass: No such file or directory
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Pushing to https://github.com/DaCodaHUB/MoneySQL.git
+Error encountered while pushing to the remote repository: Git failed with a fatal error.
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+error: cannot spawn askpass: No such file or directory
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Pushing to https://github.com/DaCodaHUB/MoneySQL.git
+Error encountered while pushing to the remote repository: Git failed with a fatal error.
+fatal: HttpRequestException encountered.
+   An error occurred while sending the request.
+error: cannot spawn askpass: No such file or directory
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+Pushing to https://github.com/DaCodaHUB/MoneySQL.git
