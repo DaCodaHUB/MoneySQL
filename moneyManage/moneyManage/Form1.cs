@@ -12,9 +12,12 @@ namespace moneyManage
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string user, string pass, string dbase)
         {
             InitializeComponent();
+            username = user;
+            password = pass;
+            database = dbase;
         }
 
         private void Form1_Load(object sender, EventArgs e)

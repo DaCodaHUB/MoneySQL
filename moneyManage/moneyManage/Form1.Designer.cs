@@ -190,6 +190,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label5;
+        private string username;
+        private string password;
+        private string database;
     }
 }
 
