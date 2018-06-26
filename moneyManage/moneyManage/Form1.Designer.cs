@@ -87,7 +87,8 @@
             "Entertainment",
             "Transportation",
             "Food and Drink",
-            "Services"});
+            "Services",
+            "Materials"});
             this.comboBox1.Location = new System.Drawing.Point(52, 118);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(179, 24);
