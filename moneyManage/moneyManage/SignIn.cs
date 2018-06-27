@@ -26,5 +26,15 @@ namespace moneyManage
             form.Closed += (s, args) => this.Close();
             form.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            string userid = textBox1.Text;
+            string pass = textBox2.Text;
+            var form = new Form1(userid, pass);
+            form.Closed += (s, args) => this.Close();
+            form.Show();
+        }
     }
 }
