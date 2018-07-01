@@ -17,7 +17,8 @@ namespace moneyManage
             Application.Run(new SignIn());
 
 //            SqlConnect sql = new SqlConnect();
-//            sql.CreateNewUser();
+//            sql.CreateNewUser("s","sh");
+//            sql.VerifyUser("ss","");
         }
     }
 }
