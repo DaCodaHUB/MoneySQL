@@ -30,13 +30,18 @@ namespace moneyManage
             SqlConnect sql = new SqlConnect();
             var replayCode = sql.CreateNewUser(userid, pass);
 
+
+            // TODO Sign UP issue
+            // replayCode == 1 or else should show the sign in again after messageBox
+            // 
+
             if (replayCode == 1)
             {
                 MessageBox.Show($@"Username {userid} is existed");
             }
             else
             {
-
+                MessageBox.Show($@"Username {userid} is created");
             }
 
             var form = new Form1(userid, pass);

@@ -107,6 +107,7 @@ namespace moneyManage.Database
 
         //                myTrans.Commit();
 
+        // TODO Use for sign in and not done yet
         public bool VerifyUser(string username, string password)
         {
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
