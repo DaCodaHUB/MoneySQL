@@ -33,7 +33,7 @@
             this.usernameTxt = new System.Windows.Forms.TextBox();
             this.passwordTxt = new System.Windows.Forms.TextBox();
             this.SignInBtn = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.SignUpBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -79,22 +79,22 @@
             this.SignInBtn.UseVisualStyleBackColor = true;
             this.SignInBtn.Click += new System.EventHandler(this.SignIn_Click);
             // 
-            // button2
+            // SignUpBtn
             // 
-            this.button2.Location = new System.Drawing.Point(249, 116);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(90, 30);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Sign Up";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.SignUp_Click);
+            this.SignUpBtn.Location = new System.Drawing.Point(249, 116);
+            this.SignUpBtn.Name = "SignUpBtn";
+            this.SignUpBtn.Size = new System.Drawing.Size(90, 30);
+            this.SignUpBtn.TabIndex = 7;
+            this.SignUpBtn.Text = "Sign Up";
+            this.SignUpBtn.UseVisualStyleBackColor = true;
+            this.SignUpBtn.Click += new System.EventHandler(this.SignUp_Click);
             // 
             // SignIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 174);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.SignUpBtn);
             this.Controls.Add(this.SignInBtn);
             this.Controls.Add(this.passwordTxt);
             this.Controls.Add(this.usernameTxt);
@@ -114,6 +114,6 @@
         private System.Windows.Forms.TextBox usernameTxt;
         private System.Windows.Forms.TextBox passwordTxt;
         private System.Windows.Forms.Button SignInBtn;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SignUpBtn;
     }
 }

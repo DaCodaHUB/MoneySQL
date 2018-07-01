@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using moneyManage.Database;
+using moneyManage.UI;
 
 namespace moneyManage
 {
@@ -16,7 +17,7 @@ namespace moneyManage
             this.Hide();
             string userid = usernameTxt.Text;
             string pass = passwordTxt.Text;
-            MessageBox.Show(userid + " " + pass);
+//            MessageBox.Show(userid + " " + pass);
             var form = new Form1(userid, pass);
             form.Closed += (s, args) => this.Close();
             form.Show();

@@ -1,4 +1,4 @@
-﻿namespace moneyManage
+﻿namespace moneyManage.UI
 {
     partial class Form1
     {
@@ -30,13 +30,13 @@
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.IncomeBtn = new System.Windows.Forms.Button();
+            this.SpendBtn = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.ReportBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -59,25 +59,25 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "$";
             // 
-            // button1
+            // IncomeBtn
             // 
-            this.button1.Location = new System.Drawing.Point(291, 34);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 29);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Income";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.IncomeBtn.Location = new System.Drawing.Point(291, 34);
+            this.IncomeBtn.Name = "IncomeBtn";
+            this.IncomeBtn.Size = new System.Drawing.Size(151, 29);
+            this.IncomeBtn.TabIndex = 2;
+            this.IncomeBtn.Text = "Income";
+            this.IncomeBtn.UseVisualStyleBackColor = true;
+            this.IncomeBtn.Click += new System.EventHandler(this.Income_Click);
             // 
-            // button2
+            // SpendBtn
             // 
-            this.button2.Location = new System.Drawing.Point(467, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(153, 29);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Spend";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.SpendBtn.Location = new System.Drawing.Point(467, 34);
+            this.SpendBtn.Name = "SpendBtn";
+            this.SpendBtn.Size = new System.Drawing.Size(153, 29);
+            this.SpendBtn.TabIndex = 3;
+            this.SpendBtn.Text = "Spend";
+            this.SpendBtn.UseVisualStyleBackColor = true;
+            this.SpendBtn.Click += new System.EventHandler(this.Spend_Click);
             // 
             // comboBox1
             // 
@@ -121,15 +121,15 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Comments";
             // 
-            // button3
+            // ReportBtn
             // 
-            this.button3.Location = new System.Drawing.Point(52, 179);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(179, 34);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "View Reports";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.ReportBtn.Location = new System.Drawing.Point(52, 179);
+            this.ReportBtn.Name = "ReportBtn";
+            this.ReportBtn.Size = new System.Drawing.Size(179, 34);
+            this.ReportBtn.TabIndex = 8;
+            this.ReportBtn.Text = "View Reports";
+            this.ReportBtn.UseVisualStyleBackColor = true;
+            this.ReportBtn.Click += new System.EventHandler(this.Report_Click);
             // 
             // label4
             // 
@@ -166,13 +166,13 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.ReportBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SpendBtn);
+            this.Controls.Add(this.IncomeBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
@@ -187,13 +187,13 @@
 
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button IncomeBtn;
+        private System.Windows.Forms.Button SpendBtn;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button ReportBtn;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label5;
