@@ -12,6 +12,7 @@ namespace moneyManage
             InitializeComponent();
         }
 
+        // Todo: Pass in TotalStruct and ExpenseStruct
         private void SignIn_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -30,11 +31,6 @@ namespace moneyManage
             string pass = passwordTxt.Text;
             SqlConnect sql = new SqlConnect();
             var replayCode = sql.CreateNewUser(userid, pass);
-
-
-            // TODO Sign UP issue
-            // replayCode == 1 or else should show the sign in again after messageBox
-            // 
 
             if (replayCode == 1)
             {

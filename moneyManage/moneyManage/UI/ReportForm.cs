@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using moneyManage.Database;
 
 namespace moneyManage
 {
     public partial class Report : Form
     {
+        // Todo: Pass in TotalStruct and ExpenseStruct
         public Report()
         {
             InitializeComponent();

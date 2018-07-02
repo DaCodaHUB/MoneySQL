@@ -59,7 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\ExpenseStruct.cs" />
     <Compile Include="Database\SQLConnect.cs" />
+    <Compile Include="Database\TotalStruct.cs" />
     <Compile Include="Tool\SecurePasswordHasher.cs" />
     <Compile Include="UI\IncomeForm.cs">
       <SubType>Form</SubType>
