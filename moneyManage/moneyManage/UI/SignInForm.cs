@@ -45,9 +45,7 @@ namespace moneyManage
                 MessageBox.Show($@"Username {userid} is created");
             }
 
-            var form = new Form1(userid, pass);
-            form.Closed += (s, args) => this.Close();
-            form.Show();
+            this.Show();
         }
     }
 }
