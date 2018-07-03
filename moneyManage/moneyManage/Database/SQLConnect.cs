@@ -22,9 +22,15 @@ namespace moneyManage.Database
         /// <param name="password">the password</param>
         /// <returns>
         /// 1 - Duplicate username
+        /// 2 - username or password is empty or whitespace
+        /// 3 - password is too short (at least 8)
         /// </returns>
         public int CreateNewUser(string username, string password)
         {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return 2;
+            if (password.Length < 7)
+                return 3;
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -42,6 +48,7 @@ namespace moneyManage.Database
 
                             myCommand.CommandText =
                                 $"INSERT INTO User (username,password) VALUES ('{username}','{password}');";
+
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
                         }
@@ -50,66 +57,18 @@ namespace moneyManage.Database
                             var message = e.Message;
                             if (message.Contains("Duplicate"))
                                 return 1;
-//                            Console.WriteLine(e.Message);
                         }
                     }
-
-
-//                    try
-//                    {
-//                        myCommand.CommandText =
-//                            $"INSERT INTO User (username,password) VALUES ('{username}','{password}');";
-//                        myCommand.ExecuteNonQuery();
-//                        myTrans.Commit();
-//
-//                        Console.WriteLine(@"Both records are written to database.");
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        try
-//                        {
-//                            myTrans.Rollback();
-//                        }
-//                        catch (SqlException ex)
-//                        {
-//                            if (myTrans.Connection != null)
-//                            {
-//                                Console.WriteLine(
-//                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
-//                            }
-//                        }
-//
-//
-//                        Console.WriteLine(
-//                            $@"An exception of type {e.GetType()} was encountered while inserting the data.");
-//                        Console.WriteLine(@"Neither record was written to database.");
-//                    }
                 }
             }
 
             return 0;
         }
 
-
-        //
-        //                while (Reader.Read())
-        //                {
-        //                    string row = "";
-        //                    for (int i = 0; i < Reader.FieldCount; i++)
-        //                    {
-        //                        Console.WriteLine(i);
-        //                        row += Reader.GetValue(i) + ", ";
-        //                    }
-        //
-        ////                    if (row)
-        //                    Console.WriteLine(row);
-        //                }
-
-        //                myTrans.Commit();
-
-        // TODO Use for sign in and not done yet
-        public bool VerifyUser(string username, string password)
+        public UserInfo VerifyUser(string username, string password)
         {
+            var hashPassword = "";
+            var user = new UserInfo();
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -120,20 +79,26 @@ namespace moneyManage.Database
                     myCommand.Connection = myConnection;
                     myCommand.Transaction = myTrans;
 
-                    password = SecurePasswordHasher.Hash(password);
-
                     try
                     {
-                        myCommand.CommandText = $"SELECT password FROM User WHERE username = '{username}';";
+                        myCommand.CommandText = $"SELECT id, password FROM User WHERE username = '{username}';";
                         var reader = myCommand.ExecuteReader();
+
                         while (reader.Read())
                         {
-                            Console.WriteLine(reader.GetString("password"));
+                            hashPassword = reader.GetString("password");
+                            user.Id = reader.GetInt32("id");
+                            Console.WriteLine(hashPassword);
+                        }
+
+                        if (string.IsNullOrWhiteSpace(hashPassword))
+                        {
+                            user.Valid = false;
+                            return user;
                         }
 
 
                         Console.WriteLine(@"Read record from the database.");
-                        return true;
                     }
                     catch (Exception e)
                     {
@@ -157,7 +122,14 @@ namespace moneyManage.Database
                 }
             }
 
-            return false;
+            user.Valid = SecurePasswordHasher.Verify(password, hashPassword);
+            return user;
+        }
+
+        internal class UserInfo
+        {
+            public int Id { get; set; }
+            public bool Valid { get; set; }
         }
     }
 }

@@ -7,17 +7,16 @@ namespace moneyManage.UI
     public partial class Form1 : Form
     {
         // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
-        public Form1(string userID)
+        public Form1(int userId)
         {
             InitializeComponent();
-            this.userID = userID;
+            this.userID = userId;
             totalData = new TotalStruct();
             expenseData = new ExpenseStruct();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void Report_Click(object sender, EventArgs e)
@@ -30,14 +29,14 @@ namespace moneyManage.UI
         {
             // Get amount of income
             int income = 0;
-            if (string.IsNullOrEmpty(this.textBox1.Text))
+            if (string.IsNullOrEmpty(this.MoneyTxt.Text))
             {
                 MessageBox.Show("The amount of money can't be empty");
                 return;
             }
             else
             {
-                income = Int32.Parse(this.textBox1.Text);
+                income = Int32.Parse(this.MoneyTxt.Text);
             }
 
             // Get current total
@@ -45,36 +44,37 @@ namespace moneyManage.UI
 
             // Update current total
             // (?) Only update the database after the program is close
-            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, DateTime.Now, current);
+            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, current);
             totalData.Current = newCurrent;
 
             // Show current total
-            textBox3.Text = current.ToString();
+            CurrentMoney.Text = current.ToString();
         }
 
         private void Spend_Click(object sender, EventArgs e)
         {
             // Get amount of expense
             int expense = 0;
-            if (string.IsNullOrEmpty(this.textBox1.Text))
+            if (string.IsNullOrWhiteSpace(this.MoneyTxt.Text))
             {
                 MessageBox.Show("The amount of money can't be empty");
                 return;
-            } else
+            }
+            else
             {
-                expense = Int32.Parse(this.textBox1.Text);
+                expense = Int32.Parse(this.MoneyTxt.Text);
             }
 
             // Get category
             string category = "";
-            if (string.IsNullOrEmpty(this.textBox1.Text))
+            if (string.IsNullOrWhiteSpace(this.catagoryList.Text))
             {
                 MessageBox.Show("You didn't choose category");
                 return;
             }
             else
             {
-                category = this.comboBox1.Text;
+                category = this.catagoryList.Text;
             }
 
             // Get current total
@@ -82,14 +82,14 @@ namespace moneyManage.UI
 
             // Update current total
             // (?) Only update the database after the program is close
-            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, DateTime.Now, current);
+            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, current);
             totalData.Current = newCurrent;
 
             // Update the expense list
-            expenseData.Insert(expenseData.UserID, DateTime.Now, category, expense);
+            expenseData.Insert(expenseData.UserID, expense);
 
             // Show current total
-            textBox3.Text = current.ToString();
+            CurrentMoney.Text = current.ToString();
         }
     }
 }

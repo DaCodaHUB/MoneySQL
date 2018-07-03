@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.MoneyTxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.IncomeBtn = new System.Windows.Forms.Button();
             this.SpendBtn = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.catagoryList = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.CommentTxt = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ReportBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.CurrentMoney = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // MoneyTxt
             // 
-            this.textBox1.Location = new System.Drawing.Point(52, 40);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(179, 22);
-            this.textBox1.TabIndex = 0;
+            this.MoneyTxt.Location = new System.Drawing.Point(52, 40);
+            this.MoneyTxt.Name = "MoneyTxt";
+            this.MoneyTxt.Size = new System.Drawing.Size(179, 22);
+            this.MoneyTxt.TabIndex = 0;
             // 
             // label1
             // 
@@ -79,20 +79,20 @@
             this.SpendBtn.UseVisualStyleBackColor = true;
             this.SpendBtn.Click += new System.EventHandler(this.Spend_Click);
             // 
-            // comboBox1
+            // catagoryList
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.catagoryList.FormattingEnabled = true;
+            this.catagoryList.Items.AddRange(new object[] {
             "Education",
             "Entertainment",
             "Transportation",
             "Food and Drink",
             "Services",
             "Materials"});
-            this.comboBox1.Location = new System.Drawing.Point(52, 118);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(179, 24);
-            this.comboBox1.TabIndex = 4;
+            this.catagoryList.Location = new System.Drawing.Point(52, 118);
+            this.catagoryList.Name = "catagoryList";
+            this.catagoryList.Size = new System.Drawing.Size(179, 24);
+            this.catagoryList.TabIndex = 4;
             // 
             // label2
             // 
@@ -104,12 +104,12 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Categories";
             // 
-            // textBox2
+            // CommentTxt
             // 
-            this.textBox2.Location = new System.Drawing.Point(291, 118);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(329, 22);
-            this.textBox2.TabIndex = 6;
+            this.CommentTxt.Location = new System.Drawing.Point(291, 118);
+            this.CommentTxt.Name = "CommentTxt";
+            this.CommentTxt.Size = new System.Drawing.Size(329, 22);
+            this.CommentTxt.TabIndex = 6;
             // 
             // label3
             // 
@@ -141,12 +141,12 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Current";
             // 
-            // textBox3
+            // CurrentMoney
             // 
-            this.textBox3.Location = new System.Drawing.Point(350, 182);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(198, 22);
-            this.textBox3.TabIndex = 10;
+            this.CurrentMoney.Location = new System.Drawing.Point(350, 182);
+            this.CurrentMoney.Name = "CurrentMoney";
+            this.CurrentMoney.Size = new System.Drawing.Size(198, 22);
+            this.CurrentMoney.TabIndex = 10;
             // 
             // label5
             // 
@@ -164,17 +164,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 254);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.CurrentMoney);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ReportBtn);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.CommentTxt);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.catagoryList);
             this.Controls.Add(this.SpendBtn);
             this.Controls.Add(this.IncomeBtn);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.MoneyTxt);
             this.Name = "Form1";
             this.Text = "MoneySQL";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -185,19 +185,19 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox MoneyTxt;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button IncomeBtn;
         private System.Windows.Forms.Button SpendBtn;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox catagoryList;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox CommentTxt;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ReportBtn;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox CurrentMoney;
         private System.Windows.Forms.Label label5;
-        private string userID;
+        private int userID;
         private moneyManage.Database.TotalStruct totalData;
         private moneyManage.Database.ExpenseStruct expenseData;
     }

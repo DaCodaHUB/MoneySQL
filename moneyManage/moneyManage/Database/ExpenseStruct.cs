@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +10,13 @@ namespace moneyManage.Database
         public struct Expense
         {
             public int userid;
-            public DateTime time;
             public string category;
             public int money;
 
-            public Expense(int userid, DateTime time, string category, int money)
+            public Expense(int userid, string category, int money)
             {
                 this.userid = userid;
-                this.time = time;
+       
                 this.category = category;
                 this.money = money;
             }
@@ -32,9 +30,9 @@ namespace moneyManage.Database
             expenseList = new List<Expense>();
         }
 
-        public void Insert(int userid, DateTime time, string category, int money)
+        public void Insert(int userid, string category, int money)
         {
-            Expense data = new Expense(userid, time, category, money);
+            Expense data = new Expense(userid, category, money);
             expenseList.Add(data);
             this.userid = userid;
         }

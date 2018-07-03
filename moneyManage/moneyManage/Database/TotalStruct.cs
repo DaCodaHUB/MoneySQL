@@ -11,13 +11,13 @@ namespace moneyManage.Database
         public struct Total
         {
             public int userid;
-            public DateTime time;
+
             public int money;
 
-            public Total(int userid, DateTime time, int money)
+            public Total(int userid, int money)
             {
                 this.userid = userid;
-                this.time = time;
+
                 this.money = money;
             }
         }
@@ -28,12 +28,12 @@ namespace moneyManage.Database
         public TotalStruct()
         {
             totalList = new List<Total>();
-            current = new Total(0, DateTime.Now, 0);
+            current = new Total(0, 0);
         }
 
-        public void Insert(int userid, DateTime time, int money)
+        public void Insert(int userid, int money)
         {
-            current = new Total(userid, time, money);
+            current = new Total(userid, money);
             totalList.Add(current);
         }
 

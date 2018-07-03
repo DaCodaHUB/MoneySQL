@@ -7,39 +7,57 @@ namespace moneyManage
 {
     public partial class SignIn : Form
     {
+        private readonly SqlConnect _sql;
+
         public SignIn()
         {
+            this._sql = new SqlConnect();
             InitializeComponent();
         }
 
-        // Todo: Pass in TotalStruct and ExpenseStruct
+        
         private void SignIn_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            string userid = usernameTxt.Text;
-            string pass = passwordTxt.Text;
-//            MessageBox.Show(userid + " " + pass);
-            var form = new Form1(userid);
-            form.Closed += (s, args) => this.Close();
-            form.Show();
+            var username = usernameTxt.Text;
+            var pass = passwordTxt.Text;
+    
+            var result = _sql.VerifyUser(username,pass);
+            if (!result.Valid)
+                MessageBox.Show($@"This {username} is not existed or password is incorrect");
+            else
+            {
+                this.Hide();
+                var form = new Form1(result.Id);
+                Console.WriteLine(result.Id);
+                form.Closed += (s, args) => this.Close();
+                form.Show();
+            }
         }
 
         private void SignUp_Click(object sender, EventArgs e)
         {
             // this.Hide();
-            string userid = usernameTxt.Text;
-            string pass = passwordTxt.Text;
-            SqlConnect sql = new SqlConnect();
-            var replayCode = sql.CreateNewUser(userid, pass);
+            var username = usernameTxt.Text;
+            var pass = passwordTxt.Text;
+  
+            var replayCode = _sql.CreateNewUser(username, pass);
 
-            if (replayCode == 1)
+            switch (replayCode)
             {
-                MessageBox.Show($@"Username {userid} is existed");
+                case 1:
+                    MessageBox.Show($@"Username {username} is existed");
+                    break;
+                case 2:
+                    MessageBox.Show(@"Username or password is empty");
+                    break;
+                case 3:
+                    MessageBox.Show(@"Password needs at least 8 characters");
+                    break;
+                default:
+                    MessageBox.Show($@"Username {username} is created");
+                    break;
             }
-            else
-            {
-                MessageBox.Show($@"Username {userid} is created");
-            }
+
 
             // this.Show();
         }

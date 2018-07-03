@@ -1,4 +1,6 @@
-﻿namespace moneyManage
+﻿using moneyManage.Database;
+
+namespace moneyManage
 {
     partial class SignIn
     {
@@ -115,5 +117,6 @@
         private System.Windows.Forms.TextBox passwordTxt;
         private System.Windows.Forms.Button SignInBtn;
         private System.Windows.Forms.Button SignUpBtn;
+        
     }
 }
