@@ -14,9 +14,11 @@ namespace moneyManage
     public partial class Report : Form
     {
         // Todo: Pass in TotalStruct and ExpenseStruct
-        public Report()
+        public Report(TotalStruct totalData, ExpenseStruct expenseData)
         {
             InitializeComponent();
+            this.totalData = totalData;
+            this.expenseData = expenseData;
         }
 
         private void button1_Click(object sender, EventArgs e)

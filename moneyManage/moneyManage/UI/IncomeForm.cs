@@ -7,11 +7,12 @@ namespace moneyManage.UI
     public partial class Form1 : Form
     {
         // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
-        public Form1(string user, string pass)
+        public Form1(string userID)
         {
             InitializeComponent();
-            username = user;
-            password = pass;
+            this.userID = userID;
+            totalData = new TotalStruct();
+            expenseData = new ExpenseStruct();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -21,7 +22,7 @@ namespace moneyManage.UI
 
         private void Report_Click(object sender, EventArgs e)
         {
-            var report = new Report();
+            var report = new Report(totalData, expenseData);
             report.Show();
         }
 
@@ -39,16 +40,13 @@ namespace moneyManage.UI
                 income = Int32.Parse(this.textBox1.Text);
             }
 
-            // Temporary!!!
-            TotalStruct data = new TotalStruct();
-
             // Get current total
-            int current = data.Current.money + income;
+            int current = totalData.Current.money + income;
 
             // Update current total
             // (?) Only update the database after the program is close
-            TotalStruct.Total newCurrent = new TotalStruct.Total(data.Current.userid, DateTime.Now, current);
-            data.Current = newCurrent;
+            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, DateTime.Now, current);
+            totalData.Current = newCurrent;
 
             // Show current total
             textBox3.Text = current.ToString();
@@ -78,9 +76,6 @@ namespace moneyManage.UI
             {
                 category = this.comboBox1.Text;
             }
-
-            ExpenseStruct expenseData = new ExpenseStruct(); // Temporary
-            TotalStruct totalData = new TotalStruct();       // Temporary
 
             // Get current total
             int current = totalData.Current.money - expense;

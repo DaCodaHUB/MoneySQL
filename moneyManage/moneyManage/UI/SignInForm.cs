@@ -19,14 +19,14 @@ namespace moneyManage
             string userid = usernameTxt.Text;
             string pass = passwordTxt.Text;
 //            MessageBox.Show(userid + " " + pass);
-            var form = new Form1(userid, pass);
+            var form = new Form1(userid);
             form.Closed += (s, args) => this.Close();
             form.Show();
         }
 
         private void SignUp_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            // this.Hide();
             string userid = usernameTxt.Text;
             string pass = passwordTxt.Text;
             SqlConnect sql = new SqlConnect();
@@ -41,7 +41,7 @@ namespace moneyManage
                 MessageBox.Show($@"Username {userid} is created");
             }
 
-            this.Show();
+            // this.Show();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace moneyManage.Database
 {
-    class ExpenseStruct
+    public class ExpenseStruct
     {
         public struct Expense
         {

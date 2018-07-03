@@ -197,9 +197,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label5;
-        private string username;
-        private string password;
-        //private TotalStruct data;
+        private string userID;
+        private moneyManage.Database.TotalStruct totalData;
+        private moneyManage.Database.ExpenseStruct expenseData;
     }
 }
 

@@ -107,5 +107,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private moneyManage.Database.TotalStruct totalData;
+        private moneyManage.Database.ExpenseStruct expenseData;
     }
 }
