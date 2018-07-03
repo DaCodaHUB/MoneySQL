@@ -86,7 +86,7 @@ namespace moneyManage.UI
             totalData.Current = newCurrent;
 
             // Update the expense list
-            expenseData.Insert(expenseData.UserID, expense);
+            expenseData.Insert(expenseData.UserID, category, expense);
 
             // Show current total
             CurrentMoney.Text = current.ToString();
