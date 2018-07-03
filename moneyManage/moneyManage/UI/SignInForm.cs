@@ -29,8 +29,7 @@ namespace moneyManage
                 this.Hide();
                 var form = new Form1(result.Id);
                 Console.WriteLine(result.Id);
-                //form.Closed += (s, args) => this.Close();
-                form.Closed += (s, args) => MessageBox.Show("Testing");
+                form.Closed += (s, args) => this.Close();
                 form.Show();
             }
         }

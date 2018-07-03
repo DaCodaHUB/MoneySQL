@@ -37,6 +37,8 @@ namespace moneyManage.Database
             this.userid = userid;
         }
 
+        // Todo: Add Delete method
+
         public List<Expense> ExpnseList { get; set; }
         public int UserID { get; set; }
 

@@ -91,5 +91,10 @@ namespace moneyManage.UI
             // Show current total
             CurrentMoney.Text = current.ToString();
         }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
     }
 }
