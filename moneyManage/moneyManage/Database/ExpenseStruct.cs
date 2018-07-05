@@ -12,14 +12,15 @@ namespace moneyManage.Database
         public struct Expense
         {
             private string category;
-            private decimal money;
-           
+            public decimal Money { get; }
+            public DateTime Timestamp { get; }
 
-            public Expense(string category, decimal money)
+
+            public Expense(string category, decimal money, DateTime timestamp)
             {
                 this.category = category;
-                this.money = money;
-              
+                this.Money = money;
+                this.Timestamp = timestamp;
             }
         }
 
@@ -34,7 +35,7 @@ namespace moneyManage.Database
 
         public void Insert(int userid, string category, decimal money)
         {
-            Expense data = new Expense(category, money);
+            Expense data = new Expense(category, money, DateTime.Now);
 
             expenseList.Add(data);
 //            sql.InsertMoneyExpense(userid, category, money);

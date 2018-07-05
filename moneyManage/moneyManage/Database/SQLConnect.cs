@@ -73,6 +73,7 @@ namespace moneyManage.Database
                         }
                     }
                 }
+
                 myConnection.Close();
             }
 
@@ -90,7 +91,6 @@ namespace moneyManage.Database
                 {
                     using (var myTrans = myConnection.BeginTransaction())
                     {
-
                         myCommand.Connection = myConnection;
                         myCommand.Transaction = myTrans;
 
@@ -105,6 +105,7 @@ namespace moneyManage.Database
                                     user.Id = reader.GetInt32("id");
                                     Console.WriteLine(hashPassword);
                                 }
+
                                 reader.Close();
 
                                 if (string.IsNullOrWhiteSpace(hashPassword))
@@ -138,25 +139,20 @@ namespace moneyManage.Database
                             Console.WriteLine(
                                 $@"An exception of type {e.GetType()} was encountered while reading the data.");
                         }
-                        finally
-                        {
-                            myConnection.Close();
-                        }
                     }
                 }
-                myConnection.Close();
             }
 
             user.Valid = SecurePasswordHasher.Verify(password, hashPassword);
             return user;
         }
 
-        public void InsertMoneyExpense(int userid, string catogory, decimal money)
+        public void InsertMoneyExpense(int userid, string category, decimal money)
         {
             if (userid < 1)
                 throw new Exception("UserID is positive number");
-            if (string.IsNullOrWhiteSpace(catogory))
-                throw new Exception("Catogory can't be empty");
+            if (string.IsNullOrWhiteSpace(category))
+                throw new Exception("Category can't be empty");
             if (money < 0)
                 throw new Exception("Money is positive number");
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
@@ -174,7 +170,7 @@ namespace moneyManage.Database
 
 
                             myCommand.CommandText =
-                                $"INSERT INTO Expense (Uid,Catogory,$) VALUES ('{userid}','{catogory}','{money}');";
+                                $"INSERT INTO Expense (Uid,Category,$) VALUES ('{userid}','{category}','{money}');";
 
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
@@ -247,7 +243,7 @@ namespace moneyManage.Database
 
         public List<ExpenseStruct.Expense> PullExpenses(int userid)
         {
-            List<ExpenseStruct.Expense> result = null;
+            var result = new List<ExpenseStruct.Expense>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -261,12 +257,14 @@ namespace moneyManage.Database
 
                     try
                     {
-                        myCommand.CommandText = $"SELECT Catogory, $ FROM Expense WHERE Uid = {userid};";
-                        var reader = myCommand.ExecuteReader();
-
-                        while (reader.Read())
+                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
+                        using (var reader = myCommand.ExecuteReader())
                         {
-                            result.Add(new ExpenseStruct.Expense(reader.GetString("Catogory"), reader.GetDecimal("$")));
+                            while (reader.Read())
+                            {
+                                result.Add(new ExpenseStruct.Expense(reader.GetString("Category"),
+                                    reader.GetDecimal("$"), reader.GetDateTime("Timestamp")));
+                            }
                         }
 
 
@@ -300,7 +298,7 @@ namespace moneyManage.Database
 
         public List<TotalStruct.Total> PullTotal(int userid)
         {
-            List<TotalStruct.Total> result = null;
+            var result = new List<TotalStruct.Total>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -314,14 +312,15 @@ namespace moneyManage.Database
 
                     try
                     {
-                        myCommand.CommandText = $"SELECT Catogory, $ FROM Expense WHERE Uid = '{userid}';";
-                        var reader = myCommand.ExecuteReader();
-
-                        while (reader.Read())
+                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = '{userid}';";
+                        using (var reader = myCommand.ExecuteReader())
                         {
-                            result.Add(new TotalStruct.Total(reader.GetDecimal("$")));
+                            while (reader.Read())
+                            {
+                                result.Add(new TotalStruct.Total(reader.GetDecimal("$"),
+                                    reader.GetDateTime("Timestamp")));
+                            }
                         }
-
 
                         Console.WriteLine(@"Read record from the database.");
                     }

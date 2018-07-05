@@ -11,10 +11,12 @@ namespace moneyManage.Database
         public struct Total
         {
             public decimal money;
+            public DateTime Timestamp { get; }
 
-            public Total(decimal money)
+            public Total(decimal money, DateTime timestamp)
             {
                 this.money = money;
+                this.Timestamp = timestamp;
             }
         }
 
@@ -25,15 +27,14 @@ namespace moneyManage.Database
         public TotalStruct()
         {
             totalList = new List<Total>();
-            current = new Total( 0);
+            current = new Total(0, DateTime.Now);
         }
 
         public void Insert(int userid, decimal money)
         {
-            current = new Total(money);
+            current = new Total(money, DateTime.Now);
             totalList.Add(current);
-            sql.InsertMoneyTotal(userid,money);
-
+            sql.InsertMoneyTotal(userid, money);
         }
 
         public Total Current { get; set; }
