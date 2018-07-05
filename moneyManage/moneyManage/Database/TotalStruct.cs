@@ -48,6 +48,12 @@ namespace moneyManage.Database
             sql.InsertMoneyTotal(userid, money);
         }
 
+        public void InsertData(decimal money, DateTime time)
+        {
+            current = new Total(money, time);
+            totalList.Add(current);
+        }
+
         public Total Current { get; set; }
         public List<Total> TotalList { get; set; }
     }

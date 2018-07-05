@@ -262,7 +262,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                result.Insert(reader.GetString("Category"), reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                result.InsertData(reader.GetString("Category"), reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                             }
                         }
 
@@ -316,7 +316,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                result.Insert(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                result.InsertData(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                             }
                         }
 

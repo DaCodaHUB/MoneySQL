@@ -49,6 +49,13 @@ namespace moneyManage.Database
             sql.InsertMoneyExpense(userid, category, money);
         }
 
+        public void InsertData(string category, decimal money, DateTime time)
+        {
+            Expense data = new Expense(category, money, time);
+
+            expenseList.Add(data);
+        }
+
         public List<Expense> ExpnseList { get; set; }
         public int UserID { get; set; }
 
