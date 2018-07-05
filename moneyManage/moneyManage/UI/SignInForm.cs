@@ -29,6 +29,7 @@ namespace moneyManage
                 this.Hide();
                 var form = new Form1(result.Id);
                 Console.WriteLine(result.Id);
+                Console.WriteLine(_sql.PullExpenses(result.Id));
                 form.Closed += (s, args) => this.Close();
                 form.Show();
             }

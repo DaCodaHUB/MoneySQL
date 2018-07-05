@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using moneyManage.Tool;
 using MySql.Data.MySqlClient;
 
@@ -72,6 +73,7 @@ namespace moneyManage.Database
                         }
                     }
                 }
+                myConnection.Close();
             }
 
             return 0;
@@ -86,52 +88,63 @@ namespace moneyManage.Database
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
                 {
-                    var myTrans = myConnection.BeginTransaction();
-
-                    myCommand.Connection = myConnection;
-                    myCommand.Transaction = myTrans;
-
-                    try
+                    using (var myTrans = myConnection.BeginTransaction())
                     {
-                        myCommand.CommandText = $"SELECT id, password FROM User WHERE username = '{username}';";
-                        var reader = myCommand.ExecuteReader();
 
-                        while (reader.Read())
-                        {
-                            hashPassword = reader.GetString("password");
-                            user.Id = reader.GetInt32("id");
-                            Console.WriteLine(hashPassword);
-                        }
+                        myCommand.Connection = myConnection;
+                        myCommand.Transaction = myTrans;
 
-                        if (string.IsNullOrWhiteSpace(hashPassword))
-                        {
-                            user.Valid = false;
-                            return user;
-                        }
-
-
-                        Console.WriteLine(@"Read record from the database.");
-                    }
-                    catch (Exception e)
-                    {
                         try
                         {
-                            myTrans.Rollback();
-                        }
-                        catch (SqlException ex)
-                        {
-                            if (myTrans.Connection != null)
+                            myCommand.CommandText = $"SELECT id, password FROM User WHERE username = '{username}';";
+                            using (var reader = myCommand.ExecuteReader())
                             {
-                                Console.WriteLine(
-                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                while (reader.Read())
+                                {
+                                    hashPassword = reader.GetString("password");
+                                    user.Id = reader.GetInt32("id");
+                                    Console.WriteLine(hashPassword);
+                                }
+                                reader.Close();
+
+                                if (string.IsNullOrWhiteSpace(hashPassword))
+                                {
+                                    user.Valid = false;
+                                    return user;
+                                }
+
+
+                                Console.WriteLine(@"Read record from the database.");
                             }
+
+//                        var reader = myCommand.ExecuteReader();
                         }
+                        catch (Exception e)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
 
 
-                        Console.WriteLine(
-                            $@"An exception of type {e.GetType()} was encountered while reading the data.");
+                            Console.WriteLine(
+                                $@"An exception of type {e.GetType()} was encountered while reading the data.");
+                        }
+                        finally
+                        {
+                            myConnection.Close();
+                        }
                     }
                 }
+                myConnection.Close();
             }
 
             user.Valid = SecurePasswordHasher.Verify(password, hashPassword);
@@ -192,7 +205,7 @@ namespace moneyManage.Database
                 throw new Exception("UserID is positive number");
             if (money < 0)
                 throw new Exception("Money is positive number");
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -230,6 +243,111 @@ namespace moneyManage.Database
                     }
                 }
             }
+        }
+
+        public List<ExpenseStruct.Expense> PullExpenses(int userid)
+        {
+            List<ExpenseStruct.Expense> result = null;
+
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    var myTrans = myConnection.BeginTransaction();
+
+                    myCommand.Connection = myConnection;
+                    myCommand.Transaction = myTrans;
+
+                    try
+                    {
+                        myCommand.CommandText = $"SELECT Catogory, $ FROM Expense WHERE Uid = {userid};";
+                        var reader = myCommand.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result.Add(new ExpenseStruct.Expense(reader.GetString("Catogory"), reader.GetDecimal("$")));
+                        }
+
+
+                        Console.WriteLine(@"Read record from the database.");
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            Console.WriteLine(e.Message);
+                            myTrans.Rollback();
+                        }
+                        catch (SqlException ex)
+                        {
+                            if (myTrans.Connection != null)
+                            {
+                                Console.WriteLine(
+                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                            }
+                        }
+
+
+                        Console.WriteLine(
+                            $@"An exception of type {e.GetType()} was encountered while reading the data.");
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public List<TotalStruct.Total> PullTotal(int userid)
+        {
+            List<TotalStruct.Total> result = null;
+
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    var myTrans = myConnection.BeginTransaction();
+
+                    myCommand.Connection = myConnection;
+                    myCommand.Transaction = myTrans;
+
+                    try
+                    {
+                        myCommand.CommandText = $"SELECT Catogory, $ FROM Expense WHERE Uid = '{userid}';";
+                        var reader = myCommand.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            result.Add(new TotalStruct.Total(reader.GetDecimal("$")));
+                        }
+
+
+                        Console.WriteLine(@"Read record from the database.");
+                    }
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            myTrans.Rollback();
+                        }
+                        catch (SqlException ex)
+                        {
+                            if (myTrans.Connection != null)
+                            {
+                                Console.WriteLine(
+                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                            }
+                        }
+
+
+                        Console.WriteLine(
+                            $@"An exception of type {e.GetType()} was encountered while reading the data.");
+                    }
+                }
+            }
+
+            return result;
         }
 
         internal class UserInfo

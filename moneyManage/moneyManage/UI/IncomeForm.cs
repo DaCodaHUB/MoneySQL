@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using moneyManage.Database;
 
@@ -7,17 +8,20 @@ namespace moneyManage.UI
     public partial class Form1 : Form
     {
         private int _userId;
+
         // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
         public Form1(int userId)
         {
             InitializeComponent();
             this._userId = userId;
+
             totalData = new TotalStruct();
             expenseData = new ExpenseStruct();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
         }
 
         private void Report_Click(object sender, EventArgs e)
@@ -45,7 +49,7 @@ namespace moneyManage.UI
 
             // Update current total
             // (?) Only update the database after the program is close
-            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, current);
+            TotalStruct.Total newCurrent = new TotalStruct.Total(current);
             totalData.Current = newCurrent;
 
             // Show current total
@@ -83,7 +87,7 @@ namespace moneyManage.UI
 
             // Update current total
             // (?) Only update the database after the program is close
-            TotalStruct.Total newCurrent = new TotalStruct.Total(totalData.Current.userid, current);
+            TotalStruct.Total newCurrent = new TotalStruct.Total(current);
             totalData.Current = newCurrent;
 
             // Update the expense list
@@ -95,7 +99,6 @@ namespace moneyManage.UI
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-
         }
     }
 }

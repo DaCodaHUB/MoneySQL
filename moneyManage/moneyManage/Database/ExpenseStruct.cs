@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 
 namespace moneyManage.Database
 {
@@ -9,16 +11,15 @@ namespace moneyManage.Database
     {
         public struct Expense
         {
-            private int userid;
             private string category;
             private decimal money;
+           
 
-            public Expense(int userid, string category, decimal money)
+            public Expense(string category, decimal money)
             {
-                this.userid = userid;
-
                 this.category = category;
                 this.money = money;
+              
             }
         }
 
@@ -33,10 +34,10 @@ namespace moneyManage.Database
 
         public void Insert(int userid, string category, decimal money)
         {
-            Expense data = new Expense(userid, category, money);
+            Expense data = new Expense(category, money);
 
             expenseList.Add(data);
-            sql.InsertMoneyExpense(userid, category, money);
+//            sql.InsertMoneyExpense(userid, category, money);
         }
 
         public List<Expense> ExpnseList { get; set; }
