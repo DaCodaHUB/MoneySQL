@@ -26,6 +26,7 @@ namespace moneyManage.Database
 
         private List<Expense> expenseList;
         private SqlConnect sql;
+        private int userid;
 
         public ExpenseStruct()
         {
@@ -33,12 +34,19 @@ namespace moneyManage.Database
             expenseList = new List<Expense>();
         }
 
+        public ExpenseStruct(int userid)
+        {
+            sql = new SqlConnect();
+            expenseList = new List<Expense>();
+            this.userid = userid;
+        }
+
         public void Insert(string category, decimal money, DateTime time)
         {
             Expense data = new Expense(category, money, time);
 
             expenseList.Add(data);
-//            sql.InsertMoneyExpense(userid, category, money);
+            sql.InsertMoneyExpense(userid, category, money);
         }
 
         public List<Expense> ExpnseList { get; set; }

@@ -243,7 +243,7 @@ namespace moneyManage.Database
 
         public ExpenseStruct PullExpenses(int userid)
         {
-            var result = new ExpenseStruct();
+            var result = new ExpenseStruct(userid);
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -297,7 +297,7 @@ namespace moneyManage.Database
 
         public TotalStruct PullTotal(int userid)
         {
-            var result = new TotalStruct();
+            var result = new TotalStruct(userid);
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {

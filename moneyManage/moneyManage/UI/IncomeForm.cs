@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using moneyManage.Database;
+using System.Diagnostics;
 
 namespace moneyManage.UI
 {
@@ -13,7 +14,6 @@ namespace moneyManage.UI
         private TotalStruct totalData;
         private ExpenseStruct expenseData;
 
-        // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
         public Form1(int userId)
         {
             InitializeComponent();
@@ -27,6 +27,7 @@ namespace moneyManage.UI
         {
             expenseData = sql.PullExpenses(_userId);
             totalData = sql.PullTotal(_userId);
+            //Debug.WriteLine(totalData.Current.money);
         }
 
         private void Report_Click(object sender, EventArgs e)
@@ -48,16 +49,16 @@ namespace moneyManage.UI
             {
                 income = decimal.Parse(this.MoneyTxt.Text);
             }
-
+            
             // Get current total
             decimal current = totalData.Current.money + income;
 
             // Update current total
-            // (?) Only update the database after the program is close
             TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
             totalData.Current = newCurrent;
 
-            // Todo: Update Total list
+            // Update Total list and database
+            totalData.Insert(current, DateTime.Now);
 
             // Show current total
             CurrentMoney.Text = current.ToString();
@@ -93,14 +94,14 @@ namespace moneyManage.UI
             decimal current = totalData.Current.money - expense;
 
             // Update current total
-            // (?) Only update the database after the program is close
             TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
             totalData.Current = newCurrent;
 
             // Update the expense list
             expenseData.Insert(category, expense, DateTime.Now);
 
-            // Todo: Update Total list
+            // Update Total list and database
+            totalData.Insert(current, DateTime.Now);
 
             // Show current total
             CurrentMoney.Text = current.ToString();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace moneyManage.Database
 {
@@ -22,19 +23,29 @@ namespace moneyManage.Database
 
         private List<Total> totalList;
         private Total current;
-        //private SqlConnect sql;
+        private SqlConnect sql;
+        private int userid;
 
         public TotalStruct()
         {
             totalList = new List<Total>();
             current = new Total(0, DateTime.Now);
+
+        }
+
+        public TotalStruct(int userid)
+        {
+            totalList = new List<Total>();
+            current = new Total(0, DateTime.Now);
+            sql = new SqlConnect();
+            this.userid = userid;
         }
 
         public void Insert(decimal money, DateTime time)
         {
             current = new Total(money, time);
             totalList.Add(current);
-            //sql.InsertMoneyTotal(userid, money);
+            sql.InsertMoneyTotal(userid, money);
         }
 
         public Total Current { get; set; }
