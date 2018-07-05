@@ -6,11 +6,12 @@ namespace moneyManage.UI
 {
     public partial class Form1 : Form
     {
+        private int _userId;
         // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
         public Form1(int userId)
         {
             InitializeComponent();
-            this.userID = userId;
+            this._userId = userId;
             totalData = new TotalStruct();
             expenseData = new ExpenseStruct();
         }
@@ -28,7 +29,7 @@ namespace moneyManage.UI
         private void Income_Click(object sender, EventArgs e)
         {
             // Get amount of income
-            int income = 0;
+            decimal income = 0;
             if (string.IsNullOrEmpty(this.MoneyTxt.Text))
             {
                 MessageBox.Show("The amount of money can't be empty");
@@ -36,11 +37,11 @@ namespace moneyManage.UI
             }
             else
             {
-                income = Int32.Parse(this.MoneyTxt.Text);
+                income = decimal.Parse(this.MoneyTxt.Text);
             }
 
             // Get current total
-            int current = totalData.Current.money + income;
+            decimal current = totalData.Current.money + income;
 
             // Update current total
             // (?) Only update the database after the program is close
@@ -54,22 +55,22 @@ namespace moneyManage.UI
         private void Spend_Click(object sender, EventArgs e)
         {
             // Get amount of expense
-            int expense = 0;
+            decimal expense = 0;
             if (string.IsNullOrWhiteSpace(this.MoneyTxt.Text))
             {
-                MessageBox.Show("The amount of money can't be empty");
+                MessageBox.Show(@"The amount of money can't be empty");
                 return;
             }
             else
             {
-                expense = Int32.Parse(this.MoneyTxt.Text);
+                expense = decimal.Parse(this.MoneyTxt.Text);
             }
 
             // Get category
             string category = "";
             if (string.IsNullOrWhiteSpace(this.catagoryList.Text))
             {
-                MessageBox.Show("You didn't choose category");
+                MessageBox.Show(@"You didn't choose category");
                 return;
             }
             else
@@ -78,7 +79,7 @@ namespace moneyManage.UI
             }
 
             // Get current total
-            int current = totalData.Current.money - expense;
+            decimal current = totalData.Current.money - expense;
 
             // Update current total
             // (?) Only update the database after the program is close
@@ -86,7 +87,7 @@ namespace moneyManage.UI
             totalData.Current = newCurrent;
 
             // Update the expense list
-            expenseData.Insert(expenseData.UserID, category, expense);
+            expenseData.Insert(_userId, category, expense);
 
             // Show current total
             CurrentMoney.Text = current.ToString();

@@ -9,32 +9,34 @@ namespace moneyManage.Database
     {
         public struct Expense
         {
-            public int userid;
-            public string category;
-            public int money;
+            private int userid;
+            private string category;
+            private decimal money;
 
-            public Expense(int userid, string category, int money)
+            public Expense(int userid, string category, decimal money)
             {
                 this.userid = userid;
-       
+
                 this.category = category;
                 this.money = money;
             }
         }
 
-        public List<Expense> expenseList;
-        public int userid;
+        private List<Expense> expenseList;
+        private SqlConnect sql;
 
         public ExpenseStruct()
         {
+            sql = new SqlConnect();
             expenseList = new List<Expense>();
         }
 
-        public void Insert(int userid, string category, int money)
+        public void Insert(int userid, string category, decimal money)
         {
             Expense data = new Expense(userid, category, money);
+
             expenseList.Add(data);
-            this.userid = userid;
+            sql.InsertMoneyExpense(userid, category, money);
         }
 
         public List<Expense> ExpnseList { get; set; }

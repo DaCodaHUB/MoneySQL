@@ -198,7 +198,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox CurrentMoney;
         private System.Windows.Forms.Label label5;
-        private int userID;
         private moneyManage.Database.TotalStruct totalData;
         private moneyManage.Database.ExpenseStruct expenseData;
     }

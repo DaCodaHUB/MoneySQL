@@ -12,9 +12,9 @@ namespace moneyManage.Database
         {
             public int userid;
 
-            public int money;
+            public decimal money;
 
-            public Total(int userid, int money)
+            public Total(int userid, decimal money)
             {
                 this.userid = userid;
 
@@ -22,8 +22,9 @@ namespace moneyManage.Database
             }
         }
 
-        public List<Total> totalList;
-        public Total current;
+        private List<Total> totalList;
+        private Total current;
+        private SqlConnect sql;
 
         public TotalStruct()
         {
@@ -31,10 +32,12 @@ namespace moneyManage.Database
             current = new Total(0, 0);
         }
 
-        public void Insert(int userid, int money)
+        public void Insert(int userid, decimal money)
         {
             current = new Total(userid, money);
             totalList.Add(current);
+            sql.InsertMoneyTotal(userid,money);
+
         }
 
         public Total Current { get; set; }

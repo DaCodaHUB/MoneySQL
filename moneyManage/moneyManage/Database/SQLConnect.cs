@@ -57,6 +57,18 @@ namespace moneyManage.Database
                             var message = e.Message;
                             if (message.Contains("Duplicate"))
                                 return 1;
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
                         }
                     }
                 }
@@ -124,6 +136,100 @@ namespace moneyManage.Database
 
             user.Valid = SecurePasswordHasher.Verify(password, hashPassword);
             return user;
+        }
+
+        public void InsertMoneyExpense(int userid, string catogory, decimal money)
+        {
+            if (userid < 1)
+                throw new Exception("UserID is positive number");
+            if (string.IsNullOrWhiteSpace(catogory))
+                throw new Exception("Catogory can't be empty");
+            if (money < 0)
+                throw new Exception("Money is positive number");
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    //                    
+                    using (var myTrans = myConnection.BeginTransaction())
+                    {
+                        try
+                        {
+                            myCommand.Connection = myConnection;
+                            myCommand.Transaction = myTrans;
+
+
+                            myCommand.CommandText =
+                                $"INSERT INTO Expense (Uid,Catogory,$) VALUES ('{userid}','{catogory}','{money}');";
+
+                            myCommand.ExecuteNonQuery();
+                            myTrans.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void InsertMoneyTotal(int userid, decimal money)
+        {
+            if (userid < 1)
+                throw new Exception("UserID is positive number");
+            if (money < 0)
+                throw new Exception("Money is positive number");
+            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    //                    
+                    using (var myTrans = myConnection.BeginTransaction())
+                    {
+                        try
+                        {
+                            myCommand.Connection = myConnection;
+                            myCommand.Transaction = myTrans;
+
+
+                            myCommand.CommandText =
+                                $"INSERT INTO Total (Uid,$) VALUES ('{userid}','{money}');";
+
+                            myCommand.ExecuteNonQuery();
+                            myTrans.Commit();
+                        }
+                        catch (Exception e)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         internal class UserInfo
