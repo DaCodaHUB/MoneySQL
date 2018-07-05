@@ -10,8 +10,8 @@ namespace moneyManage.UI
         private int _userId;
         private SqlConnect sql;
         // TODO: Loaded data in _expenses and _totals
-        private List<ExpenseStruct.Expense> _expenses;
-        private List<TotalStruct.Total> _totals;
+        private TotalStruct totalData;
+        private ExpenseStruct expenseData;
 
         // Todo: might not need to pass in user and pass but need TotalStruct and ExpenseStruct
         public Form1(int userId)
@@ -25,8 +25,8 @@ namespace moneyManage.UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _expenses = sql.PullExpenses(_userId);
-            _totals = sql.PullTotal(_userId);
+            expenseData = sql.PullExpenses(_userId);
+            totalData = sql.PullTotal(_userId);
         }
 
         private void Report_Click(object sender, EventArgs e)
@@ -56,6 +56,8 @@ namespace moneyManage.UI
             // (?) Only update the database after the program is close
             TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
             totalData.Current = newCurrent;
+
+            // Todo: Update Total list
 
             // Show current total
             CurrentMoney.Text = current.ToString();
@@ -96,7 +98,9 @@ namespace moneyManage.UI
             totalData.Current = newCurrent;
 
             // Update the expense list
-            expenseData.Insert(_userId, category, expense);
+            expenseData.Insert(category, expense, DateTime.Now);
+
+            // Todo: Update Total list
 
             // Show current total
             CurrentMoney.Text = current.ToString();

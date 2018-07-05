@@ -22,7 +22,7 @@ namespace moneyManage.Database
 
         private List<Total> totalList;
         private Total current;
-        private SqlConnect sql;
+        //private SqlConnect sql;
 
         public TotalStruct()
         {
@@ -30,11 +30,11 @@ namespace moneyManage.Database
             current = new Total(0, DateTime.Now);
         }
 
-        public void Insert(int userid, decimal money)
+        public void Insert(decimal money, DateTime time)
         {
-            current = new Total(money, DateTime.Now);
+            current = new Total(money, time);
             totalList.Add(current);
-            sql.InsertMoneyTotal(userid, money);
+            //sql.InsertMoneyTotal(userid, money);
         }
 
         public Total Current { get; set; }

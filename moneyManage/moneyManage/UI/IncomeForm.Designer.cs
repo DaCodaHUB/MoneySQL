@@ -198,8 +198,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox CurrentMoney;
         private System.Windows.Forms.Label label5;
-        private moneyManage.Database.TotalStruct totalData;
-        private moneyManage.Database.ExpenseStruct expenseData;
+        //private moneyManage.Database.TotalStruct totalData;
+        //private moneyManage.Database.ExpenseStruct expenseData;
     }
 }
 

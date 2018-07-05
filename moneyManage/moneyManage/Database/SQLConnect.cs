@@ -241,9 +241,9 @@ namespace moneyManage.Database
             }
         }
 
-        public List<ExpenseStruct.Expense> PullExpenses(int userid)
+        public ExpenseStruct PullExpenses(int userid)
         {
-            var result = new List<ExpenseStruct.Expense>();
+            var result = new ExpenseStruct();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -262,8 +262,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                result.Add(new ExpenseStruct.Expense(reader.GetString("Category"),
-                                    reader.GetDecimal("$"), reader.GetDateTime("Timestamp")));
+                                result.Insert(reader.GetString("Category"), reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                             }
                         }
 
@@ -296,9 +295,9 @@ namespace moneyManage.Database
             return result;
         }
 
-        public List<TotalStruct.Total> PullTotal(int userid)
+        public TotalStruct PullTotal(int userid)
         {
-            var result = new List<TotalStruct.Total>();
+            var result = new TotalStruct();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -317,8 +316,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                result.Add(new TotalStruct.Total(reader.GetDecimal("$"),
-                                    reader.GetDateTime("Timestamp")));
+                                result.Insert(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                             }
                         }
 

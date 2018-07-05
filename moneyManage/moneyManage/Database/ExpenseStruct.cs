@@ -33,9 +33,9 @@ namespace moneyManage.Database
             expenseList = new List<Expense>();
         }
 
-        public void Insert(int userid, string category, decimal money)
+        public void Insert(string category, decimal money, DateTime time)
         {
-            Expense data = new Expense(category, money, DateTime.Now);
+            Expense data = new Expense(category, money, time);
 
             expenseList.Add(data);
 //            sql.InsertMoneyExpense(userid, category, money);
