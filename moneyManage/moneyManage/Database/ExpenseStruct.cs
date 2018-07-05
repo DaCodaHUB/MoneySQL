@@ -37,15 +37,6 @@ namespace moneyManage.Database
             this.userid = userid;
         }
 
-        // Todo: Add Delete method
-        public void Delete()
-        {
-            if (expenseList.Any())
-            {
-                expenseList.RemoveAt(expenseList.Count - 1);
-            }
-        }
-
         public List<Expense> ExpnseList { get; set; }
         public int UserID { get; set; }
 
