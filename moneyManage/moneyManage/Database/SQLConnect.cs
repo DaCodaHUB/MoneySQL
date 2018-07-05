@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using moneyManage.Tool;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace moneyManage.Database
 {
@@ -317,7 +318,10 @@ namespace moneyManage.Database
                             while (reader.Read())
                             {
                                 result.InsertData(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                Debug.WriteLine("Inserting");
                             }
+                            Debug.WriteLine("Running");
+                            //Debug.WriteLine(result.Current.money);
                         }
 
                         Console.WriteLine(@"Read record from the database.");

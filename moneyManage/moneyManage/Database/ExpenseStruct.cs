@@ -24,20 +24,20 @@ namespace moneyManage.Database
             }
         }
 
-        private List<Expense> expenseList;
+        private List<Expense> _expenseList;
         private SqlConnect sql;
         private int userid;
 
         public ExpenseStruct()
         {
             sql = new SqlConnect();
-            expenseList = new List<Expense>();
+            _expenseList = new List<Expense>();
         }
 
         public ExpenseStruct(int userid)
         {
             sql = new SqlConnect();
-            expenseList = new List<Expense>();
+            _expenseList = new List<Expense>();
             this.userid = userid;
         }
 
@@ -45,7 +45,7 @@ namespace moneyManage.Database
         {
             Expense data = new Expense(category, money, time);
 
-            expenseList.Add(data);
+            _expenseList.Add(data);
             sql.InsertMoneyExpense(userid, category, money);
         }
 
@@ -53,15 +53,18 @@ namespace moneyManage.Database
         {
             Expense data = new Expense(category, money, time);
 
-            expenseList.Add(data);
+            _expenseList.Add(data);
         }
-
-        public List<Expense> ExpnseList { get; set; }
-        public int UserID { get; set; }
 
         public int getLength()
         {
-            return expenseList.Count;
+            return _expenseList.Count;
+        }
+
+        public List<Expense> ExpenseList {
+            get {
+                return _expenseList;
+            }
         }
     }
 }

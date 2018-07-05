@@ -12,7 +12,8 @@ namespace moneyManage.Database
         public struct Total
         {
             public decimal money;
-            public DateTime Timestamp { get; }
+            public DateTime Timestamp;
+            //public DateTime Timestamp { get; set; }
 
             public Total(decimal money, DateTime timestamp)
             {
@@ -21,40 +22,54 @@ namespace moneyManage.Database
             }
         }
 
-        private List<Total> totalList;
-        private Total current;
+        private List<Total> _totalList;
+        private Total _current;
         private SqlConnect sql;
         private int userid;
 
         public TotalStruct()
         {
-            totalList = new List<Total>();
-            current = new Total(0, DateTime.Now);
-
+            _totalList = new List<Total>();
+            _current = new Total(0, DateTime.Now);
         }
 
         public TotalStruct(int userid)
         {
-            totalList = new List<Total>();
-            current = new Total(0, DateTime.Now);
+            _totalList = new List<Total>();
+            _current = new Total(0, DateTime.Now);
             sql = new SqlConnect();
             this.userid = userid;
         }
 
         public void Insert(decimal money, DateTime time)
         {
-            current = new Total(money, time);
-            totalList.Add(current);
+            //_current = new Total(money, time);
+            _current.money = money;
+            _current.Timestamp = time;
+            _totalList.Add(_current);
             sql.InsertMoneyTotal(userid, money);
         }
 
         public void InsertData(decimal money, DateTime time)
         {
-            current = new Total(money, time);
-            totalList.Add(current);
+            _current.money = money;
+            _current.Timestamp = time;
+            _totalList.Add(_current);
+
+            Debug.WriteLine(_current.money);
         }
 
-        public Total Current { get; set; }
-        public List<Total> TotalList { get; set; }
+        public Total Current {
+            get
+            {
+                return _current;
+            }
+        }
+
+        public List<Total> TotalList {
+            get {
+                return _totalList;
+            }
+        }
     }
 }

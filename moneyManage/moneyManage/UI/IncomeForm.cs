@@ -27,7 +27,9 @@ namespace moneyManage.UI
         {
             expenseData = sql.PullExpenses(_userId);
             totalData = sql.PullTotal(_userId);
-            //Debug.WriteLine(totalData.Current.money);
+
+            Debug.WriteLine("Loading");
+            Debug.WriteLine(totalData.Current.money);
         }
 
         private void Report_Click(object sender, EventArgs e)
@@ -52,10 +54,6 @@ namespace moneyManage.UI
             
             // Get current total
             decimal current = totalData.Current.money + income;
-
-            // Update current total
-            TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
-            totalData.Current = newCurrent;
 
             // Update Total list and database
             totalData.Insert(current, DateTime.Now);
@@ -94,8 +92,8 @@ namespace moneyManage.UI
             decimal current = totalData.Current.money - expense;
 
             // Update current total
-            TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
-            totalData.Current = newCurrent;
+            //TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
+            //totalData.Current = newCurrent;
 
             // Update the expense list
             expenseData.Insert(category, expense, DateTime.Now);
