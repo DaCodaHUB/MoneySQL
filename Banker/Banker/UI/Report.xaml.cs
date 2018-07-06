@@ -19,9 +19,14 @@ namespace Banker
     /// </summary>
     public partial class Report : Window
     {
-        public Report()
+        private readonly List<Database.SqlConnect.Bank> _Total;
+        private readonly List<Database.SqlConnect.Bank> _Expense;
+
+        public Report(List<Database.SqlConnect.Bank> _total, List<Database.SqlConnect.Bank> _expense)
         {
             InitializeComponent();
+            _Total = _total;
+            _Expense = _expense;
         }
 
         private void LastMonth_Click(object sender, RoutedEventArgs e)
