@@ -52,7 +52,7 @@ namespace moneyManage.Database
             _current.money = money;
             _current.Timestamp = time;
             _totalList.Add(_current);
-            sql.InsertMoneyTotal(userid, money);
+            sql.InsertMoney("total",userid, money);
         }
 
         public void InsertData(decimal money, DateTime time)

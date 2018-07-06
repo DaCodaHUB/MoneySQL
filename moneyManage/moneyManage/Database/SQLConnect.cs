@@ -37,7 +37,7 @@ namespace moneyManage.Database
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
-                {                    
+                {
                     using (var myTrans = myConnection.BeginTransaction())
                     {
                         try
@@ -117,8 +117,6 @@ namespace moneyManage.Database
 
                                 Console.WriteLine(@"Read record from the database.");
                             }
-
-//                        var reader = myCommand.ExecuteReader();
                         }
                         catch (Exception e)
                         {
@@ -147,14 +145,16 @@ namespace moneyManage.Database
             return user;
         }
 
-        public void InsertMoneyExpense(int userid, string category, decimal money)
+        public void InsertMoney(string mode, int userid, decimal money, string category = null)
         {
             if (userid < 1)
                 throw new Exception("UserID is positive number");
-            if (string.IsNullOrWhiteSpace(category))
-                throw new Exception("Category can't be empty");
-            if (money < 0)
-                throw new Exception("Money is positive number");
+            if (mode.Equals("expense"))
+            {
+                if (string.IsNullOrWhiteSpace(category))
+                    throw new Exception("Category can't be empty");
+            }
+
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -168,14 +168,21 @@ namespace moneyManage.Database
                             myCommand.Connection = myConnection;
                             myCommand.Transaction = myTrans;
 
-
-                            myCommand.CommandText =
-                                $"INSERT INTO Expense (Uid,Category,$) VALUES ('{userid}','{category}','{money}');";
+                            if (mode.Equals("expense"))
+                            {
+                                myCommand.CommandText =
+                                    $"INSERT INTO Expense (Uid,Category,$) VALUES ('{userid}','{category}','{money}');";
+                            }
+                            else if (mode.Equals("total"))
+                            {
+                                myCommand.CommandText =
+                                    $"INSERT INTO Total (Uid,$) VALUES ('{userid}','{money}');";
+                            }
 
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             try
                             {
@@ -195,157 +202,52 @@ namespace moneyManage.Database
             }
         }
 
-        public void InsertMoneyTotal(int userid, decimal money)
+        public List<Bank> PullData(string mode, int userid)
         {
-            if (userid < 1)
-                throw new Exception("UserID is positive number");
-            if (money < 0)
-                throw new Exception("Money is positive number");
+            var result = new List<Bank>();
+
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
                 {
-                    //                    
-                    using (var myTrans = myConnection.BeginTransaction())
+                    var myTrans = myConnection.BeginTransaction();
+
+                    myCommand.Connection = myConnection;
+                    myCommand.Transaction = myTrans;
+
+                    try
                     {
-                        try
+                        if (mode.Equals("expense"))
                         {
-                            myCommand.Connection = myConnection;
-                            myCommand.Transaction = myTrans;
-
-
-                            myCommand.CommandText =
-                                $"INSERT INTO Total (Uid,$) VALUES ('{userid}','{money}');";
-
-                            myCommand.ExecuteNonQuery();
-                            myTrans.Commit();
-                        }
-                        catch (Exception e)
-                        {
-                            try
+                            myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
+                            using (var reader = myCommand.ExecuteReader())
                             {
-                                myTrans.Rollback();
-                            }
-                            catch (SqlException ex)
-                            {
-                                if (myTrans.Connection != null)
+                                while (reader.Read())
                                 {
-                                    Console.WriteLine(
-                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                    var expense = new Bank(reader.GetDecimal("$"),
+                                        reader.GetDateTime("Timestamp"), reader.GetString("Category"));
+                                    result.Add(expense);
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        public List<Bank> PullExpenses(int userid)
-        {
-            var result = new List<Bank>();
-
-            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
-            {
-                myConnection.Open();
-                using (var myCommand = myConnection.CreateCommand())
-                {
-                    var myTrans = myConnection.BeginTransaction();
-
-                    myCommand.Connection = myConnection;
-                    myCommand.Transaction = myTrans;
-
-                    try
-                    {
-                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
-                        using (var reader = myCommand.ExecuteReader())
+                        else if (mode.Equals("total"))
                         {
-                            while (reader.Read())
+                            myCommand.CommandText = $"SELECT * FROM Total WHERE Uid = {userid};";
+                            using (var reader = myCommand.ExecuteReader())
                             {
-                                var expense = new Bank(reader.GetDecimal("$"),
-                                    reader.GetDateTime("Timestamp"), reader.GetString("Category"));
-//                                result.Add();
-                                result.Add(expense);
+                                while (reader.Read())
+                                {
+                                    var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                    result.Add(total);
+                                }
                             }
-                        }
-
-
-                        Console.WriteLine(@"Read record from the database.");
-                    }
-                    catch (Exception e)
-                    {
-                        try
-                        {
-                            Console.WriteLine(e.Message);
-                            myTrans.Rollback();
-                        }
-                        catch (SqlException ex)
-                        {
-                            if (myTrans.Connection != null)
-                            {
-                                Console.WriteLine(
-                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
-                            }
-                        }
-
-
-                        Console.WriteLine(
-                            $@"An exception of type {e.GetType()} was encountered while reading the data.");
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public List<Bank> PullTotal(int userid)
-        {
-            var result = new List<Bank>();
-
-            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
-            {
-                myConnection.Open();
-                using (var myCommand = myConnection.CreateCommand())
-                {
-                    var myTrans = myConnection.BeginTransaction();
-
-                    myCommand.Connection = myConnection;
-                    myCommand.Transaction = myTrans;
-
-                    try
-                    {
-                        myCommand.CommandText = $"SELECT * FROM Total WHERE Uid = {userid};";
-                        using (var reader = myCommand.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
-                                result.Add(total);
-//                                Console.WriteLine($@"{total.Timestamp} {total.Money}");
-                            }
-
-                            Debug.WriteLine("Running");
-                            //Debug.WriteLine(result.Current.money);
                         }
 
                         Console.WriteLine(@"Read record from the database.");
                     }
                     catch (Exception e)
                     {
-                        try
-                        {
-                            myTrans.Rollback();
-                        }
-                        catch (SqlException ex)
-                        {
-                            if (myTrans.Connection != null)
-                            {
-                                Console.WriteLine(
-                                    $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
-                            }
-                        }
-
-
                         Console.WriteLine(
                             $@"An exception of type {e.GetType()} was encountered while reading the data.");
                     }
@@ -363,9 +265,9 @@ namespace moneyManage.Database
 
         public class Bank
         {
-            public decimal Money { get; set; }
-            public DateTime Timestamp { get; set; }
-            public string Category { get; set; }
+            public decimal Money { get; }
+            public DateTime Timestamp { get; }
+            public string Category { get; }
 
             public Bank(decimal money, DateTime timestamp, string category = null)
             {

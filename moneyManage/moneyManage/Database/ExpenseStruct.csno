@@ -46,7 +46,7 @@ namespace moneyManage.Database
             Expense data = new Expense(category, money, time);
 
             _expenseList.Add(data);
-            sql.InsertMoneyExpense(userid, category, money);
+            sql.InsertMoney("expense", userid, money, category);
         }
 
         public void InsertData(string category, decimal money, DateTime time)
@@ -61,10 +61,9 @@ namespace moneyManage.Database
             return _expenseList.Count;
         }
 
-        public List<Expense> ExpenseList {
-            get {
-                return _expenseList;
-            }
+        public List<Expense> ExpenseList
+        {
+            get { return _expenseList; }
         }
     }
 }
