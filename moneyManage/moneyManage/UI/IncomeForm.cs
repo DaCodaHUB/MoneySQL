@@ -43,7 +43,7 @@ namespace moneyManage.UI
         {
             // Get amount of income
             var income = GetMoneyInput();
-            if (income == 0) return;
+            if (income <= 0) return;
 
             // Get current total
             _current = _current + income;
@@ -62,7 +62,7 @@ namespace moneyManage.UI
         {
             // Get amount of expense
             var expense = GetMoneyInput();
-            if (expense == 0) return;
+            if (expense <= 0) return;
 
 
             // Get category
@@ -96,21 +96,20 @@ namespace moneyManage.UI
 
         private decimal GetMoneyInput()
         {
-            decimal income = 0;
+            decimal money = 0;
             if (string.IsNullOrWhiteSpace(MoneyTxt.Text))
             {
                 MessageBox.Show(@"The amount of money can't be empty");
             }
             else
             {
-                income = decimal.Parse(MoneyTxt.Text);
-                if (income < 0)
-                {
+                if (!decimal.TryParse(MoneyTxt.Text, out money))
+                    MessageBox.Show(@"The amount of money has to be a number");
+                if (money < 0)
                     MessageBox.Show(@"The amount of money can't be negative");
-                }
             }
 
-            return income;
+            return money;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
