@@ -13,12 +13,15 @@ namespace moneyManage
 {
     public partial class Report : Form
     {
+        private List<SqlConnect.Bank> _total;
+        private List<SqlConnect.Bank> _expense;
+
         // Todo: Pass in TotalStruct and ExpenseStruct
-        public Report(TotalStruct totalData, ExpenseStruct expenseData)
+        public Report(List<SqlConnect.Bank> totalData, List<SqlConnect.Bank> expenseData)
         {
             InitializeComponent();
-            this.totalData = totalData;
-            this.expenseData = expenseData;
+            this._total = totalData;
+            this._expense = expenseData;
         }
 
         private void button1_Click(object sender, EventArgs e)

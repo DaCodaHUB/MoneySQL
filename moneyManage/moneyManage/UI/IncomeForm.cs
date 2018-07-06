@@ -11,30 +11,33 @@ namespace moneyManage.UI
         private int _userId;
         private SqlConnect sql;
         // TODO: Loaded data in _expenses and _totals
-        private TotalStruct totalData;
-        private ExpenseStruct expenseData;
+        //private TotalStruct totalData;
+        //private ExpenseStruct expenseData;
+        private List<SqlConnect.Bank> _total;
+        private List<SqlConnect.Bank> _expense;
+        private Decimal _current;
 
         public Form1(int userId)
         {
             InitializeComponent();
             this._userId = userId;
             sql = new SqlConnect();
-            totalData = new TotalStruct();
-            expenseData = new ExpenseStruct();
+            _total = new List<SqlConnect.Bank>();
+            _expense = new List<SqlConnect.Bank>();
+            _current = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            expenseData = sql.PullExpenses(_userId);
-            totalData = sql.PullTotal(_userId);
+            _expense = sql.PullExpenses(_userId);
+            _total = sql.PullTotal(_userId);
 
             Debug.WriteLine("Loading");
-            Debug.WriteLine(totalData.Current.money);
         }
 
         private void Report_Click(object sender, EventArgs e)
         {
-            var report = new Report(totalData, expenseData);
+            var report = new Report(_total, _expense);
             report.Show();
         }
 
@@ -53,10 +56,11 @@ namespace moneyManage.UI
             }
             
             // Get current total
-            decimal current = totalData.Current.money + income;
+            decimal current = _current + income;
 
             // Update Total list and database
-            totalData.Insert(current, DateTime.Now);
+            var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
+            _total.Add(currentTotal);
 
             // Show current total
             CurrentMoney.Text = current.ToString();
@@ -89,17 +93,19 @@ namespace moneyManage.UI
             }
 
             // Get current total
-            decimal current = totalData.Current.money - expense;
+            decimal current = _current - expense;
 
             // Update current total
             //TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
             //totalData.Current = newCurrent;
 
             // Update the expense list
-            expenseData.Insert(category, expense, DateTime.Now);
+            var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
+            _expense.Add(expenseInput);
 
             // Update Total list and database
-            totalData.Insert(current, DateTime.Now);
+            var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
+            _total.Add(currentTotal);
 
             // Show current total
             CurrentMoney.Text = current.ToString();

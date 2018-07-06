@@ -242,9 +242,9 @@ namespace moneyManage.Database
             }
         }
 
-        public List<Total> PullExpenses(int userid)
+        public List<Bank> PullExpenses(int userid)
         {
-            var result = new List<Total>();
+            var result = new List<Bank>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -263,7 +263,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                var expense = new Total(reader.GetDecimal("$"),
+                                var expense = new Bank(reader.GetDecimal("$"),
                                     reader.GetDateTime("Timestamp"), reader.GetString("Category"));
 //                                result.Add();
                                 result.Add(expense);
@@ -299,9 +299,9 @@ namespace moneyManage.Database
             return result;
         }
 
-        public List<Total> PullTotal(int userid)
+        public List<Bank> PullTotal(int userid)
         {
-            var result = new List<Total>();
+            var result = new List<Bank>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -320,7 +320,7 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                var total = new Total(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                                 result.Add(total);
                                 Debug.WriteLine("Inserting");
                             }
@@ -362,13 +362,13 @@ namespace moneyManage.Database
             public bool Valid { get; set; }
         }
 
-        internal class Total
+        public class Bank
         {
-            private decimal Money { get; set; }
-            private DateTime Timestamp { get; set; }
-            private string Category { get; set; }
+            public decimal Money { get; set; }
+            public DateTime Timestamp { get; set; }
+            public string Category { get; set; }
 
-            public Total(decimal money, DateTime timestamp, string category = null)
+            public Bank(decimal money, DateTime timestamp, string category = null)
             {
                 Money = money;
                 Timestamp = timestamp;
