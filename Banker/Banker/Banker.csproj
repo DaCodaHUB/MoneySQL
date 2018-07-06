@@ -34,6 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetProjects.DataVisualization.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetProjects.Input.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetProjects.Layout.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetProjects.WPF.Themes, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.WPF.Themes.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.6.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.6.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
