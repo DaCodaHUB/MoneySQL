@@ -37,8 +37,7 @@ namespace moneyManage.Database
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
-                {
-//                    
+                {                    
                     using (var myTrans = myConnection.BeginTransaction())
                     {
                         try

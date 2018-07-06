@@ -16,7 +16,6 @@ namespace moneyManage
         private List<SqlConnect.Bank> _total;
         private List<SqlConnect.Bank> _expense;
 
-        // Todo: Pass in TotalStruct and ExpenseStruct
         public Report(List<SqlConnect.Bank> totalData, List<SqlConnect.Bank> expenseData)
         {
             InitializeComponent();

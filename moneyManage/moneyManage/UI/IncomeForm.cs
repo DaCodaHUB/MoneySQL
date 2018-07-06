@@ -11,10 +11,6 @@ namespace moneyManage.UI
         private int _userId;
 
         private SqlConnect sql;
-
-        // TODO: Loaded data in _expenses and _totals
-        //private TotalStruct totalData;
-        //private ExpenseStruct expenseData;
         private List<SqlConnect.Bank> _total;
         private List<SqlConnect.Bank> _expense;
         private Decimal _current;
@@ -26,7 +22,15 @@ namespace moneyManage.UI
             sql = new SqlConnect();
             _total = sql.PullTotal(_userId);
             _expense = sql.PullExpenses(_userId);
-            _current = 0;
+
+            if (_total.Count >= 1) {
+                _current = _total[_total.Count - 1].Money;
+            } else
+            {
+                _current = 0;
+            }
+
+            Debug.WriteLine(_current);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -58,17 +62,15 @@ namespace moneyManage.UI
             }
 
             // Get current total
-            decimal current = _current + income;
+            _current = _current + income;
 
             // Update Total list and database
-            var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
-            sql.InsertMoneyTotal(_userId, current);
+            var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
+            sql.InsertMoneyTotal(_userId, _current);
             _total.Add(currentTotal);
 
-            // Todo: Insert Database
-
             // Show current total
-            CurrentMoney.Text = current.ToString();
+            CurrentMoney.Text = _current.ToString();
         }
 
         private void Spend_Click(object sender, EventArgs e)
@@ -98,11 +100,7 @@ namespace moneyManage.UI
             }
 
             // Get current total
-            decimal current = _current - expense;
-
-            // Update current total
-            //TotalStruct.Total newCurrent = new TotalStruct.Total(current, DateTime.Now);
-            //totalData.Current = newCurrent;
+            _current = _current - expense;
 
             // Update the expense list
             var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
@@ -110,14 +108,12 @@ namespace moneyManage.UI
             _expense.Add(expenseInput);
 
             // Update Total list and database
-            var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
-            sql.InsertMoneyTotal(_userId, expense);
+            var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
+            sql.InsertMoneyTotal(_userId, _current);
             _total.Add(currentTotal);
 
-            // Todo: Insert Database
-
             // Show current total
-            CurrentMoney.Text = current.ToString();
+            CurrentMoney.Text = _current.ToString();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
