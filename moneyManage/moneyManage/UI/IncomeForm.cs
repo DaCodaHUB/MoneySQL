@@ -9,7 +9,9 @@ namespace moneyManage.UI
     public partial class Form1 : Form
     {
         private int _userId;
+
         private SqlConnect sql;
+
         // TODO: Loaded data in _expenses and _totals
         //private TotalStruct totalData;
         //private ExpenseStruct expenseData;
@@ -22,15 +24,15 @@ namespace moneyManage.UI
             InitializeComponent();
             this._userId = userId;
             sql = new SqlConnect();
-            _total = new List<SqlConnect.Bank>();
-            _expense = new List<SqlConnect.Bank>();
+            _total = sql.PullTotal(_userId);
+            _expense = sql.PullExpenses(_userId);
             _current = 0;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _expense = sql.PullExpenses(_userId);
-            _total = sql.PullTotal(_userId);
+//            _expense = 
+//            _total = 
 
             Debug.WriteLine("Loading");
         }
@@ -54,12 +56,13 @@ namespace moneyManage.UI
             {
                 income = decimal.Parse(this.MoneyTxt.Text);
             }
-            
+
             // Get current total
             decimal current = _current + income;
 
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
+            sql.InsertMoneyTotal(_userId, current);
             _total.Add(currentTotal);
 
             // Show current total
@@ -101,10 +104,12 @@ namespace moneyManage.UI
 
             // Update the expense list
             var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
+            sql.InsertMoneyExpense(_userId, category, expense);
             _expense.Add(expenseInput);
 
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
+            sql.InsertMoneyTotal(_userId, expense);
             _total.Add(currentTotal);
 
             // Show current total
@@ -113,6 +118,11 @@ namespace moneyManage.UI
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Console.WriteLine("Close Form");
+            foreach (var t in _total)
+            {
+                Console.WriteLine($@"{t.Timestamp} {t.Money}");
+            }
         }
     }
 }

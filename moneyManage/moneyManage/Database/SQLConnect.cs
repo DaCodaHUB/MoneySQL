@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace moneyManage.Database
 {
-    class SqlConnect
+    public class SqlConnect
     {
         const string MyConnectionString = "server=qtserver.dynu.net;port=33306;uid=dang;" +
                                           "pwd=passtest;database=test;";
@@ -315,14 +315,14 @@ namespace moneyManage.Database
 
                     try
                     {
-                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
+                        myCommand.CommandText = $"SELECT * FROM Total WHERE Uid = {userid};";
                         using (var reader = myCommand.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
                                 result.Add(total);
-                                Debug.WriteLine("Inserting");
+//                                Console.WriteLine($@"{total.Timestamp} {total.Money}");
                             }
 
                             Debug.WriteLine("Running");
@@ -356,7 +356,7 @@ namespace moneyManage.Database
             return result;
         }
 
-        internal class UserInfo
+        public class UserInfo
         {
             public int Id { get; set; }
             public bool Valid { get; set; }
