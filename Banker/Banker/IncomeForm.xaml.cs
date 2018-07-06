@@ -23,5 +23,25 @@ namespace Banker
         {
             InitializeComponent();
         }
+
+        private void Income(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Income_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Spend_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Reports_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

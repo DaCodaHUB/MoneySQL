@@ -24,5 +24,15 @@ namespace Banker
         {
             InitializeComponent();
         }
+
+        private void SignIn_CLick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

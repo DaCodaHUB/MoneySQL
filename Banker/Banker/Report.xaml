@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="Report" Height="442.173" Width="415.733">
     <Grid>
-        <Button Content="Last Month" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="160" Cursor="None" Height="30"/>
-        <Button Content="Monthly Stats" HorizontalAlignment="Left" Margin="214,19,0,0" VerticalAlignment="Top" Width="160" Height="30"/>
-        <Button Content="Expenses Stats" HorizontalAlignment="Left" Margin="26,69,0,0" VerticalAlignment="Top" Width="160" Height="29"/>
+        <Button Content="Last Month" HorizontalAlignment="Left" Margin="26,19,0,0" VerticalAlignment="Top" Width="160" Cursor="None" Height="30" Click="LastMonth_Click"/>
+        <Button Content="Monthly Stats" HorizontalAlignment="Left" Margin="214,19,0,0" VerticalAlignment="Top" Width="160" Height="30" Click="MonthlyStats_Click"/>
+        <Button Content="Expenses Stats" HorizontalAlignment="Left" Margin="26,69,0,0" VerticalAlignment="Top" Width="160" Height="29" Click="ExpensesStats_Click"/>
 
         <toolkit:Chart HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Height="287" Width="390"/>
 

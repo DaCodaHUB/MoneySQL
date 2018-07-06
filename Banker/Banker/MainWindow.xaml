@@ -11,8 +11,8 @@
         <Label Content="Password" HorizontalAlignment="Left" Margin="28,52,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="109,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="109,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167"/>
-        <Button Content="Sign In" HorizontalAlignment="Left" Margin="109,92,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Sign Up" HorizontalAlignment="Left" Margin="201,92,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Sign In" HorizontalAlignment="Left" Margin="109,92,0,0" VerticalAlignment="Top" Width="75" Click="SignIn_CLick"/>
+        <Button Content="Sign Up" HorizontalAlignment="Left" Margin="201,92,0,0" VerticalAlignment="Top" Width="75" Click="SignUp_Click"/>
 
     </Grid>
 </Window>

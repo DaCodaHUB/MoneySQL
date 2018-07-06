@@ -8,7 +8,7 @@
         Title="Overview" Height="538.146" Width="533.022">
     <Grid>
         <DataGrid HorizontalAlignment="Left" Height="419" Margin="31,27,0,0" VerticalAlignment="Top" Width="472"/>
-        <Button Content="Actions" HorizontalAlignment="Left" Margin="31,464,0,0" VerticalAlignment="Top" Width="94" Height="26"/>
+        <Button Content="Actions" HorizontalAlignment="Left" Margin="31,464,0,0" VerticalAlignment="Top" Width="94" Height="26" Click="Actions_Click"/>
 
     </Grid>
 </Window>

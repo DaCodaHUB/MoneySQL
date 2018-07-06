@@ -9,13 +9,13 @@
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="25,20,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="138"/>
         <Label Content="$" HorizontalAlignment="Left" Margin="163,14,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button Content="Income" HorizontalAlignment="Left" Margin="196,20,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
-        <Button Content="Spend" HorizontalAlignment="Left" Margin="324,20,0,0" VerticalAlignment="Top" Width="110" Height="23"/>
+        <Button Content="Income" HorizontalAlignment="Left" Margin="196,20,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="Income_Click"/>
+        <Button Content="Spend" HorizontalAlignment="Left" Margin="324,20,0,0" VerticalAlignment="Top" Width="110" Height="23" Click="Spend_Click"/>
         <ComboBox HorizontalAlignment="Left" Margin="25,81,0,0" VerticalAlignment="Top" Width="138"/>
         <Label Content="Current" HorizontalAlignment="Left" Margin="196,78,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="251,78,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="160"/>
         <Label Content="$" HorizontalAlignment="Left" Margin="416,76,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button Content="View Reports" HorizontalAlignment="Left" Margin="25,135,0,0" VerticalAlignment="Top" Width="117" RenderTransformOrigin="-2.251,-0.469" Height="27"/>
+        <Button Content="View Reports" HorizontalAlignment="Left" Margin="25,135,0,0" VerticalAlignment="Top" Width="117" RenderTransformOrigin="-2.251,-0.469" Height="27" Click="Reports_Click"/>
         <Label Content="Category" HorizontalAlignment="Left" Margin="25,55,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,3.023"/>
 
     </Grid>

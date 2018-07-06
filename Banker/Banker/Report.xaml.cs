@@ -23,5 +23,20 @@ namespace Banker
         {
             InitializeComponent();
         }
+
+        private void LastMonth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MonthlyStats_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExpensesStats_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

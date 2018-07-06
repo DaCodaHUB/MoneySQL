@@ -23,5 +23,10 @@ namespace Banker
         {
             InitializeComponent();
         }
+
+        private void Actions_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
