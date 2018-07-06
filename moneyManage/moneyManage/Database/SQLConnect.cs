@@ -242,9 +242,9 @@ namespace moneyManage.Database
             }
         }
 
-        public ExpenseStruct PullExpenses(int userid)
+        public List<Total> PullExpenses(int userid)
         {
-            var result = new ExpenseStruct(userid);
+            var result = new List<Total>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -263,7 +263,10 @@ namespace moneyManage.Database
                         {
                             while (reader.Read())
                             {
-                                result.InsertData(reader.GetString("Category"), reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                var expense = new Total(reader.GetDecimal("$"),
+                                    reader.GetDateTime("Timestamp"), reader.GetString("Category"));
+//                                result.Add();
+                                result.Add(expense);
                             }
                         }
 
@@ -296,9 +299,9 @@ namespace moneyManage.Database
             return result;
         }
 
-        public TotalStruct PullTotal(int userid)
+        public List<Total> PullTotal(int userid)
         {
-            var result = new TotalStruct(userid);
+            var result = new List<Total>();
 
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -312,14 +315,16 @@ namespace moneyManage.Database
 
                     try
                     {
-                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = '{userid}';";
+                        myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
                         using (var reader = myCommand.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                result.InsertData(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                var total = new Total(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                result.Add(total);
                                 Debug.WriteLine("Inserting");
                             }
+
                             Debug.WriteLine("Running");
                             //Debug.WriteLine(result.Current.money);
                         }
@@ -355,6 +360,20 @@ namespace moneyManage.Database
         {
             public int Id { get; set; }
             public bool Valid { get; set; }
+        }
+
+        internal class Total
+        {
+            private decimal Money { get; set; }
+            private DateTime Timestamp { get; set; }
+            private string Category { get; set; }
+
+            public Total(decimal money, DateTime timestamp, string category = null)
+            {
+                Money = money;
+                Timestamp = timestamp;
+                Category = category;
+            }
         }
     }
 }

@@ -20,6 +20,11 @@ namespace moneyManage.Database
                 this.money = money;
                 this.Timestamp = timestamp;
             }
+
+            public Total(decimal money)
+            {
+                this.money = money;
+            }
         }
 
         private List<Total> _totalList;
