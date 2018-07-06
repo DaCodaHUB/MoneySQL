@@ -62,6 +62,8 @@ namespace moneyManage.UI
             var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
             _total.Add(currentTotal);
 
+            // Todo: Insert Database
+
             // Show current total
             CurrentMoney.Text = current.ToString();
         }
@@ -106,6 +108,8 @@ namespace moneyManage.UI
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(current, DateTime.Now);
             _total.Add(currentTotal);
+
+            // Todo: Insert Database
 
             // Show current total
             CurrentMoney.Text = current.ToString();

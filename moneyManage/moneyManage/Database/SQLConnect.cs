@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace moneyManage.Database
 {
-    class SqlConnect
+    public class SqlConnect
     {
         const string MyConnectionString = "server=qtserver.dynu.net;port=33306;uid=dang;" +
                                           "pwd=passtest;database=test;";
@@ -356,7 +356,7 @@ namespace moneyManage.Database
             return result;
         }
 
-        internal class UserInfo
+        public class UserInfo
         {
             public int Id { get; set; }
             public bool Valid { get; set; }
