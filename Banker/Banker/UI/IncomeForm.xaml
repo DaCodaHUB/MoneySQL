@@ -1,4 +1,9 @@
 ﻿<Window
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    Background="{DynamicResource MaterialDesignPaper}"
+    TextElement.FontWeight="Medium"
+    TextElement.FontSize="14"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     WindowStartupLocation="CenterScreen"
     x:Class="Banker.IncomeForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
