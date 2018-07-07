@@ -10,9 +10,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:domain1="clr-namespace:Banker.Domain"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     Title="Banker" Height="200" Width="330">
+
 
     <Border Padding="10">
         <StackPanel>
@@ -26,7 +28,18 @@
                                          Margin="20,18,0,0" Width="22" Height="22" />
 
                 <TextBox x:Name="UsernameTxt" materialDesign:HintAssist.Hint="Username"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="15" Grid.Column="1" />
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="15" Grid.Column="1">
+
+                    <TextBox.Text>
+
+                        <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                            </Binding.ValidationRules>
+                        </Binding>
+
+                    </TextBox.Text>
+                </TextBox>
 
             </Grid>
             <Grid Margin="0,10,0,0">

@@ -11,6 +11,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:domain="clr-namespace:Banker.Domain"
     mc:Ignorable="d"
     Title="Manage" Height="221.2" Width="474.4">
     <Border Padding="10">
@@ -27,7 +28,15 @@
                                          Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"
                                          Margin="0,10,0,0" />
                 <TextBox x:Name="Money" materialDesign:HintAssist.Hint="Money"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1" />
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1">
+                    <TextBox.Text>
+                        <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Button x:Name="Income" Click="Income_OnClick" Grid.Column="2" Content="Income" Margin="10,0" />
                 <Button x:Name="Spend" Click="Spend_OnClick" Grid.Column="3" Content="Spend" Margin="10,0" />
             </Grid>
@@ -63,7 +72,7 @@
 
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1" x:Name="Report" Click="Report_OnClick" Content="View Reports" Height="30" />
-          
+
             </Grid>
             
         </StackPanel>
