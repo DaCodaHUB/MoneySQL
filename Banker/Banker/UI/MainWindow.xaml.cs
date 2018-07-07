@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Banker.Database;
+using System.ComponentModel;
 
 namespace Banker
 {
@@ -9,10 +10,13 @@ namespace Banker
     public partial class MainWindow
     {
         private readonly SqlConnect _sql;
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public MainWindow()
         {
             InitializeComponent();
             _sql = new SqlConnect();
+            DataContext = new TextFields();
         }
 
         private void SignIn_OnClick(object sender, RoutedEventArgs e)
@@ -53,6 +57,15 @@ namespace Banker
                 default:
                     MessageBox.Show($@"Username {username} is created");
                     break;
+            }
+        }
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
             }
         }
     }

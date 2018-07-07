@@ -97,6 +97,7 @@
     </ApplicationDefinition>
     <Compile Include="Database\SecurePasswordHasher.cs" />
     <Compile Include="Database\SqlConnect.cs" />
+    <Compile Include="Database\TextFields.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
     <Compile Include="UI\Report.xaml.cs">
       <DependentUpon>Report.xaml</DependentUpon>
