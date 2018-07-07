@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using Banker.Database;
 
 namespace Banker
@@ -57,6 +58,5 @@ namespace Banker
                     break;
             }
         }
-
     }
 }
