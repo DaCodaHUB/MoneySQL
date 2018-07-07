@@ -102,11 +102,24 @@ namespace Banker
             return money;
         }
 
-        private void Report_OnClick(object sender, RoutedEventArgs e)
+        private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            var report = new Report(_total, _expense);
+            var report = new Lastmonth(_total);
             report.Show();
         }
+
+        private void Monthly_Click(object sender, RoutedEventArgs e)
+        {
+            var report = new Monthly(_total);
+            report.Show();
+        }
+
+        private void Expenses_Click(object sender, RoutedEventArgs e)
+        {
+            var report = new Expenses(_expense);
+            report.Show();
+        }
+
 
 
         private void Money_OnKeyDown(object sender, KeyEventArgs e)

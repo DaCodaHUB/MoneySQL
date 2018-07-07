@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Banker"
+        xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" x:Class="Banker.Monthly"
+        mc:Ignorable="d"
+        Title="Monthly" Height="450" Width="566.4">
+    <Grid>
+
+        <toolkit:Chart  Name="lineChart" Title="Monthly Statistics" 
+
+		HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="560">
+            <toolkit:LineSeries  DependentValuePath="Value" 
+
+		IndependentValuePath="Key" ItemsSource="{Binding}" 
+
+		IsSelectionEnabled="True" Title="USD"/>
+        </toolkit:Chart>
+
+    </Grid>
+</Window>

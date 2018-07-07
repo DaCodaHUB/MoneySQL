@@ -1,0 +1,26 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Banker"
+        xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" x:Class="Banker.Expenses"
+        mc:Ignorable="d"
+        Title="Expenses" Height="450" Width="430.933">
+    <Grid>
+
+        <toolkit:Chart HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="426"/>
+        <toolkit:Chart  Name="pieChart" Title="Expense Statistics" 
+
+		HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="426">
+            <toolkit:PieSeries DependentValuePath="Value" 
+
+		IndependentValuePath="Key" ItemsSource="{Binding}" 
+
+		IsSelectionEnabled="True" />
+        </toolkit:Chart>
+
+
+
+    </Grid>
+</Window>
