@@ -26,11 +26,6 @@ namespace Banker
             InitializeComponent();
             this._Expense = _expense;
         }
-
-        private void processData()
-        {
-
-        }
     }
 
 }

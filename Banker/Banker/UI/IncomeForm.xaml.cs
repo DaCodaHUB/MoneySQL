@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 using Banker.Database;
 
 namespace Banker
