@@ -24,17 +24,18 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="Account"
-                                         Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"
+                                         Foreground="{Binding ElementName=UsernameTxt, Path=BorderBrush}"
                                          Margin="20,18,0,0" Width="22" Height="22" />
 
                 <TextBox x:Name="UsernameTxt" materialDesign:HintAssist.Hint="Username"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="15" Grid.Column="1">
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="15" Grid.Column="1"
+                         d:DataContext="{d:DesignData }">
 
                     <TextBox.Text>
 
-                        <Binding Path="UserName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True"  />
+                                <domain1:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
 
@@ -48,11 +49,12 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="Key"
-                                         Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"
+                                         Foreground="{Binding ElementName=PasswordTxt, Path=BorderBrush}"
                                          Margin="20,18,0,0" Width="22" Height="22" />
 
                 <PasswordBox x:Name="PasswordTxt" materialDesign:HintAssist.Hint="Password"
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" />
+
 
             </Grid>
 

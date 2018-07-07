@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using Banker.Database;
-using System.ComponentModel;
 
 namespace Banker
 {
@@ -10,7 +9,6 @@ namespace Banker
     public partial class MainWindow
     {
         private readonly SqlConnect _sql;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow()
         {
@@ -60,13 +58,5 @@ namespace Banker
             }
         }
 
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
-        }
     }
 }

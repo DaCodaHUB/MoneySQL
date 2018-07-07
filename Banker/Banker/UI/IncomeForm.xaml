@@ -25,14 +25,15 @@
                 </Grid.ColumnDefinitions>
 
                 <materialDesign:PackIcon Width="22" Height="22" Grid.Column="0" Kind="CurrencyUsd"
-                                         Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"
+                                         Foreground="{Binding ElementName=Money, Path=BorderBrush}"
                                          Margin="0,10,0,0" />
-                <TextBox x:Name="Money" materialDesign:HintAssist.Hint="Money"
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1">
+                <TextBox KeyDown="Money_OnKeyDown" x:Name="Money" materialDesign:HintAssist.Hint="Money"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.Column="1"
+                         d:DataContext="{d:DesignData }">
                     <TextBox.Text>
-                        <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                                <domain:OnlyDecimalNumber ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -58,7 +59,7 @@
                     <ComboBoxItem Content="Materials" />
                 </ComboBox>
                 <materialDesign:PackIcon Width="22" Height="22" Grid.Column="2" Kind="Bank"
-                                         Foreground="{Binding ElementName=NameTextBox, Path=BorderBrush}"
+                                         Foreground="{Binding ElementName=CurrentMoney, Path=BorderBrush}"
                                          Margin="20,10,0,0" />
                 
                 <TextBox x:Name="CurrentMoney" IsEnabled="False" Grid.Column="3" Margin="0,0,30,0" />
