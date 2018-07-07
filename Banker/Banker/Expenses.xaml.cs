@@ -25,7 +25,7 @@ namespace Banker
         {
             InitializeComponent();
             this._Expense = _expense;
-            DataContext = _expense;
+            pieChart.DataContext = _expense;
         }
     }
 

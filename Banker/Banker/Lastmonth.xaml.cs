@@ -19,12 +19,13 @@ namespace Banker
     /// </summary>
     public partial class Lastmonth : Window
     {
-        private readonly List<Database.SqlConnect.Bank> _Total;
+        private readonly List<KeyValuePair<decimal, decimal>> _Total;
 
-        public Lastmonth(List<Database.SqlConnect.Bank> _total)
+        public Lastmonth(List<KeyValuePair<decimal, decimal>> _total)
         {
             InitializeComponent();
             this._Total = _total;
+            lineChart.DataContext = _total;
         }
     }
 

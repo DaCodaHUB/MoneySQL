@@ -9,7 +9,6 @@
         Title="Expenses" Height="450" Width="430.933">
     <Grid>
 
-        <toolkit:Chart HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="426"/>
         <toolkit:Chart  Name="pieChart" Title="Expense Statistics" 
 
 		HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="426">

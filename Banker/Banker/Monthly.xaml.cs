@@ -19,12 +19,13 @@ namespace Banker
     /// </summary>
     public partial class Monthly : Window
     {
-        private readonly List<Database.SqlConnect.Bank> _Total;
+        private readonly List<KeyValuePair<decimal, decimal>> _valueList;
 
-        public Monthly(List<Database.SqlConnect.Bank> _total)
+        public Monthly(List<KeyValuePair<decimal, decimal>> valueList)
         {
             InitializeComponent();
-            this._Total = _total;
+            this._valueList = valueList;
+            lineChart.DataContext = valueList;
         }
     }
 

@@ -17,6 +17,7 @@ namespace Banker
         private readonly SqlConnect _sql;
         private List<SqlConnect.Bank> _total;
         private List<SqlConnect.Bank> _expense;
+        private List<SqlConnect.Bank> _random;
         private decimal _current;
 
         public IncomeForm(int userId)
@@ -27,6 +28,9 @@ namespace Banker
             _userId = userId;
             _total = _sql.PullData("total", _userId);
             _expense = _sql.PullData("expense", _userId);
+
+            // For testing
+            _random = new RandomListData().generate();
 
             _current = _total.Count >= 1 ? _total[_total.Count - 1].Money : 0;
             CurrentMoney.Text = _current.ToString("C");
@@ -107,16 +111,53 @@ namespace Banker
 
         private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            //List<SqlConnect.Bank> chartList = _total.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
+            List<SqlConnect.Bank> lastMonthList = _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
+            List<KeyValuePair<decimal, decimal>> chartList = new List<KeyValuePair<decimal, decimal>>();
 
-            var report = new Lastmonth(_total);
+            foreach (var item in lastMonthList)
+            {
+                chartList.Add(new KeyValuePair<decimal, decimal>(item.Timestamp.Day, item.Money));
+            }
+
+            var report = new Lastmonth(chartList);
             report.Show();
         }
 
         private void Monthly_Click(object sender, RoutedEventArgs e)
         {
-            var report = new Monthly(_total);
+            List<KeyValuePair<decimal, decimal>> chartList = monthlyTotals();
+
+            var report = new Monthly(chartList);
             report.Show();
+        }
+
+        private List<KeyValuePair<decimal, decimal>> monthlyExpenses()
+        {
+            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
+            for (int i = 1; i <= DateTime.Today.Month; i++)
+            {
+                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i 
+                                                                    && elem.Timestamp.Year == DateTime.Today.Year);
+                decimal sum = tempList.Sum(item => item.Money);
+                Debug.WriteLine(sum);
+                valueList.Add(new KeyValuePair<decimal, decimal>(i, sum));
+
+            }
+            return valueList;
+        }
+
+        private List<KeyValuePair<decimal, decimal>> monthlyTotals()
+        {
+            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
+            for (int i = 1; i <= DateTime.Today.Month; i++)
+            {
+                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
+                                                                    && elem.Timestamp.Year == DateTime.Today.Year);
+                decimal value = tempList[0].Money;
+                valueList.Add(new KeyValuePair<decimal, decimal>(i, value));
+
+            }
+            return valueList;
         }
 
         private void Expenses_Click(object sender, RoutedEventArgs e)
@@ -151,8 +192,6 @@ namespace Banker
             var report = new Expenses(valueList);
             report.Show();
         }
-
-
 
         private void Money_OnKeyDown(object sender, KeyEventArgs e)
         {
