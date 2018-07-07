@@ -13,10 +13,12 @@
 
 		HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.423,0.09" Height="400" Width="476">
             <toolkit:LineSeries  DependentValuePath="Value" 
-
-		IndependentValuePath="Key" ItemsSource="{Binding}" 
-
-		IsSelectionEnabled="True" Title="USD"/>
+		    IndependentValuePath="Key" ItemsSource="{Binding}" 
+		    IsSelectionEnabled="True" Title="USD"/>
+            
+            <toolkit:Chart.Axes>
+                <toolkit:CategoryAxis Orientation="X" Title="Day" />
+            </toolkit:Chart.Axes>
         </toolkit:Chart>
 
 

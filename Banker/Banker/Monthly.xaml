@@ -13,10 +13,12 @@
 
 		HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="560">
             <toolkit:LineSeries  DependentValuePath="Value" 
-
-		IndependentValuePath="Key" ItemsSource="{Binding}" 
-
-		IsSelectionEnabled="True" Title="USD"/>
+		    IndependentValuePath="Key" ItemsSource="{Binding}" 
+		    IsSelectionEnabled="True" Title="USD"/>
+            
+            <toolkit:Chart.Axes>
+                <toolkit:CategoryAxis Orientation="X" Title="Month" />
+            </toolkit:Chart.Axes>
         </toolkit:Chart>
 
     </Grid>
