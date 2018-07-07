@@ -19,12 +19,13 @@ namespace Banker
     /// </summary>
     public partial class Expenses : Window
     {
-        private readonly List<Database.SqlConnect.Bank> _Expense;
+        private readonly List<KeyValuePair<string, decimal>> _Expense;
 
-        public Expenses(List<Database.SqlConnect.Bank> _expense)
+        public Expenses(List<KeyValuePair<string, decimal>> _expense)
         {
             InitializeComponent();
             this._Expense = _expense;
+            DataContext = _expense;
         }
     }
 
