@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using Banker.Database;
 
@@ -37,6 +38,12 @@ namespace Banker
 
         private void SignUp_OnClick(object sender, RoutedEventArgs e)
         {
+//            var result = new RandomListData().generate();
+//            foreach (var v in result)
+//            {
+//                Debug.WriteLine(v.ToString());
+//            }
+
             var username = UsernameTxt.Text;
             var pass = PasswordTxt.Password;
 

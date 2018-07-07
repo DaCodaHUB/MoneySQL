@@ -268,6 +268,11 @@ namespace Banker.Database
                 Timestamp = timestamp;
                 Category = category;
             }
+
+            public override string ToString()
+            {
+                return Category == null ? $"{Timestamp}: Spent ${Money}" : $"{Timestamp}: Spent ${Money} in {Category}";
+            }
         }
     }
 }

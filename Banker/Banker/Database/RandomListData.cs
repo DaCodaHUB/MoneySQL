@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Banker.Database
 {
@@ -26,7 +27,9 @@ namespace Banker.Database
                 var data = new SqlConnect.Bank(money,daytime);
                 list.Add(data);
             }
-            return list;
+
+            var order = list.OrderBy(x => x.Timestamp.DayOfYear).ToList();
+            return order;
         }
     }
 
