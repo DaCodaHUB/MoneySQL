@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
+using System.Diagnostics;
 using Banker.Database;
 
 namespace Banker
@@ -66,6 +68,7 @@ namespace Banker
             {
                 category = Category.Text;
             }
+            Debug.WriteLine(category);
 
             // Get current total
             _current = _current - expense;
@@ -102,11 +105,53 @@ namespace Banker
             return money;
         }
 
-        private void Report_OnClick(object sender, RoutedEventArgs e)
+        private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            var report = new Report(_total, _expense);
+            //List<SqlConnect.Bank> chartList = _total.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
+
+            var report = new Lastmonth(_total);
             report.Show();
         }
+
+        private void Monthly_Click(object sender, RoutedEventArgs e)
+        {
+            var report = new Monthly(_total);
+            report.Show();
+        }
+
+        private void Expenses_Click(object sender, RoutedEventArgs e)
+        {
+            
+            List<SqlConnect.Bank> tempList = _expense.FindAll(elem => elem.Category == "Education");
+            decimal educationSum = tempList.Sum(item => item.Money);
+
+            tempList = _expense.FindAll(elem => elem.Category == "Entertainment");
+            decimal entertaimentSum = tempList.Sum(item => item.Money);
+
+            tempList = _expense.FindAll(elem => elem.Category == "Transportation");
+            decimal transportationSum = tempList.Sum(item => item.Money);
+
+            tempList = _expense.FindAll(elem => elem.Category == "Food and Drink");
+            decimal foodSum = tempList.Sum(item => item.Money);
+
+            tempList = _expense.FindAll(elem => elem.Category == "Services");
+            decimal serviceSum = tempList.Sum(item => item.Money);
+
+            tempList = _expense.FindAll(elem => elem.Category == "Materials");
+            decimal materialSum = tempList.Sum(item => item.Money);
+
+            List<KeyValuePair<string, decimal>> valueList = new List<KeyValuePair<string, decimal>>();
+            valueList.Add(new KeyValuePair<string, decimal>("Education", educationSum));
+            valueList.Add(new KeyValuePair<string, decimal>("Entertainment", entertaimentSum));
+            valueList.Add(new KeyValuePair<string, decimal>("Transportation", transportationSum));
+            valueList.Add(new KeyValuePair<string, decimal>("Food and Drink", foodSum));
+            valueList.Add(new KeyValuePair<string, decimal>("Services", serviceSum));
+            valueList.Add(new KeyValuePair<string, decimal>("Materials", materialSum));
+
+            var report = new Expenses(valueList);
+            report.Show();
+        }
+
 
 
         private void Money_OnKeyDown(object sender, KeyEventArgs e)
