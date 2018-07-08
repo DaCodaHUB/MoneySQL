@@ -13,7 +13,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:domain="clr-namespace:Banker.Domain"
     mc:Ignorable="d"
-    Title="Manage" Height="221.2" Width="474.4">
+    Title="Manage" Height="530" Width="474.4">
     <Border Padding="10">
         <StackPanel>
             <Grid>
@@ -61,23 +61,32 @@
                 <materialDesign:PackIcon Width="22" Height="22" Grid.Column="2" Kind="Bank"
                                          Foreground="{Binding ElementName=CurrentMoney, Path=BorderBrush}"
                                          Margin="20,10,0,0" />
-                
+
                 <TextBox x:Name="CurrentMoney" IsEnabled="False" Grid.Column="3" Margin="0,0,30,0" />
             </Grid>
             <Grid Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.15*" />
-                    <ColumnDefinition Width="1.15*" />
-                    <ColumnDefinition Width="0.4*" />
-                    <ColumnDefinition Width="1.75*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Button Grid.ColumnSpan="2" Content="Monthly" Grid.Column="2" HorizontalAlignment="Left" Margin="0.2,-1,0,0" VerticalAlignment="Top" Width="120" Click="Monthly_Click"/>
-                <Button Content="Expenses" Grid.Column="3" HorizontalAlignment="Left" Margin="97.2,-1,0,0" VerticalAlignment="Top" Width="120" Click="Expenses_Click"/>
-                <Button Content="Last Month" HorizontalAlignment="Left" Margin="19,-1,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Click="LastMonth_Click"/>
+                <Button Content="Last Month" Click="LastMonth_Click" Grid.Column="1" Margin="10,0" />
+                <Button Content="Monthly" Grid.Column="2" Click="Monthly_Click" Margin="10,0" />
+                <Button Content="Expenses" Grid.Column="3" Click="Expenses_Click" Margin="10,0" />
 
-            </Grid>
             
+            </Grid>
+            <Label Content="List Of Expenses" FontWeight="Bold" Margin="0,10,0,0"></Label>
+            <DataGrid x:Name="DataGridExpense" Height="292">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=" Time Stamp" Width="*" Binding="{Binding Timestamp}"></DataGridTextColumn>
+                    <DataGridTextColumn Header=" Category" Width="*" Binding="{Binding Category}"></DataGridTextColumn>
+                    <DataGridTextColumn Header=" Spend" Width="0.5*" Binding="{Binding Money}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
         </StackPanel>
     </Border>
 </Window>

@@ -31,6 +31,10 @@ namespace Banker
 
             // For testing
             _random = new RandomListData().generate();
+            foreach (var r in _random)
+            {
+                DataGridExpense.Items.Add(r);
+            }
 
             _current = _total.Count >= 1 ? _total[_total.Count - 1].Money : 0;
             CurrentMoney.Text = _current.ToString("C");
