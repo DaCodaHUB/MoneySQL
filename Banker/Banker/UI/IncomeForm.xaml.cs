@@ -214,12 +214,12 @@ namespace Banker
             decimal materialSum = tempList.Sum(item => item.Money);
 
             List<KeyValuePair<string, decimal>> valueList = new List<KeyValuePair<string, decimal>>();
-            valueList.Add(new KeyValuePair<string, decimal>("Education", educationSum));
-            valueList.Add(new KeyValuePair<string, decimal>("Entertainment", entertaimentSum));
-            valueList.Add(new KeyValuePair<string, decimal>("Transportation", transportationSum));
-            valueList.Add(new KeyValuePair<string, decimal>("Food and Drink", foodSum));
-            valueList.Add(new KeyValuePair<string, decimal>("Services", serviceSum));
-            valueList.Add(new KeyValuePair<string, decimal>("Materials", materialSum));
+            if (educationSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Education", educationSum)); }
+            if (entertaimentSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Entertainment", entertaimentSum)); }
+            if (transportationSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Transportation", transportationSum)); }
+            if (foodSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Food and Drink", foodSum)); }
+            if (serviceSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Services", serviceSum)); }
+            if (materialSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Materials", materialSum)); }
 
             var report = new Expenses(valueList);
             report.Show();
