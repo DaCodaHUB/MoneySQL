@@ -135,24 +135,56 @@ namespace Banker
 
         private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            List<SqlConnect.Bank> lastMonthList =
-                _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
             List<KeyValuePair<decimal, decimal>> chartList = new List<KeyValuePair<decimal, decimal>>();
 
-            foreach (var item in lastMonthList)
+            for (int i = 1; i <= 31; i++)
             {
-                chartList.Add(new KeyValuePair<decimal, decimal>(item.Timestamp.Day, item.Money));
+                List<SqlConnect.Bank> tempList = new List<SqlConnect.Bank>();
+
+                if (DateTime.Today.Month > 1)
+                {
+                    tempList = _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1 && elem.Timestamp.Day == i);
+                } else
+                {
+                    tempList = _random.FindAll(elem => elem.Timestamp.Month == 12 && elem.Timestamp.Year == DateTime.Today.Year - 1 
+                                                && elem.Timestamp.Day == i);
+                }
+
+                if (tempList.Count > 0)
+                {
+                    decimal sum = tempList.Sum(item => item.Money);
+                    chartList.Add(new KeyValuePair<decimal, decimal>(i, sum));
+                }
             }
 
-            var report = new Lastmonth(chartList);
-            report.Show();
+            if (chartList.Count > 0)
+            {
+                var report = new Lastmonth(chartList);
+                report.Show();
+            } else
+            {
+                MessageBox.Show("No data last month");
+            }
         }
 
         private void Monthly_Click(object sender, RoutedEventArgs e)
         {
-            List<KeyValuePair<decimal, decimal>> chartList = monthlyTotals();
+            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
 
-            var report = new Monthly(chartList);
+            for (int i = 1; i <= DateTime.Today.Month; i++)
+            {
+                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
+                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
+                decimal value = 0;
+                if (tempList.Count > 0)
+                {
+                    value = tempList[0].Money;
+                }
+
+                valueList.Add(new KeyValuePair<decimal, decimal>(i, value));
+            }
+
+            var report = new Monthly(valueList);
             report.Show();
         }
 
@@ -186,37 +218,6 @@ namespace Banker
 
             var report = new Expenses(valueList);
             report.Show();
-        }
-
-        private List<KeyValuePair<decimal, decimal>> monthlyExpenses()
-        {
-            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
-
-            for (int i = 1; i <= DateTime.Today.Month; i++)
-            {
-                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
-                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
-                decimal sum = tempList.Sum(item => item.Money);
-                Debug.WriteLine(sum);
-                valueList.Add(new KeyValuePair<decimal, decimal>(i, sum));
-            }
-
-            return valueList;
-        }
-
-        private List<KeyValuePair<decimal, decimal>> monthlyTotals()
-        {
-            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
-
-            for (int i = 1; i <= DateTime.Today.Month; i++)
-            {
-                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
-                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
-                decimal value = tempList[0].Money;
-                valueList.Add(new KeyValuePair<decimal, decimal>(i, value));
-            }
-
-            return valueList;
         }
 
         private void Money_OnKeyDown(object sender, KeyEventArgs e)
