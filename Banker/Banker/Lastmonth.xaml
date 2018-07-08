@@ -9,7 +9,7 @@
         Title="Last Month" Height="428.4" Width="481.6">
     <Grid>
 
-        <toolkit:Chart  Name="lineChart" Title="Last Month Chart" 
+        <toolkit:Chart  Name="lineChart" Title="Last Month Expenses" 
 
 		HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.423,0.09" Height="400" Width="476">
             <toolkit:LineSeries  DependentValuePath="Value" 
