@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace Banker.Database
@@ -312,13 +314,15 @@ namespace Banker.Database
             public DateTime Timestamp { get; }
             public string Category { get; }
             public decimal Money { get; }
-            
+            public string Spend { get; }
+
 //            .ToString("yyyy-MM-dd HH:mm:ss")
             public Bank(decimal money, DateTime timestamp, string category = null)
             {
                 Money = money;
                 Timestamp = timestamp;
                 Category = category;
+                Spend = money.ToString("C");
             }
 
             public override string ToString()

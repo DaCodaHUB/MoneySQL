@@ -31,7 +31,10 @@ namespace Banker
             _userId = userId;
             _total = _sql.PullData("total", _userId);
             _expense = _sql.PullData("expense", _userId);
+
+
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
+
 
             // For testing
             _random = new RandomListData().generate();
@@ -92,6 +95,7 @@ namespace Banker
             {
                 category = Category.Text;
             }
+
             MessageBox.Show(@"You successfully added an expense to your bank");
 
             Debug.WriteLine(category);
@@ -101,6 +105,7 @@ namespace Banker
 
             // Update the expense list
             var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
+
             _sql.InsertMoney("expense", _userId, expense, category);
             _expense.Add(expenseInput);
             _observableDataBanks.Add(expenseInput);
@@ -258,38 +263,28 @@ namespace Banker
 
         private void Delete_OnClick(object sender, RoutedEventArgs e)
         {
-            var removeIndex = new List<int>();
+            var removeItem = _observableDataBanks.Where(x => x.Selected).ToList();
 
-            for (var i = 0; i < DataGridExpense.Items.Count; i++)
-            {
-                if (DataGridExpense.Columns[0].GetCellContent(DataGridExpense.Items[i]) is CheckBox checkbox &&
-                    checkbox.IsChecked == true)
-                {
-                    removeIndex.Add(i);
-                }
-            }
-
-            if (removeIndex.Count == 0)
+            if (removeItem.Count == 0)
             {
                 MessageBox.Show("Check a box to delete a record.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
-            var orderByDescending = removeIndex.OrderByDescending(x => x).ToList();
-            foreach (var i in orderByDescending)
+            foreach (var item in removeItem)
             {
-                var timestamp = _expense[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
-//                MessageBox.Show(_expense[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
-                _observableDataBanks.RemoveAt(i);
-                _current += _expense[i].Money;
-                _expense.RemoveAt(i);
+                var timestamp = item.Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+
+                _observableDataBanks.Remove(item);
+                _current += item.Money;
+                _expense.Remove(item);
                 var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
                 _sql.InsertMoney("total", _userId, _current);
                 _total.Add(currentTotal);
                 _sql.DeleteMoney("expense", timestamp);
-
-                CurrentMoney.Text = _current.ToString("C");
             }
+
+            CurrentMoney.Text = _current.ToString("C");
         }
     }
 }
