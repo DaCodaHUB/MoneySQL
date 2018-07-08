@@ -1,4 +1,5 @@
 ﻿<Window
+    ResizeMode="CanMinimize"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     Background="{DynamicResource MaterialDesignPaper}"
     TextElement.FontWeight="Medium"
@@ -13,9 +14,9 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:domain="clr-namespace:Banker.Domain"
     mc:Ignorable="d"
-    Title="Manage" Height="530" Width="474.4">
+    Title="Manage" Height="530" Width="500">
     <Border Padding="10">
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.15*" />
@@ -76,16 +77,19 @@
                 <Button Content="Monthly" Grid.Column="2" Click="Monthly_Click" Margin="10,0" />
                 <Button Content="Expenses" Grid.Column="3" Click="Expenses_Click" Margin="10,0" />
 
-            
+
             </Grid>
-            <Label Content="List Of Expenses" FontWeight="Bold" Margin="0,10,0,0"></Label>
-            <DataGrid x:Name="DataGridExpense" Height="292">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header=" Time Stamp" Width="*" Binding="{Binding Timestamp}"></DataGridTextColumn>
-                    <DataGridTextColumn Header=" Category" Width="*" Binding="{Binding Category}"></DataGridTextColumn>
-                    <DataGridTextColumn Header=" Spend" Width="0.5*" Binding="{Binding Money}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="List Of Expenses" FontWeight="Bold"/>
+                <Button x:Name="Delete" Content="Delete" Click="Delete_OnClick" Grid.Column="1" Margin="20,0,10,0"></Button>
+            </Grid>
+            
+            <DataGrid x:Name="DataGridExpense" Height="292" />
+
 
         </StackPanel>
     </Border>

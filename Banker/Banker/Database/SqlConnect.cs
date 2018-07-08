@@ -195,6 +195,56 @@ namespace Banker.Database
             }
         }
 
+        public void DeleteMoney(string mode, string timestamp)
+        {
+           
+            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    //                    
+                    using (var myTrans = myConnection.BeginTransaction())
+                    {
+                        try
+                        {
+                            myCommand.Connection = myConnection;
+                            myCommand.Transaction = myTrans;
+
+                            if (mode.Equals("expense"))
+                            {
+                                myCommand.CommandText =
+                                    $"DELETE FROM Expense WHERE TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) >= 0 AND TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) <= 5;";
+                            }
+                            else if (mode.Equals("total"))
+                            {
+                                myCommand.CommandText =
+                                    $"DELETE FROM Total WHERE Timestamp='{timestamp}';";
+                            }
+
+                            myCommand.ExecuteNonQuery();
+                            myTrans.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public List<Bank> PullData(string mode, int userid)
         {
             var result = new List<Bank>();
@@ -258,10 +308,12 @@ namespace Banker.Database
 
         public class Bank
         {
-            public decimal Money { get; }
+            public bool Selected { get; set; }
             public DateTime Timestamp { get; }
             public string Category { get; }
-
+            public decimal Money { get; }
+            
+//            .ToString("yyyy-MM-dd HH:mm:ss")
             public Bank(decimal money, DateTime timestamp, string category = null)
             {
                 Money = money;

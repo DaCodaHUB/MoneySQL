@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 using System.Diagnostics;
+using System.Windows.Controls;
 using Banker.Database;
 
 namespace Banker
@@ -18,6 +20,7 @@ namespace Banker
         private List<SqlConnect.Bank> _total;
         private List<SqlConnect.Bank> _expense;
         private List<SqlConnect.Bank> _random;
+        private ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
         public IncomeForm(int userId)
@@ -28,13 +31,12 @@ namespace Banker
             _userId = userId;
             _total = _sql.PullData("total", _userId);
             _expense = _sql.PullData("expense", _userId);
+            _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
 
             // For testing
             _random = new RandomListData().generate();
-            foreach (var r in _random)
-            {
-                DataGridExpense.Items.Add(r);
-            }
+
+            DataGridExpense.ItemsSource = _observableDataBanks;
 
             _current = _total.Count >= 1 ? _total[_total.Count - 1].Money : 0;
             CurrentMoney.Text = _current.ToString("C");
@@ -42,9 +44,16 @@ namespace Banker
 
         private void Income_OnClick(object sender, RoutedEventArgs e)
         {
+            Income.IsEnabled = false;
             // Get amount of income
             var income = GetMoneyInput();
-            if (income <= 0) return;
+            if (income <= 0)
+            {
+                Income.IsEnabled = true;
+                return;
+            }
+
+            MessageBox.Show(@"You successfully added an income to your bank");
 
             // Get current total
             _current = _current + income;
@@ -56,13 +65,19 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
+            Income.IsEnabled = true;
         }
 
         private void Spend_OnClick(object sender, RoutedEventArgs e)
         {
+            Spend.IsEnabled = false;
             // Get amount of expense
             var expense = GetMoneyInput();
-            if (expense <= 0) return;
+            if (expense <= 0)
+            {
+                Spend.IsEnabled = true;
+                return;
+            }
 
 
             // Get category
@@ -70,12 +85,15 @@ namespace Banker
             if (string.IsNullOrWhiteSpace(Category.Text))
             {
                 MessageBox.Show(@"You didn't choose category");
+                Spend.IsEnabled = true;
                 return;
             }
             else
             {
                 category = Category.Text;
             }
+            MessageBox.Show(@"You successfully added an expense to your bank");
+
             Debug.WriteLine(category);
 
             // Get current total
@@ -85,6 +103,7 @@ namespace Banker
             var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
             _sql.InsertMoney("expense", _userId, expense, category);
             _expense.Add(expenseInput);
+            _observableDataBanks.Add(expenseInput);
 
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
@@ -93,6 +112,7 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
+            Spend.IsEnabled = true;
         }
 
         private decimal GetMoneyInput()
@@ -115,7 +135,8 @@ namespace Banker
 
         private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            List<SqlConnect.Bank> lastMonthList = _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
+            List<SqlConnect.Bank> lastMonthList =
+                _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1);
             List<KeyValuePair<decimal, decimal>> chartList = new List<KeyValuePair<decimal, decimal>>();
 
             foreach (var item in lastMonthList)
@@ -137,7 +158,6 @@ namespace Banker
 
         private void Expenses_Click(object sender, RoutedEventArgs e)
         {
-            
             List<SqlConnect.Bank> tempList = _expense.FindAll(elem => elem.Category == "Education");
             decimal educationSum = tempList.Sum(item => item.Money);
 
@@ -175,12 +195,12 @@ namespace Banker
             for (int i = 1; i <= DateTime.Today.Month; i++)
             {
                 List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
-                                                                    && elem.Timestamp.Year == DateTime.Today.Year);
+                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
                 decimal sum = tempList.Sum(item => item.Money);
                 Debug.WriteLine(sum);
                 valueList.Add(new KeyValuePair<decimal, decimal>(i, sum));
-
             }
+
             return valueList;
         }
 
@@ -191,11 +211,11 @@ namespace Banker
             for (int i = 1; i <= DateTime.Today.Month; i++)
             {
                 List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
-                                                                    && elem.Timestamp.Year == DateTime.Today.Year);
+                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
                 decimal value = tempList[0].Money;
                 valueList.Add(new KeyValuePair<decimal, decimal>(i, value));
-
             }
+
             return valueList;
         }
 
@@ -232,6 +252,43 @@ namespace Banker
                     MessageBox.Show("Please enter only Number.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
                     e.Handled = true;
                     break;
+            }
+        }
+
+
+        private void Delete_OnClick(object sender, RoutedEventArgs e)
+        {
+            var removeIndex = new List<int>();
+
+            for (var i = 0; i < DataGridExpense.Items.Count; i++)
+            {
+                if (DataGridExpense.Columns[0].GetCellContent(DataGridExpense.Items[i]) is CheckBox checkbox &&
+                    checkbox.IsChecked == true)
+                {
+                    removeIndex.Add(i);
+                }
+            }
+
+            if (removeIndex.Count == 0)
+            {
+                MessageBox.Show("Check a box to delete a record.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
+
+            var orderByDescending = removeIndex.OrderByDescending(x => x).ToList();
+            foreach (var i in orderByDescending)
+            {
+                var timestamp = _expense[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+//                MessageBox.Show(_expense[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss"));
+                _observableDataBanks.RemoveAt(i);
+                _current += _expense[i].Money;
+                _expense.RemoveAt(i);
+                var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
+                _sql.InsertMoney("total", _userId, _current);
+                _total.Add(currentTotal);
+                _sql.DeleteMoney("expense", timestamp);
+
+                CurrentMoney.Text = _current.ToString("C");
             }
         }
     }
