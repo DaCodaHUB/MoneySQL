@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace Banker
 {
@@ -25,7 +28,35 @@ namespace Banker
         {
             InitializeComponent();
             this._Expense = _expense;
-            pieChart.DataContext = _expense;
+
+            SeriesCollection = new SeriesCollection();
+
+            foreach (var item in _expense)
+            {
+                SeriesCollection.Add(new PieSeries
+                {
+                    Title = item.Key,
+                    Values = new ChartValues<decimal> {item.Value},
+                    DataLabels = true,
+                });
+            }
+
+            DataContext = this;
+        }
+
+        public Func<ChartPoint, string> PointLabel { get; set; }
+        public SeriesCollection SeriesCollection { get; set; }
+
+        private void Chart_OnDataClick(object sender, LiveCharts.ChartPoint chartPoint)
+        {
+            var chart = (LiveCharts.Wpf.PieChart)chartPoint.ChartView;
+
+            //clear selected slice.
+            foreach (PieSeries series in chart.Series)
+                series.PushOut = 0;
+
+            var selectedSeries = (PieSeries)chartPoint.SeriesView;
+            selectedSeries.PushOut = 8;
         }
     }
 

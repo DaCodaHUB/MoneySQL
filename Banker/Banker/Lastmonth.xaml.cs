@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Banker
 {
@@ -19,14 +21,45 @@ namespace Banker
     /// </summary>
     public partial class Lastmonth : Window
     {
-        private readonly List<KeyValuePair<decimal, decimal>> _Total;
+        private readonly List<KeyValuePair<decimal, decimal>> _valueList;
 
-        public Lastmonth(List<KeyValuePair<decimal, decimal>> _total)
+        public Lastmonth(List<KeyValuePair<decimal, decimal>> valueList)
         {
             InitializeComponent();
-            this._Total = _total;
-            lineChart.DataContext = _total;
+            this._valueList = valueList;
+            //lineChart.DataContext = _total;
+
+            ChartValues<decimal> values = new ChartValues<decimal>();
+
+            Labels = new string[valueList.Count];
+
+            int i = 0;
+            foreach (var item in valueList)
+            {
+                Labels[i] = item.Key.ToString();
+                values.Add(item.Value);
+                i++;
+            }
+
+            SeriesCollection = new SeriesCollection {
+                new LineSeries
+                {
+                    Title = "Monthly Stats",
+                    Values = values,
+                    LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                    PointGeometry = null,
+                    PointForeground = Brushes.Blue
+                }
+            };
+
+            YFormatter = value => value.ToString("C");
+
+            DataContext = this;
         }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> YFormatter { get; set; }
     }
 
 }

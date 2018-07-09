@@ -155,11 +155,8 @@ namespace Banker
                                                 && elem.Timestamp.Day == i);
                 }
 
-                if (tempList.Count > 0)
-                {
-                    decimal sum = tempList.Sum(item => item.Money);
-                    chartList.Add(new KeyValuePair<decimal, decimal>(i, sum));
-                }
+                decimal sum = tempList.Sum(item => item.Money);
+                chartList.Add(new KeyValuePair<decimal, decimal>(i, sum));
             }
 
             if (chartList.Count > 0)
