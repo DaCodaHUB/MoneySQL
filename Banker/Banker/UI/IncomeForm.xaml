@@ -90,13 +90,21 @@
 
             <DataGrid x:Name="DataGridExpense" AutoGenerateColumns="False" Height="415" Margin="0,0,-0.4,0"
                       IsReadOnly="True">
-
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalAlignment" Value="Center" ></Setter>
+                        <Setter Property="FontSize" Value="15"></Setter>
+                    </Style>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                        <Setter Property="FontSize" Value="15"></Setter>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header=" Selected" Width="0.6*" Binding="{Binding Selected}"
+                    <DataGridCheckBoxColumn Header="Selected" Width="0.6*" Binding="{Binding Selected}"
                                             IsReadOnly="False" />
-                    <DataGridTextColumn Header="   Timestamp" Width="1.4*" Binding="{Binding Timestamp}" />
-                    <DataGridTextColumn Header=" Category" Width="*" Binding="{Binding Category}" />
-                    <DataGridTextColumn Header=" Spend" Width="0.7*" Binding="{Binding Spend}" />
+                    <DataGridTextColumn Header="Timestamp" Width="1.4*" Binding="{Binding Timestamp}" />
+                    <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Category}" />
+                    <DataGridTextColumn Header="Spend" Width="0.7*" Binding="{Binding Spend}" />
                 </DataGrid.Columns>
             </DataGrid>
 

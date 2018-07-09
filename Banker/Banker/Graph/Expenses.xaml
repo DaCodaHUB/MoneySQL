@@ -1,4 +1,9 @@
 ﻿<Window
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    Background="{DynamicResource MaterialDesignPaper}"
+    TextElement.FontWeight="Medium"
+    TextElement.FontSize="15"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,6 +15,12 @@
     <Grid>
         <lvc:PieChart x:Name="PieChartXAML" LegendLocation="Bottom" Series="{Binding SeriesCollection}"
                       Hoverable="True" HoverPushOut="10">
+            <lvc:PieChart.Resources>
+                <Style TargetType="lvc:PieSeries">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                </Style>
+            </lvc:PieChart.Resources>
 
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="30" />

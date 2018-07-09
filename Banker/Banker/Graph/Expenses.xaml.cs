@@ -20,7 +20,7 @@ namespace Banker
     /// <summary>
     /// Interaction logic for Expenses.xaml
     /// </summary>
-    public partial class Expenses
+    public partial class Expenses : Window
     {
 //        public Func<ChartPoint, string> PointLabel { get; set; }
         public SeriesCollection SeriesCollection { get; set; }
