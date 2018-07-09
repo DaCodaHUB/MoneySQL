@@ -20,14 +20,15 @@ namespace Banker
     /// <summary>
     /// Interaction logic for Expenses.xaml
     /// </summary>
-    public partial class Expenses : Window
+    public partial class Expenses
     {
-        private readonly List<KeyValuePair<string, decimal>> _Expense;
+//        public Func<ChartPoint, string> PointLabel { get; set; }
+        public SeriesCollection SeriesCollection { get; set; }
 
         public Expenses(List<KeyValuePair<string, decimal>> _expense)
         {
             InitializeComponent();
-            this._Expense = _expense;
+
 
             SeriesCollection = new SeriesCollection();
 
@@ -37,27 +38,12 @@ namespace Banker
                 {
                     Title = item.Key,
                     Values = new ChartValues<decimal> {item.Value},
-                    DataLabels = true,
+                    DataLabels = true
                 });
             }
 
+//            PointLabel = chartPoint => $"{chartPoint.Participation:P}";
             DataContext = this;
         }
-
-        public Func<ChartPoint, string> PointLabel { get; set; }
-        public SeriesCollection SeriesCollection { get; set; }
-
-        private void Chart_OnDataClick(object sender, LiveCharts.ChartPoint chartPoint)
-        {
-            var chart = (LiveCharts.Wpf.PieChart)chartPoint.ChartView;
-
-            //clear selected slice.
-            foreach (PieSeries series in chart.Series)
-                series.PushOut = 0;
-
-            var selectedSeries = (PieSeries)chartPoint.SeriesView;
-            selectedSeries.PushOut = 8;
-        }
     }
-
 }

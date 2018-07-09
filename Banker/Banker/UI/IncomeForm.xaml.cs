@@ -140,11 +140,11 @@ namespace Banker
 
         private void LastMonth_Click(object sender, RoutedEventArgs e)
         {
-            List<KeyValuePair<decimal, decimal>> chartList = new List<KeyValuePair<decimal, decimal>>();
+            var chartList = new List<KeyValuePair<int, decimal>>();
 
             for (int i = 1; i <= 31; i++)
             {
-                List<SqlConnect.Bank> tempList = new List<SqlConnect.Bank>();
+                var tempList = new List<SqlConnect.Bank>();
 
                 if (DateTime.Today.Month > 1)
                 {
@@ -155,8 +155,8 @@ namespace Banker
                                                 && elem.Timestamp.Day == i);
                 }
 
-                decimal sum = tempList.Sum(item => item.Money);
-                chartList.Add(new KeyValuePair<decimal, decimal>(i, sum));
+                var sum = tempList.Sum(item => item.Money);
+                chartList.Add(new KeyValuePair<int, decimal>(i, sum));
             }
 
             if (chartList.Count > 0)
@@ -171,11 +171,11 @@ namespace Banker
 
         private void Monthly_Click(object sender, RoutedEventArgs e)
         {
-            List<KeyValuePair<decimal, decimal>> valueList = new List<KeyValuePair<decimal, decimal>>();
+            var valueList = new List<KeyValuePair<int, decimal>>();
 
             for (int i = 1; i <= DateTime.Today.Month; i++)
             {
-                List<SqlConnect.Bank> tempList = _random.FindAll(elem => elem.Timestamp.Month == i
+                var tempList = _random.FindAll(elem => elem.Timestamp.Month == i
                                                                          && elem.Timestamp.Year == DateTime.Today.Year);
                 decimal value = 0;
                 if (tempList.Count > 0)
@@ -183,7 +183,7 @@ namespace Banker
                     value = tempList[0].Money;
                 }
 
-                valueList.Add(new KeyValuePair<decimal, decimal>(i, value));
+                valueList.Add(new KeyValuePair<int, decimal>(i, value));
             }
 
             var report = new Monthly(valueList);

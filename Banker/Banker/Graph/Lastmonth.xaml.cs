@@ -11,30 +11,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Diagnostics;
 using LiveCharts;
 using LiveCharts.Wpf;
 
 namespace Banker
 {
     /// <summary>
-    /// Interaction logic for Monthly.xaml
+    /// Interaction logic for Lastmonth.xaml
     /// </summary>
-    public partial class Monthly : Window
+    public partial class Lastmonth : Window
     {
-        private readonly List<KeyValuePair<decimal, decimal>> _valueList;
 
-        public Monthly(List<KeyValuePair<decimal, decimal>> valueList)
+        public Lastmonth(List<KeyValuePair<int, decimal>> valueList)
         {
             InitializeComponent();
-            this._valueList = valueList;
-            //lineChart.DataContext = valueList;
 
-            ChartValues<decimal> values = new ChartValues<decimal>();
+            var values = new ChartValues<decimal>();
 
             Labels = new string[valueList.Count];
-            
-            int i = 0;
+
+            var i = 0;
             foreach (var item in valueList)
             {
                 Labels[i] = item.Key.ToString();
@@ -52,7 +48,7 @@ namespace Banker
                     PointForeground = Brushes.Blue
                 }
             };
-            
+
             YFormatter = value => value.ToString("C");
 
             DataContext = this;
@@ -62,4 +58,5 @@ namespace Banker
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
     }
+
 }

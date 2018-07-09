@@ -49,18 +49,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetProjects.DataVisualization.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.DataVisualization.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetProjects.Input.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.Input.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetProjects.Layout.Toolkit, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.Layout.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetProjects.WPF.Themes, Version=5.0.43.0, Culture=neutral, PublicKeyToken=79778c5f2eed289b, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetProjects.Wpf.Toolkit.5.0.43\lib\net40\DotNetProjects.WPF.Themes.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Protobuf, Version=3.6.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.6.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -118,24 +106,24 @@
     <Compile Include="Database\TextFields.cs" />
     <Compile Include="Domain\OnlyDecimalNumber.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
-    <Compile Include="Expenses.xaml.cs">
+    <Compile Include="Graph\Expenses.xaml.cs">
       <DependentUpon>Expenses.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Lastmonth.xaml.cs">
+    <Compile Include="Graph\Lastmonth.xaml.cs">
       <DependentUpon>Lastmonth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Monthly.xaml.cs">
+    <Compile Include="Graph\Monthly.xaml.cs">
       <DependentUpon>Monthly.xaml</DependentUpon>
     </Compile>
-    <Page Include="Expenses.xaml">
+    <Page Include="Graph\Expenses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Lastmonth.xaml">
+    <Page Include="Graph\Lastmonth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Monthly.xaml">
+    <Page Include="Graph\Monthly.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

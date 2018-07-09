@@ -3,7 +3,7 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     Background="{DynamicResource MaterialDesignPaper}"
     TextElement.FontWeight="Medium"
-    TextElement.FontSize="15"
+    TextElement.FontSize="20"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     WindowStartupLocation="CenterScreen"
     x:Class="Banker.IncomeForm"
@@ -14,18 +14,18 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:domain="clr-namespace:Banker.Domain"
     mc:Ignorable="d"
-    Title="Manage" Height="530" Width="500">
+    Title="Manage" Height="700" Width="600">
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.15*" />
+                    <ColumnDefinition Width="0.2*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <materialDesign:PackIcon Width="22" Height="22" Grid.Column="0" Kind="CurrencyUsd"
+                <materialDesign:PackIcon Width="40" Height="40" Grid.Column="0" Kind="CurrencyUsd"
                                          Foreground="{Binding ElementName=Money, Path=BorderBrush}"
                                          Margin="0,10,0,0" />
                 <TextBox KeyDown="Money_OnKeyDown" x:Name="Money" materialDesign:HintAssist.Hint="Money"
@@ -42,7 +42,7 @@
                 <Button x:Name="Income" Click="Income_OnClick" Grid.Column="2" Content="Income" Margin="10,0" />
                 <Button x:Name="Spend" Click="Spend_OnClick" Grid.Column="3" Content="Spend" Margin="10,0" />
             </Grid>
-            <Grid Margin="0,20,0,0">
+            <Grid Margin="0,25,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.15*" />
                     <ColumnDefinition Width="1.15*" />
@@ -59,15 +59,15 @@
                     <ComboBoxItem Content="Services" />
                     <ComboBoxItem Content="Materials" />
                 </ComboBox>
-                <materialDesign:PackIcon Width="22" Height="22" Grid.Column="2" Kind="Bank"
+                <materialDesign:PackIcon Width="40" Height="40" Grid.Column="2" Kind="Bank"
                                          Foreground="{Binding ElementName=CurrentMoney, Path=BorderBrush}"
                                          Margin="20,10,0,0" />
 
                 <TextBox x:Name="CurrentMoney" IsEnabled="False" Grid.Column="3" Margin="0,0,30,0" />
             </Grid>
-            <Grid Margin="0,20,0,0">
+            <Grid Margin="0,25,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.15*" />
+                    <ColumnDefinition Width="0.08*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -79,7 +79,7 @@
 
 
             </Grid>
-            <Grid Margin="0,10,0,0">
+            <Grid Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="0.5*" />
@@ -88,10 +88,12 @@
                 <Button x:Name="Delete" Content="Delete" Click="Delete_OnClick" Grid.Column="1" Margin="20,0,10,0" />
             </Grid>
 
-            <DataGrid x:Name="DataGridExpense" AutoGenerateColumns="False" Height="292">
+            <DataGrid x:Name="DataGridExpense" AutoGenerateColumns="False" Height="415" Margin="0,0,-0.4,0"
+                      IsReadOnly="True">
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header=" Selected" Width="0.6*" Binding="{Binding Selected}" />
+                    <DataGridCheckBoxColumn Header=" Selected" Width="0.6*" Binding="{Binding Selected}"
+                                            IsReadOnly="False" />
                     <DataGridTextColumn Header="   Timestamp" Width="1.4*" Binding="{Binding Timestamp}" />
                     <DataGridTextColumn Header=" Category" Width="*" Binding="{Binding Category}" />
                     <DataGridTextColumn Header=" Spend" Width="0.7*" Binding="{Binding Spend}" />
