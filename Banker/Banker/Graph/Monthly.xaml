@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-    x:Class="Banker.Monthly"
+    x:Class="Banker.Graph.Monthly"
     mc:Ignorable="d"
     Title="Monthly" Height="600" Width="800">
     <Grid>

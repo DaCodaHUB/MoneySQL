@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Banker.Database
 {
     public class RandomListData
     {
-        private Random _random;
+        private readonly Random _random;
 
         public RandomListData()
         {
             _random = new Random();
         }
 
-        public List<SqlConnect.Bank> generate()
+        public List<SqlConnect.Bank> Generate()
         {
             var list = new List<SqlConnect.Bank>();
             for (var i = 0; i < 90; i++)

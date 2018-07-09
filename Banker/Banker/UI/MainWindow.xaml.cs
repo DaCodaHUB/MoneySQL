@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using Banker.Database;
 
 namespace Banker
@@ -29,9 +27,9 @@ namespace Banker
                 MessageBox.Show($@"This {username} is not existed or password is incorrect");
             else
             {
-                this.Hide();
+                Hide();
                 var incomeForm = new IncomeForm(result.Id);
-                incomeForm.Closed += (s, args) => this.Close();
+                incomeForm.Closed += (s, args) => Close();
                 incomeForm.Show();
             }
         }

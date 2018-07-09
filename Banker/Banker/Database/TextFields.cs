@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Banker.Database
 {
     public class TextFields : INotifyPropertyChanged
     {
-        private string username;
+        private string _username;
         // Declare the event
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,15 +14,15 @@ namespace Banker.Database
 
         public TextFields(string value)
         {
-            this.username = value;
+            _username = value;
         }
 
         public string Text
         {
-            get => username;
+            get => _username;
             set
             {
-                username = value;
+                _username = value;
                 // Call OnPropertyChanged whenever the property is updated
                 OnPropertyChanged("Text");
             }
@@ -36,7 +31,7 @@ namespace Banker.Database
         // Create the OnPropertyChanged method to raise the event
         private void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(username));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_username));
         }
     }
 }

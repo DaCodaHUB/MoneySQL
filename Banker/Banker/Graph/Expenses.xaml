@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-    x:Class="Banker.Expenses"
+    x:Class="Banker.Graph.Expenses"
     mc:Ignorable="d"
     Title="Expenses" Height="700" Width="700">
     <Grid>

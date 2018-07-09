@@ -5,8 +5,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Linq;
 using System.Diagnostics;
-using System.Windows.Controls;
 using Banker.Database;
+using Banker.Graph;
 
 namespace Banker
 {
@@ -17,10 +17,10 @@ namespace Banker
     {
         private readonly int _userId;
         private readonly SqlConnect _sql;
-        private List<SqlConnect.Bank> _total;
-        private List<SqlConnect.Bank> _expense;
-        private List<SqlConnect.Bank> _random;
-        private ObservableCollection<SqlConnect.Bank> _observableDataBanks;
+        private readonly List<SqlConnect.Bank> _total;
+        private readonly List<SqlConnect.Bank> _expense;
+        private readonly List<SqlConnect.Bank> _random;
+        private readonly ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
         public IncomeForm(int userId)
@@ -37,7 +37,7 @@ namespace Banker
 
 
             // For testing
-            _random = new RandomListData().generate();
+            _random = new RandomListData().Generate();
 
             DataGridExpense.ItemsSource = _observableDataBanks;
 

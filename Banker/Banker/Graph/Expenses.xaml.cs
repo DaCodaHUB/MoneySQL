@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
-using LiveCharts.Defaults;
 
-namespace Banker
+namespace Banker.Graph
 {
     /// <summary>
     /// Interaction logic for Expenses.xaml
@@ -23,13 +11,11 @@ namespace Banker
     public partial class Expenses : Window
     {
 //        public Func<ChartPoint, string> PointLabel { get; set; }
-        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection SeriesCollection { get; }
 
         public Expenses(List<KeyValuePair<string, decimal>> _expense)
         {
             InitializeComponent();
-
-
             SeriesCollection = new SeriesCollection();
 
             foreach (var item in _expense)

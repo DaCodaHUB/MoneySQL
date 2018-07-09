@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace Banker.Database
