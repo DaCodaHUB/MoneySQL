@@ -25,6 +25,7 @@ namespace Banker
             _expenseCalculated = Expenses_Calculate(expense);
             _monthlyCalculated = Monthly_Caluculate(random);
             _lastmonthCalculated = LastMonth_Calculate(random);
+            ChartCombo.SelectedIndex = 0;
         }
 
 

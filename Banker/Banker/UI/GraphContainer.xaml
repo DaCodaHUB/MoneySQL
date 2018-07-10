@@ -14,7 +14,7 @@
     Title="Chart" Height="740" Width="800">
     <Border Padding="10">
         <StackPanel>
-            <ComboBox FontSize="20" materialDesign:HintAssist.Hint="Chart" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,500,0">
+            <ComboBox x:Name="ChartCombo" FontSize="20" materialDesign:HintAssist.Hint="Chart" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="0,0,500,0">
                 <ComboBoxItem x:Name="Expenses" Content="Expenses" Selected="Expenses_OnSelected"></ComboBoxItem>
                 <ComboBoxItem x:Name="Monthly" Content="Monthly" Selected="Monthly_OnSelected"></ComboBoxItem>
                 <ComboBoxItem x:Name="LastMonth" Content="Last Month" Selected="LastMonth_OnSelected"></ComboBoxItem>

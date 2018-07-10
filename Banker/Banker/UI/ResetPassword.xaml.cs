@@ -32,7 +32,7 @@ namespace Banker
             // Todo: change type to password
 
             // Todo: upload to database
-            if(verifyString.Equals(verify.Text) && newPass.Text.Equals(confirmPass.Text))
+            if(verifyString.Equals(verify.Text) && newPass.Password.Equals(confirmPass.Password))
             {
 
             }

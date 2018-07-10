@@ -26,7 +26,7 @@ namespace Banker.Database
                 return 2;
             if (password.Length < 7)
                 return 3;
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -41,7 +41,9 @@ namespace Banker.Database
                             password = SecurePasswordHasher.Hash(password);
 
                             myCommand.CommandText =
-                                $"INSERT INTO User (username,password) VALUES ('{username}','{password}');";
+                                $"INSERT INTO User (username,password) VALUES (@username,@password);";
+                            myCommand.Parameters.AddWithValue("@username", username);
+                            myCommand.Parameters.AddWithValue("@password", password);
 
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
@@ -77,7 +79,7 @@ namespace Banker.Database
         {
             var hashPassword = "";
             var user = new UserInfo();
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -89,7 +91,8 @@ namespace Banker.Database
 
                         try
                         {
-                            myCommand.CommandText = $"SELECT id, password FROM User WHERE username = '{username}';";
+                            myCommand.CommandText = "SELECT id, password FROM User WHERE username = @username;";
+                            myCommand.Parameters.AddWithValue("@username", username);
                             using (var reader = myCommand.ExecuteReader())
                             {
                                 while (reader.Read())
@@ -148,7 +151,7 @@ namespace Banker.Database
                     throw new Exception("Category can't be empty");
             }
 
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -164,12 +167,17 @@ namespace Banker.Database
                             if (mode.Equals("expense"))
                             {
                                 myCommand.CommandText =
-                                    $"INSERT INTO Expense (Uid,Category,$) VALUES ('{userid}','{category}','{money}');";
+                                    "INSERT INTO Expense (Uid,Category,$) VALUES (@userid,@category,@money);";
+                                myCommand.Parameters.AddWithValue("@userid", userid);
+                                myCommand.Parameters.AddWithValue("@category", category);
+                                myCommand.Parameters.AddWithValue("@money", money);
                             }
                             else if (mode.Equals("total"))
                             {
                                 myCommand.CommandText =
-                                    $"INSERT INTO Total (Uid,$) VALUES ('{userid}','{money}');";
+                                    $"INSERT INTO Total (Uid,$) VALUES (@userid,@money);";
+                                myCommand.Parameters.AddWithValue("@userid", userid);
+                                myCommand.Parameters.AddWithValue("@money", money);
                             }
 
                             myCommand.ExecuteNonQuery();
@@ -195,10 +203,9 @@ namespace Banker.Database
             }
         }
 
-        public void DeleteMoney(string mode, string timestamp)
+        public void DeleteMoney(string mode, int itemId, int userId)
         {
-           
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -213,13 +220,18 @@ namespace Banker.Database
 
                             if (mode.Equals("expense"))
                             {
-                                myCommand.CommandText =
-                                    $"DELETE FROM Expense WHERE TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) >= 0 AND TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) <= 5;";
+                                myCommand.CommandText = "DELETE FROM Expense WHERE id=@itemId AND Uid=@userId;";
+                                myCommand.Parameters.AddWithValue("@itemId", itemId);
+                                myCommand.Parameters.AddWithValue("@userId", userId);
+//                                myCommand.CommandText =
+//                                    $"DELETE FROM Expense WHERE TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) >= 0 AND TIME_TO_SEC(TIMEDIFF(`Timestamp`,'{timestamp}')) <= 5;";
                             }
                             else if (mode.Equals("total"))
                             {
                                 myCommand.CommandText =
-                                    $"DELETE FROM Total WHERE Timestamp='{timestamp}';";
+                                    $"DELETE FROM Total WHERE id=@itemId AND Uid=@userId;";
+                                myCommand.Parameters.AddWithValue("@itemId", itemId);
+                                myCommand.Parameters.AddWithValue("@userId", userId);
                             }
 
                             myCommand.ExecuteNonQuery();
@@ -249,7 +261,7 @@ namespace Banker.Database
         {
             var result = new List<Bank>();
 
-            using (var myConnection = new MySqlConnection { ConnectionString = MyConnectionString })
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
                 using (var myCommand = myConnection.CreateCommand())
@@ -263,13 +275,15 @@ namespace Banker.Database
                     {
                         if (mode.Equals("expense"))
                         {
-                            myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = {userid};";
+                            myCommand.CommandText = $"SELECT * FROM Expense WHERE Uid = @userId;";
+                            myCommand.Parameters.AddWithValue("@userId", userid);
                             using (var reader = myCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
                                     var expense = new Bank(reader.GetDecimal("$"),
-                                        reader.GetDateTime("Timestamp"), reader.GetString("Category"));
+                                        reader.GetDateTime("Timestamp"), reader.GetString("Category"),
+                                        reader.GetInt32("id"));
                                     result.Add(expense);
                                 }
                             }
@@ -281,7 +295,8 @@ namespace Banker.Database
                             {
                                 while (reader.Read())
                                 {
-                                    var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"));
+                                    var total = new Bank(reader.GetDecimal("$"), reader.GetDateTime("Timestamp"), null,
+                                        reader.GetInt32("id"));
                                     result.Add(total);
                                 }
                             }
@@ -313,14 +328,16 @@ namespace Banker.Database
             public string Category { get; }
             public decimal Money { get; }
             public string Spend { get; }
+            public int Id { get; }
 
 //            .ToString("yyyy-MM-dd HH:mm:ss")
-            public Bank(decimal money, DateTime timestamp, string category = null, bool selected = false)
+            public Bank(decimal money, DateTime timestamp, string category = null, int id = 0, bool selected = false)
             {
                 Money = money;
                 Timestamp = timestamp;
                 Category = category;
                 Spend = money.ToString("C");
+                Id = id;
             }
 
             public override string ToString()

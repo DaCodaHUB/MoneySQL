@@ -19,7 +19,7 @@ namespace Banker
         private readonly List<SqlConnect.Bank> _total;
         private readonly List<SqlConnect.Bank> _expense;
         private readonly List<SqlConnect.Bank> _random;
-        private ObservableCollection<SqlConnect.Bank> _observableDataBanks;
+        private readonly ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
         public IncomeForm(int userId)
@@ -33,12 +33,12 @@ namespace Banker
 
 
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
-            
+
             // For testing
             _random = new RandomListData().Generate();
 
             DataGridExpense.ItemsSource = _observableDataBanks;
-            
+
             _current = _total.Count >= 1 ? _total[_total.Count - 1].Money : 0;
             CurrentMoney.Text = _current.ToString("C");
         }
@@ -54,8 +54,6 @@ namespace Banker
                 return;
             }
 
-            MessageBox.Show(@"You successfully added an income to your bank");
-
             // Get current total
             _current = _current + income;
 
@@ -66,6 +64,7 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
+            MessageBox.Show(@"You successfully added an income to your bank");
             Income.IsEnabled = true;
         }
 
@@ -94,8 +93,6 @@ namespace Banker
                 category = Category.Text;
             }
 
-            MessageBox.Show(@"You successfully added an expense to your bank");
-
 
             // Get current total
             _current = _current - expense;
@@ -114,6 +111,7 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
+            MessageBox.Show(@"You successfully added an expense to your bank");
             Spend.IsEnabled = true;
         }
 
@@ -182,7 +180,7 @@ namespace Banker
         private void Delete_OnClick(object sender, RoutedEventArgs e)
         {
             var removeItem = _observableDataBanks.Where(x => x.Selected).ToList();
-            
+
             if (removeItem.Count == 0)
             {
                 MessageBox.Show("Check a box to delete a record.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
@@ -191,7 +189,7 @@ namespace Banker
 
             foreach (var item in removeItem)
             {
-                var timestamp = item.Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+//                var timestamp = item.Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
 
                 _observableDataBanks.Remove(item);
                 _current += item.Money;
@@ -199,7 +197,7 @@ namespace Banker
                 var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
                 _sql.InsertMoney("total", _userId, _current);
                 _total.Add(currentTotal);
-                _sql.DeleteMoney("expense", timestamp);
+                _sql.DeleteMoney("expense", item.Id, _userId);
             }
 
             CurrentMoney.Text = _current.ToString("C");

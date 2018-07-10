@@ -26,14 +26,15 @@ namespace Banker
         {
             InitializeComponent();
             _sql = Sql;
+            DataContext = new TextFields();
         }
 
         private void SignUp_OnClick(object sender, RoutedEventArgs e)
         {
-            var username = usernameTxt.Text;
+            var username = UsernameTxt.Text;
 
             // Todo: Change to PasswordBox
-            var pass = passwordTxt.Text;
+            var pass = passwordTxt.Password;
 
             var replayCode = _sql.CreateNewUser(username, pass);
 
