@@ -106,6 +106,7 @@
     <Compile Include="Charts\Monthly_UC.xaml.cs">
       <DependentUpon>Monthly_UC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Database\MailCode.cs" />
     <Compile Include="Database\RandomListData.cs" />
     <Compile Include="Database\SecurePasswordHasher.cs" />
     <Compile Include="Database\SqlConnect.cs" />
@@ -127,6 +128,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ResetPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignUp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\GraphContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -142,6 +151,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.xaml.cs">
+      <DependentUpon>ResetPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SignUp.xaml.cs">
+      <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\GraphContainer.xaml.cs">
       <DependentUpon>GraphContainer.xaml</DependentUpon>

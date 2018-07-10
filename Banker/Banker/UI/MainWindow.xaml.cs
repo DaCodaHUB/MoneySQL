@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Banker.Database;
+using System.Net.Mail;
+using System.Diagnostics;
 
 namespace Banker
 {
@@ -36,32 +39,14 @@ namespace Banker
 
         private void SignUp_OnClick(object sender, RoutedEventArgs e)
         {
-//            var result = new RandomListData().generate();
-//            foreach (var v in result)
-//            {
-//                Debug.WriteLine(v.ToString());
-//            }
+            //            var result = new RandomListData().generate();
+            //            foreach (var v in result)
+            //            {
+            //                Debug.WriteLine(v.ToString());
+            //            }
 
-            var username = UsernameTxt.Text;
-            var pass = PasswordTxt.Password;
-
-            var replayCode = _sql.CreateNewUser(username, pass);
-
-            switch (replayCode)
-            {
-                case 1:
-                    MessageBox.Show($@"Username {username} is existed");
-                    break;
-                case 2:
-                    MessageBox.Show(@"Username or password is empty");
-                    break;
-                case 3:
-                    MessageBox.Show(@"Password needs at least 8 characters");
-                    break;
-                default:
-                    MessageBox.Show($@"Username {username} is created");
-                    break;
-            }
+            var signUpForm = new SignUp(_sql);
+            signUpForm.Show();
         }
     }
 }
