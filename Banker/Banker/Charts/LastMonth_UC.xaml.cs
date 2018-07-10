@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace Banker.Graph
+namespace Banker.Charts
 {
     /// <summary>
-    /// Interaction logic for Lastmonth.xaml
+    /// Interaction logic for LastMonth_UC.xaml
     /// </summary>
-    public partial class Lastmonth : Window
+    public partial class LastMonth_UC : UserControl
     {
-
-        public Lastmonth(List<KeyValuePair<int, decimal>> valueList)
+        public LastMonth_UC(List<KeyValuePair<int, decimal>> valueList)
         {
             InitializeComponent();
 
@@ -49,5 +58,4 @@ namespace Banker.Graph
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
     }
-
 }

@@ -73,9 +73,9 @@
                     <ColumnDefinition Width="*" />
 
                 </Grid.ColumnDefinitions>
-                <Button Content="Last Month" Click="LastMonth_Click" Grid.Column="1" Margin="10,0" />
-                <Button Content="Monthly" Grid.Column="2" Click="Monthly_Click" Margin="10,0" />
-                <Button Content="Expenses" Grid.Column="3" Click="Expenses_Click" Margin="10,0" />
+                <!-- <Button Content="Last Month" Click="LastMonth_Click" Grid.Column="1" Margin="10,0" /> -->
+                <!-- <Button Content="Monthly" Grid.Column="2" Click="Monthly_Click" Margin="10,0" /> -->
+                <Button Content="View Charts" Grid.Column="3" Click="ViewCharts_Click" Margin="10,0" />
 
 
             </Grid>

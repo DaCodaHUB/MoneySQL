@@ -100,34 +100,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Charts\LastMonth_UC.xaml.cs">
+      <DependentUpon>LastMonth_UC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charts\Monthly_UC.xaml.cs">
+      <DependentUpon>Monthly_UC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Database\RandomListData.cs" />
     <Compile Include="Database\SecurePasswordHasher.cs" />
     <Compile Include="Database\SqlConnect.cs" />
     <Compile Include="Database\TextFields.cs" />
     <Compile Include="Domain\OnlyDecimalNumber.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
-    <Compile Include="Graph\Expenses.xaml.cs">
-      <DependentUpon>Expenses.xaml</DependentUpon>
+    <Compile Include="Charts\Expenses_UC.xaml.cs">
+      <DependentUpon>Expenses_UC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Graph\Lastmonth.xaml.cs">
-      <DependentUpon>Lastmonth.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Graph\Monthly.xaml.cs">
-      <DependentUpon>Monthly.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Graph\Expenses.xaml">
+    <Page Include="Charts\Expenses_UC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Graph\Lastmonth.xaml">
+    <Page Include="Charts\LastMonth_UC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Graph\Monthly.xaml">
+    <Page Include="Charts\Monthly_UC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\DataForm.xaml">
+    <Page Include="UI\GraphContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,8 +143,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\DataForm.xaml.cs">
-      <DependentUpon>DataForm.xaml</DependentUpon>
+    <Compile Include="UI\GraphContainer.xaml.cs">
+      <DependentUpon>GraphContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\IncomeForm.xaml.cs">
       <DependentUpon>IncomeForm.xaml</DependentUpon>

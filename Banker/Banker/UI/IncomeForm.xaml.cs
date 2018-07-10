@@ -138,88 +138,11 @@ namespace Banker
             return money;
         }
 
-        private void LastMonth_Click(object sender, RoutedEventArgs e)
+       
+        private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
-            var chartList = new List<KeyValuePair<int, decimal>>();
-
-            for (int i = 1; i <= 31; i++)
-            {
-                var tempList = new List<SqlConnect.Bank>();
-
-                if (DateTime.Today.Month > 1)
-                {
-                    tempList = _random.FindAll(elem => elem.Timestamp.Month == DateTime.Now.Month - 1 && elem.Timestamp.Day == i);
-                } else
-                {
-                    tempList = _random.FindAll(elem => elem.Timestamp.Month == 12 && elem.Timestamp.Year == DateTime.Today.Year - 1 
-                                                && elem.Timestamp.Day == i);
-                }
-
-                var sum = tempList.Sum(item => item.Money);
-                chartList.Add(new KeyValuePair<int, decimal>(i, sum));
-            }
-
-            if (chartList.Count > 0)
-            {
-                var report = new Lastmonth(chartList);
-                report.Show();
-            } else
-            {
-                MessageBox.Show("No data last month");
-            }
-        }
-
-        private void Monthly_Click(object sender, RoutedEventArgs e)
-        {
-            var valueList = new List<KeyValuePair<int, decimal>>();
-
-            for (int i = 1; i <= DateTime.Today.Month; i++)
-            {
-                var tempList = _random.FindAll(elem => elem.Timestamp.Month == i
-                                                                         && elem.Timestamp.Year == DateTime.Today.Year);
-                decimal value = 0;
-                if (tempList.Count > 0)
-                {
-                    value = tempList[0].Money;
-                }
-
-                valueList.Add(new KeyValuePair<int, decimal>(i, value));
-            }
-
-            var report = new Monthly(valueList);
-            report.Show();
-        }
-
-        private void Expenses_Click(object sender, RoutedEventArgs e)
-        {
-            List<SqlConnect.Bank> tempList = _expense.FindAll(elem => elem.Category == "Education");
-            decimal educationSum = tempList.Sum(item => item.Money);
-
-            tempList = _expense.FindAll(elem => elem.Category == "Entertainment");
-            decimal entertaimentSum = tempList.Sum(item => item.Money);
-
-            tempList = _expense.FindAll(elem => elem.Category == "Transportation");
-            decimal transportationSum = tempList.Sum(item => item.Money);
-
-            tempList = _expense.FindAll(elem => elem.Category == "Food and Drink");
-            decimal foodSum = tempList.Sum(item => item.Money);
-
-            tempList = _expense.FindAll(elem => elem.Category == "Services");
-            decimal serviceSum = tempList.Sum(item => item.Money);
-
-            tempList = _expense.FindAll(elem => elem.Category == "Materials");
-            decimal materialSum = tempList.Sum(item => item.Money);
-
-            List<KeyValuePair<string, decimal>> valueList = new List<KeyValuePair<string, decimal>>();
-            if (educationSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Education", educationSum)); }
-            if (entertaimentSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Entertainment", entertaimentSum)); }
-            if (transportationSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Transportation", transportationSum)); }
-            if (foodSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Food and Drink", foodSum)); }
-            if (serviceSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Services", serviceSum)); }
-            if (materialSum > 0) { valueList.Add(new KeyValuePair<string, decimal>("Materials", materialSum)); }
-
-            var report = new Expenses(valueList);
-            report.Show();
+            var graph = new GraphContainer(_expense, _random);
+            graph.Show();
         }
 
         private void Money_OnKeyDown(object sender, KeyEventArgs e)

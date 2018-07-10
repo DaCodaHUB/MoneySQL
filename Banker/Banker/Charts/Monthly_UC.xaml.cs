@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace Banker.Graph
+namespace Banker.Charts
 {
     /// <summary>
-    /// Interaction logic for Monthly.xaml
+    /// Interaction logic for Monthly_UC.xaml
     /// </summary>
-    public partial class Monthly : Window
+    public partial class Monthly_UC : UserControl
     {
-  
-
-        public Monthly(List<KeyValuePair<int, decimal>> valueList)
+        public Monthly_UC(List<KeyValuePair<int, decimal>> valueList)
         {
             InitializeComponent();
-   
+
             var values = new ChartValues<decimal>();
 
             Labels = new string[valueList.Count];
-            
+
             var i = 0;
             foreach (var item in valueList)
             {
@@ -40,7 +38,7 @@ namespace Banker.Graph
                     PointForeground = Brushes.Blue
                 }
             };
-            
+
             YFormatter = value => value.ToString("C");
 
             DataContext = this;
