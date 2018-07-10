@@ -153,6 +153,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Domain\ValidEmail.cs" />
+    <Compile Include="Domain\ValidPassword.cs" />
     <Compile Include="Domain\ValidUserName.cs" />
     <Compile Include="UI\ResetPassword.xaml.cs">
       <DependentUpon>ResetPassword.xaml</DependentUpon>

@@ -65,10 +65,23 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon Grid.Column="0" Kind="Key"
+                                         Foreground="{Binding ElementName=temppass, Path=BorderBrush}"
+                                         Margin="20,18,0,0" Width="40" Height="40" />
+                <materialDesign:PackIcon x:Name="KeyIcon" Grid.Column="0" Kind="Key"
                                          Foreground="{Binding ElementName=passwordTxt, Path=BorderBrush}"
                                          Margin="20,18,0,0" Width="40" Height="40" />
+                
+                <TextBox Name ="temppass" Grid.Column="1" Foreground="AliceBlue">
+                    <TextBox.Text>
+                        <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <domain:ValidPassword ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <PasswordBox Name="passwordTxt" materialDesign:HintAssist.Hint="Password"
-                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1"/>
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" PasswordChanged="PasswordTxt_OnPasswordChanged"/>
             </Grid>
 
 
@@ -78,3 +91,4 @@
 
 
 </Window>
+

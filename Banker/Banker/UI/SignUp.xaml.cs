@@ -54,5 +54,10 @@ namespace Banker
                     break;
             }
         }
+
+        private void PasswordTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            temppass.SelectedText = passwordTxt.Password;
+        }
     }
 }
