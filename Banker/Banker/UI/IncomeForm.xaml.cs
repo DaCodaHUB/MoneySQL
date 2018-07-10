@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Linq;
 using System.Diagnostics;
 using Banker.Database;
-using Banker.Graph;
 
 namespace Banker
 {
@@ -20,7 +19,7 @@ namespace Banker
         private readonly List<SqlConnect.Bank> _total;
         private readonly List<SqlConnect.Bank> _expense;
         private readonly List<SqlConnect.Bank> _random;
-        private readonly ObservableCollection<SqlConnect.Bank> _observableDataBanks;
+        private ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
         public IncomeForm(int userId)
@@ -34,13 +33,12 @@ namespace Banker
 
 
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
-
-
+            
             // For testing
             _random = new RandomListData().Generate();
 
             DataGridExpense.ItemsSource = _observableDataBanks;
-
+            
             _current = _total.Count >= 1 ? _total[_total.Count - 1].Money : 0;
             CurrentMoney.Text = _current.ToString("C");
         }
@@ -98,7 +96,6 @@ namespace Banker
 
             MessageBox.Show(@"You successfully added an expense to your bank");
 
-            Debug.WriteLine(category);
 
             // Get current total
             _current = _current - expense;
@@ -138,7 +135,7 @@ namespace Banker
             return money;
         }
 
-       
+
         private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
             var graph = new GraphContainer(_expense, _random);
@@ -185,7 +182,7 @@ namespace Banker
         private void Delete_OnClick(object sender, RoutedEventArgs e)
         {
             var removeItem = _observableDataBanks.Where(x => x.Selected).ToList();
-
+            
             if (removeItem.Count == 0)
             {
                 MessageBox.Show("Check a box to delete a record.", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);

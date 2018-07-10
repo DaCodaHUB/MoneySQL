@@ -315,7 +315,7 @@ namespace Banker.Database
             public string Spend { get; }
 
 //            .ToString("yyyy-MM-dd HH:mm:ss")
-            public Bank(decimal money, DateTime timestamp, string category = null)
+            public Bank(decimal money, DateTime timestamp, string category = null, bool selected = false)
             {
                 Money = money;
                 Timestamp = timestamp;

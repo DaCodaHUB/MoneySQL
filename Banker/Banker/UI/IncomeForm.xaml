@@ -88,23 +88,22 @@
                 <Button x:Name="Delete" Content="Delete" Click="Delete_OnClick" Grid.Column="1" Margin="20,0,10,0" />
             </Grid>
 
-            <DataGrid x:Name="DataGridExpense" AutoGenerateColumns="False" Height="415" Margin="0,0,-0.4,0"
-                      IsReadOnly="True">
+            <DataGrid x:Name="DataGridExpense" AutoGenerateColumns="False" Height="415" Margin="0,0,-0.4,0">
                 <DataGrid.Resources>
-                    <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="DataGridColumnHeader">
-                        <Setter Property="HorizontalAlignment" Value="Center" ></Setter>
-                        <Setter Property="FontSize" Value="15"></Setter>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}"
+                           TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="FontSize" Value="15" />
                     </Style>
                     <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
-                        <Setter Property="FontSize" Value="15"></Setter>
+                        <Setter Property="FontSize" Value="15" />
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Selected" Width="0.6*" Binding="{Binding Selected}"
-                                            IsReadOnly="False" />
-                    <DataGridTextColumn Header="Timestamp" Width="1.4*" Binding="{Binding Timestamp}" />
-                    <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Category}" />
-                    <DataGridTextColumn Header="Spend" Width="0.7*" Binding="{Binding Spend}" />
+                    <DataGridCheckBoxColumn Header="Selected" Width="0.6*" Binding="{Binding Selected}" />
+                    <DataGridTextColumn Header="Timestamp" Width="1.4*" Binding="{Binding Timestamp}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Category}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Spend" Width="0.7*" Binding="{Binding Spend}" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
 
