@@ -6,6 +6,7 @@
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     WindowStartupLocation="CenterScreen"
     x:Class="Banker.MainWindow"
+    xmlns:pba="clr-namespace:Banker.Domain"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -53,7 +54,11 @@
                                          Margin="20,18,0,0" Width="40" Height="40" />
 
                 <PasswordBox x:Name="PasswordTxt" materialDesign:HintAssist.Hint="Password"
-                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1"/>
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1"
+                             pba:PasswordBoxAssistant.BindPassword="true" pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
+                                                                                                                   UpdateSourceTrigger=Explicit, 
+                                                                                                                   ValidatesOnDataErrors=True, 
+                                                                                                                   ValidatesOnExceptions=True}" />
 
 
             </Grid>

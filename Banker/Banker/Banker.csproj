@@ -152,6 +152,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Domain\PasswordBoxAssistant.cs" />
     <Compile Include="Domain\ValidEmail.cs" />
     <Compile Include="Domain\ValidPassword.cs" />
     <Compile Include="Domain\ValidUserName.cs" />
