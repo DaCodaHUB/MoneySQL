@@ -3,6 +3,8 @@ using System.Windows;
 using Banker.Database;
 using System.Net.Mail;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Banker
 {
@@ -20,11 +22,13 @@ namespace Banker
             DataContext = new TextFields();
         }
 
+        
+
         private void SignIn_OnClick(object sender, RoutedEventArgs e)
         {
             var username = UsernameTxt.Text;
-            var pass = PasswordTxt.Password;
-
+            var pass = PasswordTxt.SecurePassword;
+            
             var result = _sql.VerifyUser(username, pass);
             if (!result.Valid)
                 MessageBox.Show($@"This {username} is not existed or password is incorrect");

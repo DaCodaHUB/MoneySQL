@@ -14,7 +14,7 @@
     xmlns:domain="clr-namespace:Banker.Domain"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
-    Title="Banker" Height="250" Width="550">
+    Title="Banker" Height="300" Width="550">
 
 
     <Border Padding="10">
@@ -58,7 +58,8 @@
                              pba:PasswordBoxAssistant.BindPassword="true" pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
                                                                                                                    UpdateSourceTrigger=Explicit, 
                                                                                                                    ValidatesOnDataErrors=True, 
-                                                                                                                   ValidatesOnExceptions=True}" />
+                                                                                                                   ValidatesOnExceptions=True}">
+                </PasswordBox>
 
 
             </Grid>
@@ -72,6 +73,16 @@
                 <Button x:Name="SignIn" Click="SignIn_OnClick" Content="Sign In" Grid.Column="1" Margin="20,0,20,0" />
                 <Button x:Name="SignUp" Click="SignUp_OnClick" Content="Sign Up" Grid.Column="2" Margin="20,0,20,0" Height="Auto" />
             </Grid>
+
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Content="Reset" Grid.Column="2" Margin="20,0"></Button>
+            </Grid>
+            
         </StackPanel>
     </Border>
 

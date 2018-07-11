@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Security;
 using MySql.Data.MySqlClient;
 
 namespace Banker.Database
@@ -20,11 +21,11 @@ namespace Banker.Database
         /// 2 - username or password is empty or whitespace
         /// 3 - password is too short (at least 8)
         /// </returns>
-        public int CreateNewUser(string username, string password)
+        public int CreateNewUser(string username, SecureString Spassword)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || Spassword.Length == 0)
                 return 2;
-            if (password.Length < 7)
+            if (Spassword.Length < 7)
                 return 3;
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -38,7 +39,7 @@ namespace Banker.Database
                             myCommand.Connection = myConnection;
                             myCommand.Transaction = myTrans;
 
-                            password = SecurePasswordHasher.Hash(password);
+                            var password = SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(Spassword));
 
                             myCommand.CommandText =
                                 $"INSERT INTO User (username,password) VALUES (@username,@password);";
@@ -75,7 +76,7 @@ namespace Banker.Database
             return 0;
         }
 
-        public UserInfo VerifyUser(string username, string password)
+        public UserInfo VerifyUser(string username, SecureString Spassword)
         {
             var hashPassword = "";
             var user = new UserInfo();
@@ -137,7 +138,7 @@ namespace Banker.Database
                 }
             }
 
-            user.Valid = SecurePasswordHasher.Verify(password, hashPassword);
+            user.Valid = SecurePasswordHasher.Verify(SecurePasswordBox.ConvertToUnsecureString(Spassword), hashPassword);
             return user;
         }
 

@@ -43,7 +43,7 @@ namespace Banker.Domain
 
             box.PasswordChanged += HandlePasswordChanged;
 
-            //Debug.WriteLine(newPassword);
+//            Debug.WriteLine(newPassword);
         }
 
         private static void OnBindPasswordChanged(DependencyObject dp, DependencyPropertyChangedEventArgs e)

@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Database\MailCode.cs" />
     <Compile Include="Database\RandomListData.cs" />
+    <Compile Include="Database\SecurePasswordBox.cs" />
     <Compile Include="Database\SecurePasswordHasher.cs" />
     <Compile Include="Database\SqlConnect.cs" />
     <Compile Include="Database\TextFields.cs" />

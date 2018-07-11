@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,7 +35,7 @@ namespace Banker
             var username = UsernameTxt.Text;
 
             // Todo: Change to PasswordBox
-            var pass = passwordTxt.Password;
+            var pass = passwordTxt.SecurePassword;
 
             var replayCode = _sql.CreateNewUser(username, pass);
 
@@ -58,6 +59,7 @@ namespace Banker
         private void PasswordTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
             temppass.SelectedText = passwordTxt.Password;
+//            new NetworkCredential()
         }
     }
 }
