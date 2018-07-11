@@ -16,7 +16,6 @@
     mc:Ignorable="d"
     Title="Banker" Height="300" Width="550">
 
-
     <Border Padding="10">
         <StackPanel>
             <Grid>
@@ -54,11 +53,11 @@
                                          Margin="20,18,0,0" Width="40" Height="40" />
 
                 <PasswordBox x:Name="PasswordTxt" materialDesign:HintAssist.Hint="Password"
-                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1"
-                             pba:PasswordBoxAssistant.BindPassword="true" pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" >
+                    <!-- pba:PasswordBoxAssistant.BindPassword="true" pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
                                                                                                                    UpdateSourceTrigger=Explicit, 
                                                                                                                    ValidatesOnDataErrors=True, 
-                                                                                                                   ValidatesOnExceptions=True}">
+                                                                                                                   ValidatesOnExceptions=True}" -->
                 </PasswordBox>
 
             </Grid>
@@ -79,7 +78,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="Reset" Grid.Column="2" Margin="20,0"></Button>
+                <Button Content="Forgot Password" Grid.Column="2" Margin="20,0" Click="Reset_OnClick"></Button>
             </Grid>
             
         </StackPanel>

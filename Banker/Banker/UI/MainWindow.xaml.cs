@@ -52,5 +52,10 @@ namespace Banker
             var signUpForm = new SignUp(_sql);
             signUpForm.Show();
         }
+
+        private void Reset_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
