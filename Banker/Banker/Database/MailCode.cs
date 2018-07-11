@@ -11,11 +11,11 @@ namespace Banker.Database
     {
         private string verifyCode;
 
-        public MailCode()
+        public MailCode(string email)
         {
             verifyCode = generateCode();
 
-            string to = "dannylpov@gmail.com";
+            string to = email;
             string from = "bankerserver@gmail.com";
             string subject = "Reset Code";
             string body = "You wish to reset your password. Use this code to verify the process: " + verifyCode;

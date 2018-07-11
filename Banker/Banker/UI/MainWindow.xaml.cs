@@ -22,8 +22,6 @@ namespace Banker
             DataContext = new TextFields();
         }
 
-        
-
         private void SignIn_OnClick(object sender, RoutedEventArgs e)
         {
             var username = UsernameTxt.Text;
@@ -55,7 +53,8 @@ namespace Banker
 
         private void Reset_OnClick(object sender, RoutedEventArgs e)
         {
-
+            var emailForm = new EmailForm();
+            emailForm.Show();
         }
     }
 }

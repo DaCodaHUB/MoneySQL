@@ -129,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EmailForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ResetPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +161,9 @@
     <Compile Include="Domain\ValidEmail.cs" />
     <Compile Include="Domain\ValidPassword.cs" />
     <Compile Include="Domain\ValidUserName.cs" />
+    <Compile Include="EmailForm.xaml.cs">
+      <DependentUpon>EmailForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ResetPassword.xaml.cs">
       <DependentUpon>ResetPassword.xaml</DependentUpon>
     </Compile>

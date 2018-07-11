@@ -79,7 +79,6 @@ namespace Banker
                 return;
             }
 
-
             // Get category
             string category;
             if (string.IsNullOrWhiteSpace(Category.Text))
@@ -136,7 +135,9 @@ namespace Banker
 
         private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
+            Hide();
             var graph = new GraphContainer(_expense, _random);
+            graph.Closed += (s, args) => Show();
             graph.Show();
         }
 

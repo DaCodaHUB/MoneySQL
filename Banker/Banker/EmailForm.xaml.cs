@@ -16,27 +16,22 @@ using Banker.Database;
 namespace Banker
 {
     /// <summary>
-    /// Interaction logic for ResetPassword.xaml
+    /// Interaction logic for EmailForm.xaml
     /// </summary>
-    public partial class ResetPassword : Window
+    public partial class EmailForm : Window
     {
-        private string _verifyString;
-        
-        public ResetPassword(string verifyString)
+        public EmailForm()
         {
             InitializeComponent();
-            _verifyString = verifyString;
         }
 
-        private void Reset_OnClick(object sender, RoutedEventArgs e)
+        private void Submit_OnClick(object sender, RoutedEventArgs e)
         {
-            // Todo: change type to password
-
-            // Todo: upload to database
-            if(_verifyString.Equals(verify.Text) && newPass.Password.Equals(confirmPass.Password))
-            {
-
-            }
+            Hide();
+            var mail = new MailCode(Email.Text);
+            var resetForm = new ResetPassword(mail.VerifyString);
+            resetForm.Closed += (s, args) => Close();
+            resetForm.Show();
         }
     }
 }
