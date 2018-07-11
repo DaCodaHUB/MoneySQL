@@ -15,7 +15,6 @@ namespace Banker
     public partial class IncomeForm
     {
         private readonly int _userId;
-        private readonly SqlConnect _sql;
         private readonly List<SqlConnect.Bank> _total;
         private readonly List<SqlConnect.Bank> _expense;
         private readonly List<SqlConnect.Bank> _random;
@@ -26,10 +25,9 @@ namespace Banker
         {
             InitializeComponent();
             DataContext = new TextFields();
-            _sql = new SqlConnect();
             _userId = userId;
-            _total = _sql.PullData("total", _userId);
-            _expense = _sql.PullData("expense", _userId);
+            _total = SqlConnect.PullData("total", _userId);
+            _expense = SqlConnect.PullData("expense", _userId);
 
 
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
@@ -59,7 +57,7 @@ namespace Banker
 
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
-            _sql.InsertMoney("total", _userId, _current);
+            SqlConnect.InsertMoney("total", _userId, _current);
             _total.Add(currentTotal);
 
             // Show current total
@@ -99,13 +97,13 @@ namespace Banker
             // Update the expense list
             var expenseInput = new SqlConnect.Bank(expense, DateTime.Now, category);
 
-            _sql.InsertMoney("expense", _userId, expense, category);
+            SqlConnect.InsertMoney("expense", _userId, expense, category);
             _expense.Add(expenseInput);
             _observableDataBanks.Add(expenseInput);
 
             // Update Total list and database
             var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
-            _sql.InsertMoney("total", _userId, _current);
+            SqlConnect.InsertMoney("total", _userId, _current);
             _total.Add(currentTotal);
 
             // Show current total
@@ -196,9 +194,9 @@ namespace Banker
                 _current += item.Money;
                 _expense.Remove(item);
                 var currentTotal = new SqlConnect.Bank(_current, DateTime.Now);
-                _sql.InsertMoney("total", _userId, _current);
+                SqlConnect.InsertMoney("total", _userId, _current);
                 _total.Add(currentTotal);
-                _sql.DeleteMoney("expense", item.Id, _userId);
+                SqlConnect.DeleteMoney("expense", item.Id, _userId);
             }
 
             CurrentMoney.Text = _current.ToString("C");

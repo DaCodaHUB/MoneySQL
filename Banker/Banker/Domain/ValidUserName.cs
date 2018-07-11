@@ -23,7 +23,7 @@ namespace Banker.Domain
             if (letterAndNumber.IsMatch(username))
                 return new ValidationResult(false, "Not allow special characters");
 
-            if (username.Length < 4 || username.Length > 31)
+            if (username.Length <= 4 || username.Length > 31)
                 return new ValidationResult(false, "Must be 5 to 30 character in length");
 
             return ValidationResult.ValidResult;

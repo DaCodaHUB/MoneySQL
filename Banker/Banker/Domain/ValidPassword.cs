@@ -16,6 +16,7 @@ namespace Banker.Domain
             if (string.IsNullOrWhiteSpace((value ?? "").ToString()))
                 return new ValidationResult(false, "Field is required.");
             var password = (value ?? "").ToString();
+
             if (!char.IsLetter(password[0]))
                 return new ValidationResult(false, "Must start with a letter");
 
@@ -30,8 +31,8 @@ namespace Banker.Domain
                 return new ValidationResult(false, "Require at least one special character");
 
 
-            if (password.Length < 7 || password.Length > 30)
-                return new ValidationResult(false, "Must be 8 to 31 character in length");
+            if (password.Length <= 6 || password.Length > 31)
+                return new ValidationResult(false, "Must be 7 to 31 character in length");
 
             return ValidationResult.ValidResult;
         }

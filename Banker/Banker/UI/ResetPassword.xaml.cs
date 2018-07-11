@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Banker.Database;
 
 namespace Banker
@@ -20,23 +9,64 @@ namespace Banker
     /// </summary>
     public partial class ResetPassword : Window
     {
-        private string _verifyString;
-        
-        public ResetPassword(string verifyString)
+        private readonly string _username;
+
+        public ResetPassword(string username)
         {
+            _username = username;
+
             InitializeComponent();
-            _verifyString = verifyString;
+            DataContext = new TextFields();
         }
 
         private void Reset_OnClick(object sender, RoutedEventArgs e)
         {
-            // Todo: change type to password
+            var pass = newpasswordTxt.SecurePassword;
 
-            // Todo: upload to database
-            if(_verifyString.Equals(verify.Text) && newPass.Password.Equals(confirmPass.Password))
+            if (temppass.BorderBrush.ToString().Equals("#FFF44336"))
             {
-
+                MessageBox.Show("Your Password didn't meet requirement");
+                return;
             }
+
+            var confirm = newconfirmTxt.SecurePassword;
+            if (!SecurePasswordBox.ConvertToUnsecureString(pass)
+                .Equals(SecurePasswordBox.ConvertToUnsecureString(confirm)))
+            {
+                MessageBox.Show("Confirm password doesn't match");
+                return;
+            }
+
+            if (verifyTxt.BorderBrush.ToString().Equals("#FFF44336"))
+            {
+                MessageBox.Show("Verify Code is incorrect.");
+                return;
+            }
+
+            MessageBox.Show(_username);
+            SqlConnect.SetNewPassword(_username, pass);
+            MessageBox.Show("Your password is reset.");
+            Close();
+        }
+
+
+        private void NewpasswordTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(newpasswordTxt.SecurePassword),
+                "[a-z]",
+                "a");
+            result = Regex.Replace(result, "[A-Z]", "A");
+            result = Regex.Replace(result, "[0-9]", "0");
+            temppass.SelectedText = result;
+        }
+
+        private void NewconfirmTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(newconfirmTxt.SecurePassword), "[a-z]",
+                "a");
+            result = Regex.Replace(result, "[A-Z]", "A");
+            result = Regex.Replace(result, "[0-9]", "0");
+            tempconfirm.SelectedText = result;
         }
     }
 }

@@ -14,7 +14,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:domain="clr-namespace:Banker.Domain"
     mc:Ignorable="d"
-        Title="SignUp" Height="330" Width="550">
+        Title="SignUp" Height="400" Width="550">
 
     <Border Padding="10">
         <StackPanel>
@@ -67,11 +67,11 @@
                 <materialDesign:PackIcon Grid.Column="0" Kind="Key"
                                          Foreground="{Binding ElementName=temppass, Path=BorderBrush}"
                                          Margin="20,18,0,0" Width="40" Height="40" />
-                <materialDesign:PackIcon x:Name="KeyIcon" Grid.Column="0" Kind="Key"
+                <materialDesign:PackIcon Grid.Column="0" Kind="Key"
                                          Foreground="{Binding ElementName=passwordTxt, Path=BorderBrush}"
                                          Margin="20,18,0,0" Width="40" Height="40" />
                 
-                <TextBox Name ="temppass" Grid.Column="1" Foreground="AliceBlue">
+                <TextBox Name ="temppass" Grid.Column="1" Foreground="AliceBlue" IsTabStop="False">
                     <TextBox.Text>
                         <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -84,8 +84,33 @@
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" PasswordChanged="PasswordTxt_OnPasswordChanged"/>
             </Grid>
 
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="Key"
+                                         Foreground="{Binding ElementName=tempconfirm, Path=BorderBrush}"
+                                         Margin="20,18,0,0" Width="40" Height="40" />
+                <materialDesign:PackIcon Grid.Column="0" Kind="Key"
+                                         Foreground="{Binding ElementName=confirmTxt, Path=BorderBrush}"
+                                         Margin="20,18,0,0" Width="40" Height="40" />
 
-            <Button Content="Sign Up" Margin="200,20,200,0"/>
+                <TextBox Name ="tempconfirm" Grid.Column="1" Foreground="AliceBlue" IsTabStop="False">
+                    <TextBox.Text>
+                        <Binding Path="Text" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <PasswordBox Name="confirmTxt" materialDesign:HintAssist.Hint="Confirm Password"
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" PasswordChanged="ConfirmTxt_OnPasswordChanged"/>
+            </Grid>
+
+
+            <Button Content="Sign Up" Click="SignUp_OnClick" Margin="200,20,200,0"/>
         </StackPanel>
     </Border>
 

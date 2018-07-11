@@ -18,15 +18,9 @@ namespace Banker.Database
         /// <param name="password">the password</param>
         /// <returns>
         /// 1 - Duplicate username
-        /// 2 - username or password is empty or whitespace
-        /// 3 - password is too short (at least 8)
         /// </returns>
-        public int CreateNewUser(string username, SecureString Spassword)
+        public static int CreateNewUser(string username, SecureString spassword, string email)
         {
-            if (string.IsNullOrWhiteSpace(username) || Spassword.Length == 0)
-                return 2;
-            if (Spassword.Length < 7)
-                return 3;
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -39,12 +33,14 @@ namespace Banker.Database
                             myCommand.Connection = myConnection;
                             myCommand.Transaction = myTrans;
 
-                            var password = SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(Spassword));
+                            var password =
+                                SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(spassword));
 
                             myCommand.CommandText =
-                                $"INSERT INTO User (username,password) VALUES (@username,@password);";
+                                $"INSERT INTO User (username,password,email) VALUES (@username,@password,@email);";
                             myCommand.Parameters.AddWithValue("@username", username);
                             myCommand.Parameters.AddWithValue("@password", password);
+                            myCommand.Parameters.AddWithValue("@email", email);
 
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
@@ -70,13 +66,57 @@ namespace Banker.Database
                     }
                 }
 
-                myConnection.Close();
             }
 
             return 0;
         }
 
-        public UserInfo VerifyUser(string username, SecureString Spassword)
+        public static void SetNewPassword(string username, SecureString spassword)
+        {
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    using (var myTrans = myConnection.BeginTransaction())
+                    {
+                        try
+                        {
+                            myCommand.Connection = myConnection;
+                            myCommand.Transaction = myTrans;
+
+                            var password =
+                                SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(spassword));
+
+                            myCommand.CommandText =
+                                $"UPDATE `User` SET `password`=@password WHERE `username`=@username;";
+                            myCommand.Parameters.AddWithValue("@username", username);
+                            myCommand.Parameters.AddWithValue("@password", password);
+
+                            myCommand.ExecuteNonQuery();
+                            myTrans.Commit();
+                        }
+                        catch (MySqlException)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static UserInfo VerifyUser(string username, SecureString spassword)
         {
             var hashPassword = "";
             var user = new UserInfo();
@@ -100,19 +140,14 @@ namespace Banker.Database
                                 {
                                     hashPassword = reader.GetString("password");
                                     user.Id = reader.GetInt32("id");
-                                    Console.WriteLine(hashPassword);
                                 }
 
-                                reader.Close();
 
                                 if (string.IsNullOrWhiteSpace(hashPassword))
                                 {
                                     user.Valid = false;
                                     return user;
                                 }
-
-
-                                Console.WriteLine(@"Read record from the database.");
                             }
                         }
                         catch (Exception e)
@@ -138,11 +173,64 @@ namespace Banker.Database
                 }
             }
 
-            user.Valid = SecurePasswordHasher.Verify(SecurePasswordBox.ConvertToUnsecureString(Spassword), hashPassword);
+            user.Valid =
+                SecurePasswordHasher.Verify(SecurePasswordBox.ConvertToUnsecureString(spassword), hashPassword);
             return user;
         }
 
-        public void InsertMoney(string mode, int userid, decimal money, string category = null)
+        public static string GetEmail(string username)
+        {
+            var email = "";
+            using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
+            {
+                myConnection.Open();
+                using (var myCommand = myConnection.CreateCommand())
+                {
+                    using (var myTrans = myConnection.BeginTransaction())
+                    {
+                        myCommand.Connection = myConnection;
+                        myCommand.Transaction = myTrans;
+
+                        try
+                        {
+                            myCommand.CommandText = "SELECT email FROM User WHERE username = @username;";
+                            myCommand.Parameters.AddWithValue("@username", username);
+                            using (var reader = myCommand.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    email = reader.GetString("email");
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            try
+                            {
+                                myTrans.Rollback();
+                            }
+                            catch (SqlException ex)
+                            {
+                                if (myTrans.Connection != null)
+                                {
+                                    Console.WriteLine(
+                                        $@"An exception of type {ex.GetType()} was encountered while attempting to roll back the transaction.");
+                                }
+                            }
+
+
+                            Console.WriteLine(
+                                $@"An exception of type {e.GetType()} was encountered while reading the data.");
+                        }
+                    }
+                }
+            }
+
+
+            return email;
+        }
+
+        public static void InsertMoney(string mode, int userid, decimal money, string category = null)
         {
             if (userid < 1)
                 throw new Exception("UserID is positive number");
@@ -204,7 +292,7 @@ namespace Banker.Database
             }
         }
 
-        public void DeleteMoney(string mode, int itemId, int userId)
+        public static void DeleteMoney(string mode, int itemId, int userId)
         {
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -258,7 +346,7 @@ namespace Banker.Database
             }
         }
 
-        public List<Bank> PullData(string mode, int userid)
+        public static List<Bank> PullData(string mode, int userid)
         {
             var result = new List<Bank>();
 

@@ -23,13 +23,27 @@ namespace Banker
         public EmailForm()
         {
             InitializeComponent();
+            DataContext = new TextFields();
         }
 
         private void Submit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (UsernameTxt.BorderBrush.ToString().Equals("#FFF44336"))
+            {
+                MessageBox.Show("Username doesn't meet requirement");
+                return;
+            }
+
+            var email = SqlConnect.GetEmail(UsernameTxt.Text);
+            if (email.Length == 0)
+            {
+                MessageBox.Show("Username doesn't exist.");
+                return;
+            }
+
             Hide();
-            var mail = new MailCode(Email.Text);
-            var resetForm = new ResetPassword(mail.VerifyString);
+            var mailCode = new MailCode(SqlConnect.GetEmail(UsernameTxt.Text));
+            var resetForm = new ResetPassword(UsernameTxt.Text);
             resetForm.Closed += (s, args) => Close();
             resetForm.Show();
         }

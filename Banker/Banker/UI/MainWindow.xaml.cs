@@ -13,12 +13,9 @@ namespace Banker
     /// </summary>
     public partial class MainWindow
     {
-        private readonly SqlConnect _sql;
-
         public MainWindow()
         {
             InitializeComponent();
-            _sql = new SqlConnect();
             DataContext = new TextFields();
         }
 
@@ -26,10 +23,10 @@ namespace Banker
         {
             var username = UsernameTxt.Text;
             var pass = PasswordTxt.SecurePassword;
-            
-            var result = _sql.VerifyUser(username, pass);
+
+            var result = SqlConnect.VerifyUser(username, pass);
             if (!result.Valid)
-                MessageBox.Show($@"This {username} is not existed or password is incorrect");
+                MessageBox.Show($@"Username or password is incorrect");
             else
             {
                 Hide();
@@ -41,13 +38,9 @@ namespace Banker
 
         private void SignUp_OnClick(object sender, RoutedEventArgs e)
         {
-            //            var result = new RandomListData().generate();
-            //            foreach (var v in result)
-            //            {
-            //                Debug.WriteLine(v.ToString());
-            //            }
-
-            var signUpForm = new SignUp(_sql);
+            Hide();
+            var signUpForm = new SignUp();
+            signUpForm.Closed += (s, args) => Show();
             signUpForm.Show();
         }
 

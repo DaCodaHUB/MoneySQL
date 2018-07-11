@@ -106,6 +106,7 @@
     <Compile Include="Charts\Monthly_UC.xaml.cs">
       <DependentUpon>Monthly_UC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Database\LuhnAlgorithm.cs" />
     <Compile Include="Database\MailCode.cs" />
     <Compile Include="Database\RandomListData.cs" />
     <Compile Include="Database\SecurePasswordBox.cs" />
@@ -129,7 +130,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EmailForm.xaml">
+    <Page Include="UI\EmailForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,7 +162,8 @@
     <Compile Include="Domain\ValidEmail.cs" />
     <Compile Include="Domain\ValidPassword.cs" />
     <Compile Include="Domain\ValidUserName.cs" />
-    <Compile Include="EmailForm.xaml.cs">
+    <Compile Include="Domain\ValidVerifyCodecs.cs" />
+    <Compile Include="UI\EmailForm.xaml.cs">
       <DependentUpon>EmailForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ResetPassword.xaml.cs">
