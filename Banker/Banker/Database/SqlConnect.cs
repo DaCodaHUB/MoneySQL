@@ -65,13 +65,12 @@ namespace Banker.Database
                         }
                     }
                 }
-
             }
 
             return 0;
         }
 
-        public static void SetNewPassword(string username, SecureString spassword)
+        public static void UpdateMode(User user, string mode, SecureString spassword = null)
         {
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
@@ -85,13 +84,35 @@ namespace Banker.Database
                             myCommand.Connection = myConnection;
                             myCommand.Transaction = myTrans;
 
-                            var password =
-                                SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(spassword));
+                            if (mode.Equals("SetPassword"))
+                            {
+                                var password =
+                                    SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(spassword));
 
-                            myCommand.CommandText =
-                                $"UPDATE `User` SET `password`=@password WHERE `username`=@username;";
-                            myCommand.Parameters.AddWithValue("@username", username);
-                            myCommand.Parameters.AddWithValue("@password", password);
+                                myCommand.CommandText =
+                                    $"UPDATE `User` SET `password`=@password, `resetTimes`=@resetTimes WHERE `username`=@username;";
+                                myCommand.Parameters.AddWithValue("@username", user.Username);
+                                myCommand.Parameters.AddWithValue("@password", password);
+                            }
+
+                            if (mode.Equals("ResetStatus"))
+                            {
+                                myCommand.CommandText =
+                                    $"UPDATE `User` SET `Timestamp`=@Timestamp, `IsReset`=@IsReset, `resetTimes`=@resetTimes WHERE `username`=@username;";
+                                myCommand.Parameters.AddWithValue("@Timestamp", DateTime.Now);
+                                myCommand.Parameters.AddWithValue("@IsReset", 1);
+                                myCommand.Parameters.AddWithValue("@resetTimes", 0);
+                                myCommand.Parameters.AddWithValue("@username", user.Username);
+                            }
+
+                            if (mode.Equals("GetCode"))
+                            {
+                                myCommand.CommandText =
+                                    $"UPDATE `User` SET `resetTimes`=@resetTimes WHERE `username`=@username;";
+                                myCommand.Parameters.AddWithValue("@username", user.Username);
+                                myCommand.Parameters.AddWithValue("@resetTimes", user.ResetTimes + 1);
+                            }
+
 
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
@@ -116,10 +137,11 @@ namespace Banker.Database
             }
         }
 
-        public static UserInfo VerifyUser(string username, SecureString spassword)
+
+        public static UserValid VerifyUser(string username, SecureString spassword)
         {
             var hashPassword = "";
-            var user = new UserInfo();
+            var user = new UserValid();
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -178,9 +200,9 @@ namespace Banker.Database
             return user;
         }
 
-        public static string GetEmail(string username)
+        public static User GetEmail(string username)
         {
-            var email = "";
+            var user = new User("");
             using (var myConnection = new MySqlConnection {ConnectionString = MyConnectionString})
             {
                 myConnection.Open();
@@ -193,13 +215,17 @@ namespace Banker.Database
 
                         try
                         {
-                            myCommand.CommandText = "SELECT email FROM User WHERE username = @username;";
+                            myCommand.CommandText = "SELECT * FROM User WHERE username = @username;";
                             myCommand.Parameters.AddWithValue("@username", username);
                             using (var reader = myCommand.ExecuteReader())
                             {
                                 while (reader.Read())
                                 {
-                                    email = reader.GetString("email");
+                                    user.Email = reader.GetString("email");
+                                    user.ResetTimes = reader.GetInt32("resetTimes");
+                                    user.Timestamp = reader.GetDateTime("Timestamp");
+                                    user.IsReset = reader.GetInt32("IsReset");
+                                    user.Username = reader.GetString("username");
                                 }
                             }
                         }
@@ -227,7 +253,7 @@ namespace Banker.Database
             }
 
 
-            return email;
+            return user;
         }
 
         public static void InsertMoney(string mode, int userid, decimal money, string category = null)
@@ -404,10 +430,24 @@ namespace Banker.Database
             return result;
         }
 
-        public class UserInfo
+        public class UserValid
         {
             public int Id { get; set; }
             public bool Valid { get; set; }
+        }
+
+        public class User
+        {
+            public string Username { get; set; }
+            public DateTime Timestamp { get; set; }
+            public string Email { get; set; }
+            public int ResetTimes { get; set; }
+            public int IsReset { get; set; }
+
+            public User(string email)
+            {
+                Email = email;
+            }
         }
 
         public class Bank

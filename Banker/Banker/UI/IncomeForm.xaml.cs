@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
-using System.Diagnostics;
 using Banker.Database;
 
 namespace Banker
@@ -17,7 +16,7 @@ namespace Banker
         private readonly int _userId;
         private readonly List<SqlConnect.Bank> _total;
         private readonly List<SqlConnect.Bank> _expense;
-        private readonly List<SqlConnect.Bank> _random;
+//        private readonly List<SqlConnect.Bank> _random;
         private readonly ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
@@ -33,7 +32,7 @@ namespace Banker
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
 
             // For testing
-            _random = new RandomListData().Generate();
+//            _random = new RandomListData().Generate();
 
             DataGridExpense.ItemsSource = _observableDataBanks;
 
@@ -134,7 +133,7 @@ namespace Banker
         private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            var graph = new GraphContainer(_expense, _random);
+            var graph = new GraphContainer(_expense, _total);
             graph.Closed += (s, args) => Show();
             graph.Show();
         }

@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 
@@ -20,9 +9,9 @@ namespace Banker.Charts
     /// <summary>
     /// Interaction logic for LastMonth_UC.xaml
     /// </summary>
-    public partial class LastMonth_UC : UserControl
+    public partial class LastMonthUc
     {
-        public LastMonth_UC(List<KeyValuePair<int, decimal>> valueList)
+        public LastMonthUc(List<KeyValuePair<int, decimal>> valueList)
         {
             InitializeComponent();
 

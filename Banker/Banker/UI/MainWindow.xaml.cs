@@ -1,10 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Banker.Database;
-using System.Net.Mail;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 
 namespace Banker
 {
@@ -46,7 +41,9 @@ namespace Banker
 
         private void Reset_OnClick(object sender, RoutedEventArgs e)
         {
+            Hide();
             var emailForm = new EmailForm();
+            emailForm.Closed += (s, args) => Show();
             emailForm.Show();
         }
     }

@@ -7,13 +7,13 @@ namespace Banker
     /// <summary>
     /// Interaction logic for ResetPassword.xaml
     /// </summary>
-    public partial class ResetPassword : Window
+    public partial class ResetPassword
     {
-        private readonly string _username;
+        private readonly SqlConnect.User _user;
 
-        public ResetPassword(string username)
+        public ResetPassword(SqlConnect.User user)
         {
-            _username = username;
+            _user = user;
 
             InitializeComponent();
             DataContext = new TextFields();
@@ -43,8 +43,8 @@ namespace Banker
                 return;
             }
 
-            MessageBox.Show(_username);
-            SqlConnect.SetNewPassword(_username, pass);
+//            MessageBox.Show(_username);
+            SqlConnect.UpdateMode(_user, "SetPassword", pass);
             MessageBox.Show("Your password is reset.");
             Close();
         }

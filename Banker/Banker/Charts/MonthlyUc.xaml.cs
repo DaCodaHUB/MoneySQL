@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -10,9 +9,9 @@ namespace Banker.Charts
     /// <summary>
     /// Interaction logic for Monthly_UC.xaml
     /// </summary>
-    public partial class Monthly_UC : UserControl
+    public partial class MonthlyUc
     {
-        public Monthly_UC(List<KeyValuePair<int, decimal>> valueList)
+        public MonthlyUc(List<KeyValuePair<int, decimal>> valueList)
         {
             InitializeComponent();
 

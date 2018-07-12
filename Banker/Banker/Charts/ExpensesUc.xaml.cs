@@ -3,21 +3,21 @@ using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace Banker.Graph
+namespace Banker.Charts
 {
     /// <summary>
     /// Interaction logic for Expenses_UC.xaml
     /// </summary>
-    public partial class Expenses_UC : UserControl
+    public partial class ExpensesUc : UserControl
     {
         public SeriesCollection SeriesCollection { get; }
 
-        public Expenses_UC(List<KeyValuePair<string, decimal>> _expense)
+        public ExpensesUc(List<KeyValuePair<string, decimal>> expense)
         {
             InitializeComponent();
             SeriesCollection = new SeriesCollection();
 
-            foreach (var item in _expense)
+            foreach (var item in expense)
             {
                 SeriesCollection.Add(new PieSeries
                 {

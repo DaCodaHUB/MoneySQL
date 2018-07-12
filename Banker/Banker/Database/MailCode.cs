@@ -5,12 +5,12 @@ namespace Banker.Database
 {
     public class MailCode
     {
-        public MailCode(string email)
+        public MailCode(SqlConnect.User user)
         {
             var verifyCode = GenerateCode();
 
-            var to = email;
-            const string @from = "bankerserver@gmail.com";
+            var to = user.Email;
+            const string from = "bankerserver@gmail.com";
             const string subject = "Reset Code";
             var body = "You wish to reset your password. Use this code to verify the process: " + verifyCode;
             var message = new MailMessage(from, to, subject, body);
@@ -25,6 +25,7 @@ namespace Banker.Database
             try
             {
                 client.Send(message);
+                SqlConnect.UpdateMode(user, "GetCode");
             }
             catch (TimeoutException ex)
             {

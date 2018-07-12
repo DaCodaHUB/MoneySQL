@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using Banker.Charts;
 using Banker.Database;
-using Banker.Graph;
 
 namespace Banker
 {
@@ -19,12 +18,12 @@ namespace Banker
         private readonly List<KeyValuePair<int, decimal>> _lastmonthCalculated;
 
 
-        public GraphContainer(List<SqlConnect.Bank> expense, List<SqlConnect.Bank> random)
+        public GraphContainer(List<SqlConnect.Bank> expense, List<SqlConnect.Bank> total)
         {
             InitializeComponent();
             _expenseCalculated = Expenses_Calculate(expense);
-            _monthlyCalculated = Monthly_Caluculate(random);
-            _lastmonthCalculated = LastMonth_Calculate(random);
+            _monthlyCalculated = Monthly_Caluculate(total);
+            _lastmonthCalculated = LastMonth_Calculate(total);
             ChartCombo.SelectedIndex = 0;
         }
 
@@ -34,7 +33,7 @@ namespace Banker
             if (_expenseCalculated.Count > 0)
             {
                 ChartContainer.Children.Clear();
-                var report = new Expenses_UC(_expenseCalculated);
+                var report = new ExpensesUc(_expenseCalculated);
                 ChartContainer.Children.Add(report);
             }
             else
@@ -45,10 +44,10 @@ namespace Banker
 
         private void Monthly_OnSelected(object sender, RoutedEventArgs e)
         {
-            if (_monthlyCalculated.Count > 0)
+            if (_monthlyCalculated.FindAll(a => a.Value != 0).Count > 0)
             {
                 ChartContainer.Children.Clear();
-                var report = new Monthly_UC(_monthlyCalculated);
+                var report = new MonthlyUc(_monthlyCalculated);
                 ChartContainer.Children.Add(report);
             }
             else
@@ -59,10 +58,10 @@ namespace Banker
 
         private void LastMonth_OnSelected(object sender, RoutedEventArgs e)
         {
-            if (_lastmonthCalculated.Count > 0)
+            if (_lastmonthCalculated.FindAll(a => a.Value != 0).Count > 0)
             {
                 ChartContainer.Children.Clear();
-                var report = new LastMonth_UC(_lastmonthCalculated);
+                var report = new LastMonthUc(_lastmonthCalculated);
                 ChartContainer.Children.Add(report);
             }
             else

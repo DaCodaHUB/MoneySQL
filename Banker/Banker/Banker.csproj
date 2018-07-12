@@ -100,11 +100,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Charts\LastMonth_UC.xaml.cs">
-      <DependentUpon>LastMonth_UC.xaml</DependentUpon>
+    <Compile Include="Charts\LastMonthUc.xaml.cs">
+      <DependentUpon>LastMonthUc.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Charts\Monthly_UC.xaml.cs">
-      <DependentUpon>Monthly_UC.xaml</DependentUpon>
+    <Compile Include="Charts\MonthlyUc.xaml.cs">
+      <DependentUpon>MonthlyUc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\LuhnAlgorithm.cs" />
     <Compile Include="Database\MailCode.cs" />
@@ -115,18 +115,18 @@
     <Compile Include="Database\TextFields.cs" />
     <Compile Include="Domain\OnlyDecimalNumber.cs" />
     <Compile Include="Domain\NotEmptyValidationRule.cs" />
-    <Compile Include="Charts\Expenses_UC.xaml.cs">
-      <DependentUpon>Expenses_UC.xaml</DependentUpon>
+    <Compile Include="Charts\ExpensesUc.xaml.cs">
+      <DependentUpon>ExpensesUc.xaml</DependentUpon>
     </Compile>
-    <Page Include="Charts\Expenses_UC.xaml">
+    <Page Include="Charts\ExpensesUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Charts\LastMonth_UC.xaml">
+    <Page Include="Charts\LastMonthUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Charts\Monthly_UC.xaml">
+    <Page Include="Charts\MonthlyUc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

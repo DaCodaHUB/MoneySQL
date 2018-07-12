@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Diagnostics;
 
 namespace Banker.Domain
 {
@@ -51,7 +45,7 @@ namespace Banker.Domain
             // when the BindPassword attached property is set on a PasswordBox,
             // start listening to its PasswordChanged event
 
-            PasswordBox box = dp as PasswordBox;
+            var box = dp as PasswordBox;
 
             if (box == null)
             {

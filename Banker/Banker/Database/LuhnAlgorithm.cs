@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Banker.Database
 {
-    public class LuhnAlgorithm
+    public static class LuhnAlgorithm
     {
         //this function will return check digit
         //it will double the every alternate digit starting from last one, 
@@ -17,8 +13,7 @@ namespace Banker.Database
         public static string GetLuhnCheckDigit(string number)
         {
             var time = DateTime.Now;
-            var skipDigit1 = (time.Day + time.Month + time.DayOfYear) % 10;
-            var skipDigit2 = (time.Year + time.Month + time.Day) % 10;
+
             var mins = time.Minute.ToString("D2").ToCharArray();
             var days = time.Day.ToString("D2").ToCharArray();
             var sum = 0;
@@ -32,7 +27,6 @@ namespace Banker.Database
 
             for (var i = digits.Count - 1; i >= 0; i--)
             {
-                if (i == skipDigit1 || i == skipDigit2) continue;
                 var curDigit = (digits[i] - 48);
 
 
@@ -52,18 +46,18 @@ namespace Banker.Database
             return string.Join("", digits.ToArray()) + lastDigit;
         }
 
-        public static bool checkLuhn(string Number)
+        public static bool CheckLuhn(string number)
         {
+            if (number.Length < 10)
+                return false;
             var time = DateTime.Now;
-            var skipDigit1 = (time.Day + time.Month + time.DayOfYear) % 10;
-            var skipDigit2 = (time.Year + time.Month + time.Day) % 10;
             var mins = time.Minute;
             var days = time.Day;
 
             var total = 0;
             var alt = false;
 
-            var digits = Number.ToCharArray().ToList();
+            var digits = number.ToCharArray().ToList();
             var twodigitsMin = int.Parse("" + digits[3] + digits[7]);
             var twodigitsDay = int.Parse("" + digits[1] + digits[6]);
 
@@ -77,7 +71,6 @@ namespace Banker.Database
 
             for (var i = digits.Count - 1; i >= 0; i--)
             {
-                if (i == skipDigit1 || i == skipDigit2) continue;
                 var curDigit = (int) char.GetNumericValue(digits[i]);
                 if (alt)
                 {
