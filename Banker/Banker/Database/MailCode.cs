@@ -29,8 +29,7 @@ namespace Banker.Database
             }
             catch (TimeoutException ex)
             {
-                Console.WriteLine(@"Exception caught in CreateTimeoutTestMessage(): {0}",
-                    ex);
+                Console.WriteLine(@"Exception caught in CreateTimeoutTestMessage(): {0}", ex);
             }
         }
 
