@@ -21,15 +21,15 @@ namespace Banker
 
         private void Reset_OnClick(object sender, RoutedEventArgs e)
         {
-            var pass = newpasswordTxt.SecurePassword;
+            var pass = NewpasswordTxt.SecurePassword;
 
-            if (temppass.BorderBrush.ToString().Equals("#FFF44336"))
+            if (Temppass.BorderBrush.ToString().Equals("#FFF44336"))
             {
                 MessageBox.Show("Your Password didn't meet requirement");
                 return;
             }
 
-            var confirm = newconfirmTxt.SecurePassword;
+            var confirm = NewconfirmTxt.SecurePassword;
             if (!SecurePasswordBox.ConvertToUnsecureString(pass)
                 .Equals(SecurePasswordBox.ConvertToUnsecureString(confirm)))
             {
@@ -37,13 +37,12 @@ namespace Banker
                 return;
             }
 
-            if (verifyTxt.BorderBrush.ToString().Equals("#FFF44336"))
+            if (VerifyTxt.BorderBrush.ToString().Equals("#FFF44336"))
             {
                 MessageBox.Show("Verify Code is incorrect.");
                 return;
             }
 
-//            MessageBox.Show(_username);
             SqlConnect.UpdateMode(_user, "SetPassword", pass);
             MessageBox.Show("Your password is reset.");
             Close();
@@ -52,21 +51,21 @@ namespace Banker
 
         private void NewpasswordTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(newpasswordTxt.SecurePassword),
+            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(NewpasswordTxt.SecurePassword),
                 "[a-z]",
                 "a");
             result = Regex.Replace(result, "[A-Z]", "A");
             result = Regex.Replace(result, "[0-9]", "0");
-            temppass.SelectedText = result;
+            Temppass.SelectedText = result;
         }
 
         private void NewconfirmTxt_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(newconfirmTxt.SecurePassword), "[a-z]",
+            var result = Regex.Replace(SecurePasswordBox.ConvertToUnsecureString(NewconfirmTxt.SecurePassword), "[a-z]",
                 "a");
             result = Regex.Replace(result, "[A-Z]", "A");
             result = Regex.Replace(result, "[0-9]", "0");
-            tempconfirm.SelectedText = result;
+            Tempconfirm.SelectedText = result;
         }
     }
 }

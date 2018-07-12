@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Security;
 using MySql.Data.MySqlClient;
 
@@ -90,19 +91,9 @@ namespace Banker.Database
                                     SecurePasswordHasher.Hash(SecurePasswordBox.ConvertToUnsecureString(spassword));
 
                                 myCommand.CommandText =
-                                    $"UPDATE `User` SET `password`=@password, `resetTimes`=@resetTimes WHERE `username`=@username;";
+                                    $"UPDATE `User` SET `password`=@password WHERE `username`=@username;";
                                 myCommand.Parameters.AddWithValue("@username", user.Username);
                                 myCommand.Parameters.AddWithValue("@password", password);
-                            }
-
-                            if (mode.Equals("ResetStatus"))
-                            {
-                                myCommand.CommandText =
-                                    $"UPDATE `User` SET `Timestamp`=@Timestamp, `IsReset`=@IsReset, `resetTimes`=@resetTimes WHERE `username`=@username;";
-                                myCommand.Parameters.AddWithValue("@Timestamp", DateTime.Now);
-                                myCommand.Parameters.AddWithValue("@IsReset", 1);
-                                myCommand.Parameters.AddWithValue("@resetTimes", 0);
-                                myCommand.Parameters.AddWithValue("@username", user.Username);
                             }
 
                             if (mode.Equals("GetCode"))
@@ -113,11 +104,10 @@ namespace Banker.Database
                                 myCommand.Parameters.AddWithValue("@resetTimes", user.ResetTimes + 1);
                             }
 
-
                             myCommand.ExecuteNonQuery();
                             myTrans.Commit();
                         }
-                        catch (MySqlException)
+                        catch (MySqlException e)
                         {
                             try
                             {
@@ -224,7 +214,6 @@ namespace Banker.Database
                                     user.Email = reader.GetString("email");
                                     user.ResetTimes = reader.GetInt32("resetTimes");
                                     user.Timestamp = reader.GetDateTime("Timestamp");
-                                    user.IsReset = reader.GetInt32("IsReset");
                                     user.Username = reader.GetString("username");
                                 }
                             }
@@ -442,7 +431,6 @@ namespace Banker.Database
             public DateTime Timestamp { get; set; }
             public string Email { get; set; }
             public int ResetTimes { get; set; }
-            public int IsReset { get; set; }
 
             public User(string email)
             {

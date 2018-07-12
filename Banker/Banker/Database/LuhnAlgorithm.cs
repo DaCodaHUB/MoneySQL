@@ -50,6 +50,10 @@ namespace Banker.Database
         {
             if (number.Length < 10)
                 return false;
+            if (number.Any(char.IsLetter))
+                return false;
+
+
             var time = DateTime.Now;
             var mins = time.Minute;
             var days = time.Day;
@@ -66,7 +70,7 @@ namespace Banker.Database
 
             if (mins < twodigitsMin)
                 mins += 60;
-            if (mins % twodigitsMin > 5)
+            if (mins % twodigitsMin > 10)
                 return false;
 
             for (var i = digits.Count - 1; i >= 0; i--)

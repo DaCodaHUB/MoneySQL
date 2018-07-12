@@ -34,12 +34,7 @@ namespace Banker
                 return;
             }
 
-            if (_user.Timestamp.Day < DateTime.Today.Day && _user.IsReset == 0)
-            {
-                SqlConnect.UpdateMode(_user, "ResetStatus");
-            }
-
-            else if (_user.ResetTimes >= 4)
+            if (_user.ResetTimes >= 4)
             {
                 MessageBox.Show("You tried to reset 4 times already. Please come back tomorrow.");
                 return;
