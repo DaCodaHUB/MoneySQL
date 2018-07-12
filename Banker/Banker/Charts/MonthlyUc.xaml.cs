@@ -11,31 +11,39 @@ namespace Banker.Charts
     /// </summary>
     public partial class MonthlyUc
     {
-        public MonthlyUc(List<KeyValuePair<int, decimal>> valueList)
+        public MonthlyUc(List<KeyValuePair<int, decimal>> totalList, List<KeyValuePair<int, decimal>> expenseList)
         {
             InitializeComponent();
 
-            var values = new ChartValues<decimal>();
+            var totalValues = new ChartValues<decimal>();
+            var expenseValues = new ChartValues<decimal>();
 
-            Labels = new string[valueList.Count];
+            Labels = new string[totalList.Count];
 
-            var i = 0;
-            foreach (var item in valueList)
+            for (int i = 0; i < totalList.Count; i++)
             {
-                Labels[i] = item.Key.ToString();
-                values.Add(item.Value);
-                i++;
+                Labels[i] = totalList[i].Key.ToString();
+                totalValues.Add(totalList[i].Value);
+                expenseValues.Add(expenseList[i].Value);
             }
 
             SeriesCollection = new SeriesCollection {
                 new LineSeries
                 {
                     Title = "Monthly Stats",
-                    Values = values,
+                    Values = totalValues,
                     LineSmoothness = 0, //0: straight lines, 1: really smooth lines
                     PointGeometry = null,
                     PointForeground = Brushes.Blue
-                }
+                },
+                new LineSeries
+                {
+                    Title = "Monthly Expenses",
+                    Values = expenseValues,
+                    LineSmoothness = 0, //0: straight lines, 1: really smooth lines
+                    PointGeometry = null,
+                    PointForeground = Brushes.Red
+                },
             };
 
             YFormatter = value => value.ToString("C");

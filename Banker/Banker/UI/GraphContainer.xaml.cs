@@ -14,7 +14,8 @@ namespace Banker
     public partial class GraphContainer
     {
         private readonly List<KeyValuePair<string, decimal>> _expenseCalculated;
-        private readonly List<KeyValuePair<int, decimal>> _monthlyCalculated;
+        private readonly List<KeyValuePair<int, decimal>> _monthlyTotalCalculated;
+        private readonly List<KeyValuePair<int, decimal>> _monthlyExpenseCalculated;
         private readonly List<KeyValuePair<int, decimal>> _lastmonthCalculated;
 
 
@@ -22,8 +23,9 @@ namespace Banker
         {
             InitializeComponent();
             _expenseCalculated = Expenses_Calculate(expense);
-            _monthlyCalculated = Monthly_Caluculate(total);
-            _lastmonthCalculated = LastMonth_Calculate(total);
+            _monthlyTotalCalculated = MonthlyTotal_Calculate(total);
+            _monthlyExpenseCalculated = MonthlyExpense_Calculate(expense);
+            _lastmonthCalculated = LastMonth_Calculate(total); // Testing: expense -> total
             ChartCombo.SelectedIndex = 0;
         }
 
@@ -44,10 +46,10 @@ namespace Banker
 
         private void Monthly_OnSelected(object sender, RoutedEventArgs e)
         {
-            if (_monthlyCalculated.FindAll(a => a.Value != 0).Count > 0)
+            if (_monthlyTotalCalculated.FindAll(a => a.Value != 0).Count > 0)
             {
                 ChartContainer.Children.Clear();
-                var report = new MonthlyUc(_monthlyCalculated);
+                var report = new MonthlyUc(_monthlyTotalCalculated, _monthlyExpenseCalculated);
                 ChartContainer.Children.Add(report);
             }
             else
@@ -70,7 +72,7 @@ namespace Banker
             }
         }
 
-        private static List<KeyValuePair<int, decimal>> Monthly_Caluculate(List<SqlConnect.Bank> monthly)
+        private static List<KeyValuePair<int, decimal>> MonthlyTotal_Calculate(List<SqlConnect.Bank> monthly)
         {
             var valueList = new List<KeyValuePair<int, decimal>>();
 
@@ -81,10 +83,27 @@ namespace Banker
                 decimal value = 0;
                 if (tempList.Count > 0)
                 {
-                    value = tempList[0].Money;
+                    value = tempList[tempList.Count - 1].Money;
                 }
 
                 valueList.Add(new KeyValuePair<int, decimal>(i, value));
+            }
+
+            return valueList;
+        }
+
+        private static List<KeyValuePair<int, decimal>> MonthlyExpense_Calculate(List<SqlConnect.Bank> monthly)
+        {
+            var valueList = new List<KeyValuePair<int, decimal>>();
+
+            for (var i = 1; i <= DateTime.Today.Month; i++)
+            {
+                var tempList = monthly.FindAll(elem => elem.Timestamp.Month == i
+                                                       && elem.Timestamp.Year == DateTime.Today.Year);
+
+                var sum = tempList.Sum(item => item.Money);
+
+                valueList.Add(new KeyValuePair<int, decimal>(i, sum));
             }
 
             return valueList;
