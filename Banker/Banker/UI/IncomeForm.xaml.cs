@@ -60,7 +60,7 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
-            MessageBox.Show(@"You successfully added an income to your bank");
+            //MessageBox.Show(@"You successfully added an income to your bank");
             Income.IsEnabled = true;
         }
 
@@ -106,7 +106,7 @@ namespace Banker
 
             // Show current total
             CurrentMoney.Text = _current.ToString("C");
-            MessageBox.Show(@"You successfully added an expense to your bank");
+            //MessageBox.Show(@"You successfully added an expense to your bank");
             Spend.IsEnabled = true;
         }
 

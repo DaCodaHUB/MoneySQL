@@ -53,10 +53,7 @@
 
                 <PasswordBox x:Name="PasswordTxt" materialDesign:HintAssist.Hint="Password"
                              Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.Column="1" >
-                    <!-- pba:PasswordBoxAssistant.BindPassword="true" pba:PasswordBoxAssistant.BoundPassword="{Binding Path=Password,
-                                                                                                                   UpdateSourceTrigger=Explicit, 
-                                                                                                                   ValidatesOnDataErrors=True, 
-                                                                                                                   ValidatesOnExceptions=True}" -->
+                    
                 </PasswordBox>
 
             </Grid>

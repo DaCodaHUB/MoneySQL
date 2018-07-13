@@ -163,6 +163,7 @@
     <Compile Include="Domain\ValidPassword.cs" />
     <Compile Include="Domain\ValidUserName.cs" />
     <Compile Include="Domain\ValidVerifyCodecs.cs" />
+    <Compile Include="UI\ButtonHelper.cs" />
     <Compile Include="UI\EmailForm.xaml.cs">
       <DependentUpon>EmailForm.xaml</DependentUpon>
     </Compile>

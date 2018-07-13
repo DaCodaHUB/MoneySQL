@@ -42,10 +42,10 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="Request Code" Click="Submit_OnClick" Margin="50,0" />
-                <Button Content="Got Verify Code" Grid.Column="1" Click="GotCode_OnClick" Margin="50,0"></Button>
+                <Button Content="Submit" Click="Submit_OnClick" Margin="41.6,0,58,-0.2" Grid.Column="1" />
+                <Button Content="Got Verify Code" Click="GotCode_OnClick" Margin="70,0,30.4,-0.2"/>
             </Grid>
-            
+
         </StackPanel>
     </Border>
 </Window>
