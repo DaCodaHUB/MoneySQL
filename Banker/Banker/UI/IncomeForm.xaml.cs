@@ -16,7 +16,8 @@ namespace Banker
         private readonly int _userId;
         private readonly List<SqlConnect.Bank> _total;
         private readonly List<SqlConnect.Bank> _expense;
-        private readonly List<SqlConnect.Bank> _random; // For testing
+        // For testing
+        //private readonly List<SqlConnect.Bank> _random;
         private readonly ObservableCollection<SqlConnect.Bank> _observableDataBanks;
         private decimal _current;
 
@@ -31,7 +32,8 @@ namespace Banker
 
             _observableDataBanks = new ObservableCollection<SqlConnect.Bank>(_expense);
 
-            _random = new RandomListData().Generate(); // For testing
+            // For testing
+            //_random = new RandomListData().Generate();
 
             DataGridExpense.ItemsSource = _observableDataBanks;
 
@@ -132,7 +134,7 @@ namespace Banker
         private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            var graph = new GraphContainer(_expense, _random); // Testing : _total -> _random
+            var graph = new GraphContainer(_expense, _total); // Testing : _total -> _random
             graph.Closed += (s, args) => Show();
             graph.Show();
         }
