@@ -134,7 +134,7 @@ namespace Banker
         private void ViewCharts_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            var graph = new GraphContainer(_expense, _total); // Testing : _total -> _random
+            var graph = new GraphContainer(_expense, _total); // Testing : _expense, _total -> _random
             graph.Closed += (s, args) => Show();
             graph.Show();
         }
